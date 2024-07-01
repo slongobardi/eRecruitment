@@ -44,6 +44,13 @@ public class Candidatura {
 			  inverseJoinColumns = @JoinColumn(name = "id_skill"))
 	private Set<Skill>listaSkill;
 	
+	@ManyToMany()
+	@JoinTable(
+			  name = "candidaturaTitoliStudio", 
+			  joinColumns = @JoinColumn(name = "id_candidatura"), 
+			  inverseJoinColumns = @JoinColumn(name = "id_titoliStudio"))
+	private Set<TitoliStudio>listaTitoliStudio;
+	
 	
 
 
@@ -127,6 +134,18 @@ public class Candidatura {
 
 	public void setListaSkill(Set<Skill> listaSkill) {
 		this.listaSkill = listaSkill;
+	}
+	
+	
+
+
+	public Set<TitoliStudio> getListaTitoliStudio() {
+		return listaTitoliStudio;
+	}
+
+
+	public void setListaTitoliStudio(Set<TitoliStudio> listaTitoliStudio) {
+		this.listaTitoliStudio = listaTitoliStudio;
 	}
 
 

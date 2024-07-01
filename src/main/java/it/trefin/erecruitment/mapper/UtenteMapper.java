@@ -1,9 +1,11 @@
 package it.trefin.erecruitment.mapper;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.trefin.erecruitment.dto.UtenteDto;
+import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
@@ -27,10 +29,11 @@ public class UtenteMapper {
 		uDto.setIndirizzo(u.getIndirizzo());
 		uDto.setUtenteTitoliStudio(u.getUtenteTitoliStudio().stream().map(UtenteTitoliStudio::getId).collect(Collectors.toList()));
 		uDto.setUtentiCandidati(u.getUtentiCandidati().stream().map(UtenteCandidatura::getId).collect(Collectors.toList()));
+		uDto.setListaColloquii(u.getListaColloquii().stream().map(Colloquio::getId).collect(Collectors.toSet()));
 		return uDto;
 	}
 	
-	public static Utente toEntity(UtenteDto uDto, List<UtenteTitoliStudio> listaUTitoliStudio,List<UtenteCandidatura>listaUCandidati) {
+	public static Utente toEntity(UtenteDto uDto, List<UtenteTitoliStudio> listaUTitoliStudio,List<UtenteCandidatura>listaUCandidati,Set<Colloquio>listaColloqui) {
 		Utente u = new Utente();
 		u.setNome(uDto.getNome());
 		u.setCognome(uDto.getCognome());
@@ -45,6 +48,8 @@ public class UtenteMapper {
 		u.setDescrizione(uDto.getDescrizione());
 		u.setUtenteTitoliStudio(listaUTitoliStudio);
 		u.setUtentiCandidati(listaUCandidati);
+		u.setListaColloquii(listaColloqui);
+		
 		
 		return u;
 	}

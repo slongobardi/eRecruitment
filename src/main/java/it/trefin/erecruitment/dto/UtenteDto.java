@@ -1,6 +1,7 @@
 package it.trefin.erecruitment.dto;
 
 import java.util.List;
+import java.util.Set;
 
 
 
@@ -19,6 +20,8 @@ public class UtenteDto {
 	
 	private List<Long>utenteTitoliStudio;
 	private List<Long>utentiCandidati;
+	private Set<Long>listaColloquii;
+
 
 	private byte[] foto;
 	private byte[] cv;
@@ -104,6 +107,12 @@ public class UtenteDto {
 	}
 	public void setCitta(String citta) {
 		this.citta = citta;
+	}
+	public Set<Long> getListaColloquii() {
+		return listaColloquii;
+	}
+	public void setListaColloquii(Set<Long> listaColloquii) {
+		this.listaColloquii = listaColloquii;
 	}
 	
 	

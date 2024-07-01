@@ -1,6 +1,7 @@
 package it.trefin.erecruitment.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import it.trefin.erecruitment.model.Studi;
 
@@ -12,6 +13,8 @@ public class TitoliStudioDto {
 	private Studi studi;
 	
 	private List<Long>titoliStudio;
+	private Set<Long>listaCandidature;
+
 
 	public long getId() {
 		return id;
@@ -35,6 +38,14 @@ public class TitoliStudioDto {
 
 	public void setTitoliStudio(List<Long> titoliStudio) {
 		this.titoliStudio = titoliStudio;
+	}
+
+	public Set<Long> getListaCandidature() {
+		return listaCandidature;
+	}
+
+	public void setListaCandidature(Set<Long> listaCandidature) {
+		this.listaCandidature = listaCandidature;
 	}
 	
 	

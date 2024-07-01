@@ -8,6 +8,7 @@ import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Skill;
+import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.model.UtenteCandidatura;
 
 public class CandidaturaMapper {
@@ -23,12 +24,13 @@ public class CandidaturaMapper {
 		cDto.setAzienda(c.getAzienda().getId());
 		cDto.setListaSkill(c.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet()));
 		cDto.setUtenteCandidature(c.getUtenteCandidature().stream().map(UtenteCandidatura::getId).collect(Collectors.toList()));
+		cDto.setListaTitoliStudio(c.getListaTitoliStudio().stream().map(TitoliStudio::getId).collect(Collectors.toSet()));
 		return cDto;
 
 	}
 	
 	
-	public static Candidatura toEntity(CandidaturaDto cDto,Azienda azienda,List<UtenteCandidatura> utenteCandidature,Set<Skill>listaSkill) {
+	public static Candidatura toEntity(CandidaturaDto cDto,Azienda azienda,List<UtenteCandidatura> utenteCandidature,Set<Skill>listaSkill,Set<TitoliStudio>listaTitoliStudio) {
 		Candidatura c = new Candidatura();
 		c.setDescrizione(cDto.getDescrizione());
 		c.setId(cDto.getId());
@@ -38,6 +40,7 @@ public class CandidaturaMapper {
 		c.setAzienda(azienda);
 		c.setUtenteCandidature(utenteCandidature);
 		c.setListaSkill(listaSkill);
+		c.setListaTitoliStudio(listaTitoliStudio);
 		return c;
 	}
 }

@@ -16,6 +16,8 @@ private long id;
 	private List<Long>utenteCandidature;
 	private long azienda;
 	private Set<Long>listaSkill;
+	private Set<Long>listaTitoliStudio;
+
 	
 	
 	
@@ -66,6 +68,12 @@ private long id;
 	}
 	public void setListaSkill(Set<Long> listaSkill) {
 		this.listaSkill = listaSkill;
+	}
+	public Set<Long> getListaTitoliStudio() {
+		return listaTitoliStudio;
+	}
+	public void setListaTitoliStudio(Set<Long> listaTitoliStudio) {
+		this.listaTitoliStudio = listaTitoliStudio;
 	}
 
 

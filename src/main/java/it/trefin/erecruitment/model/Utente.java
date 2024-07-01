@@ -1,13 +1,17 @@
 package it.trefin.erecruitment.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -33,6 +37,13 @@ public class Utente {
 	
 	@OneToMany(mappedBy="utente")
 	private List<UtenteCandidatura>utentiCandidati;
+	
+	@ManyToMany()
+	@JoinTable(
+			  name = "utenteColloquio", 
+			  joinColumns = @JoinColumn(name = "id_utente"), 
+			  inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
+	private Set<Colloquio>listaColloquii;
 	
 	
 	@Lob
@@ -174,6 +185,16 @@ public class Utente {
 
 	public void setCitta(String citta) {
 		this.citta = citta;
+	}
+
+
+	public Set<Colloquio> getListaColloquii() {
+		return listaColloquii;
+	}
+
+
+	public void setListaColloquii(Set<Colloquio> listaColloquii) {
+		this.listaColloquii = listaColloquii;
 	}
 
 

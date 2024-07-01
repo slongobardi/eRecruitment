@@ -2,11 +2,13 @@ package it.trefin.erecruitment.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -20,6 +22,9 @@ public class TitoliStudio {
 	
 	@OneToMany(mappedBy="titoliStudio")
 	private List<UtenteTitoliStudio>titoliStudio;
+	
+	@ManyToMany(mappedBy="listaTitoliStudio")
+	private Set<Candidatura> listaCandidature;
 
 
 	public TitoliStudio() {
@@ -55,6 +60,16 @@ public class TitoliStudio {
 
 	public void setTitoliStudio(List<UtenteTitoliStudio> titoliStudio) {
 		this.titoliStudio = titoliStudio;
+	}
+
+
+	public Set<Candidatura> getListaCandidature() {
+		return listaCandidature;
+	}
+
+
+	public void setListaCandidature(Set<Candidatura> listaCandidature) {
+		this.listaCandidature = listaCandidature;
 	}
 
 

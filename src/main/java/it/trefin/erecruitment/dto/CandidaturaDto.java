@@ -1,0 +1,73 @@
+package it.trefin.erecruitment.dto;
+
+import java.sql.Date;
+import java.util.List;
+import java.util.Set;
+
+
+public class CandidaturaDto {
+
+private long id;
+	
+	private String nome;
+	private Date pubblicazione;
+	private int numeroCandidati;
+	private String descrizione;
+	private List<Long>utenteCandidature;
+	private long azienda;
+	private Set<Long>listaSkill;
+	
+	
+	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Date getPubblicazione() {
+		return pubblicazione;
+	}
+	public void setPubblicazione(Date pubblicazione) {
+		this.pubblicazione = pubblicazione;
+	}
+	public int getNumeroCandidati() {
+		return numeroCandidati;
+	}
+	public void setNumeroCandidati(int numeroCandidati) {
+		this.numeroCandidati = numeroCandidati;
+	}
+	public String getDescrizione() {
+		return descrizione;
+	}
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+	public List<Long> getUtenteCandidature() {
+		return utenteCandidature;
+	}
+	public void setUtenteCandidature(List<Long> utenteCandidature) {
+		this.utenteCandidature = utenteCandidature;
+	}
+	public long getAzienda() {
+		return azienda;
+	}
+	public void setAzienda(long azienda) {
+		this.azienda = azienda;
+	}
+	public Set<Long> getListaSkill() {
+		return listaSkill;
+	}
+	public void setListaSkill(Set<Long> listaSkill) {
+		this.listaSkill = listaSkill;
+	}
+
+
+
+}

@@ -8,4 +8,6 @@ import it.trefin.erecruitment.model.Amministratore;
 @Repository
 public interface AmministratoreRepository extends JpaRepository<Amministratore,Long>{
 
+
+
 }

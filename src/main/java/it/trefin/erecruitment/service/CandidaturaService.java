@@ -41,7 +41,7 @@ public class CandidaturaService {
 
 	}
 
-	public Response<CandidaturaDto, Status> visualizzaUtente(long id) {
+	public Response<CandidaturaDto, Status> visualizzaCandidatura(long id) {
 
 		Response<CandidaturaDto, Status> response = new Response<>();
 
@@ -50,13 +50,13 @@ public class CandidaturaService {
 			Candidatura candidatura = cRepository.findById(id).get();
 
 			if (candidatura != null) {
-				SchedaUtenteDTO dto = CandidaturaMapper.toDto(candidatura);
+				CandidaturaDto dto = CandidaturaMapper.toDto(candidatura);
 				response.setData(dto);
 				response.setStatus(Status.OK);
 				response.setDescrizione(" risultati ritornati con successo");
 			} else {
 				response.setStatus(Status.SYSTEM_ERROR);
-				response.setDescrizione("Nessuna candidatura trovato con l'ID fornito");
+				response.setDescrizione("Nessuna candidatura trovata con l'ID fornito");
 			}
 
 		} catch (Exception e) {
@@ -67,67 +67,69 @@ public class CandidaturaService {
 		return response;
 	}
 
-	public Response<CandidaturaDto, Status> aggiornaUtente(Candidatura candidatura, Long id) {
+	public Response<CandidaturaDto, Status> aggiornaCandidatura(Candidatura candidatura, Long id) {
 
 		Response<CandidaturaDto, Status> response = new Response<>();
 
 		try {
 
 			Candidatura c = cRepository.findById(id).get();
-			
-			response.setData(SchedaUtenteMapper.toDto(schedaUtente));
+			c.setDescrizione(candidatura.getDescrizione());
+			c.setNome(candidatura.getNome());
+			cRepository.save(c);
+			response.setData(CandidaturaMapper.toDto(c));
 			response.setStatus(Status.OK);
-			response.setDescrizione("SchedaUtente modificata con successo.");
+			response.setDescrizione("Candidatura modificata con successo.");
 			return response;
 
 		} catch (Exception e) {
 
 			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
+			response.setDescrizione("aggiornaCandidatura in errore " + e.getMessage());
 			return response;
 
 		}
 
 	}
 
-	public Response<SchedaUtente, Status> eliminaUtente(long id) {
+	public Response<Candidatura, Status> eliminaUtente(long id) {
 
-		Response<SchedaUtente, Status> response = new Response<>();
+		Response<Candidatura, Status> response = new Response<>();
 
 		try {
 
-			response.setData(schedaUtenteRepository.getByUtenteId(id));
-			schedaUtenteRepository.delete(response.getData());
+			response.setData(cRepository.findById(id).get());
+			cRepository.delete(response.getData());
 			response.setStatus(Status.OK);
-			response.setDescrizione("schedaUtente eliminata con successo.");
+			response.setDescrizione("Candidatura eliminata con successo.");
 			return response;
 
 		} catch (Exception e) {
 
 			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("eliminaUtente in errore " + e.getMessage());
+			response.setDescrizione("eliminaCandidatura in errore " + e.getMessage());
 			return response;
 
 		}
 
 	}
 
-	public Response<List<SchedaUtenteDTO>, Status> visualizzaTuttiUtenti() {
+	public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
 
-		Response<List<SchedaUtenteDTO>, Status> response = new Response<>();
+		Response<List<CandidaturaDto>, Status> response = new Response<>();
 
 		try {
 
-			response.setData(schedaUtenteRepository.findAll().stream().map(SchedaUtenteMapper::toDto)
+			response.setData(cRepository.findAll().stream().map(CandidaturaMapper::toDto)
 					.collect(Collectors.toList()));
 			response.setStatus(Status.OK);
-			response.setDescrizione("SchedeUtente ritornate con successo.");
+			response.setDescrizione("Candidature ritornate con successo.");
 			return response;
 
 		} catch (Exception e) {
 
 			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaTuttiUtenti in errore " + e.getMessage());
+			response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
 			return response;
 
 		}

@@ -8,6 +8,7 @@ import it.trefin.erecruitment.model.Ruolo;
 public class UtenteDto {
 
 	private long id;
+	private long idAzienda;
 	private String nome;
 	private String cognome;
 	private String email;
@@ -19,7 +20,6 @@ public class UtenteDto {
 
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
-	private List<Long> aziende;
 
 	private Set<Long> listaColloquii;
 
@@ -148,12 +148,12 @@ public class UtenteDto {
 		this.ruolo = ruolo;
 	}
 
-	public List<Long> getAziende() {
-		return aziende;
+	public long getIdAzienda() {
+		return idAzienda;
 	}
 
-	public void setAziende(List<Long> aziende) {
-		this.aziende = aziende;
+	public void setIdAzienda(long idAzienda) {
+		this.idAzienda = idAzienda;
 	}
 
 }

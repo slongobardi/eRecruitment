@@ -33,13 +33,13 @@ public class UtenteMapper {
 		uDto.setUtentiCandidati(
 				u.getUtentiCandidati().stream().map(UtenteCandidatura::getId).collect(Collectors.toList()));
 		uDto.setListaColloquii(u.getListaColloquii().stream().map(Colloquio::getId).collect(Collectors.toSet()));
-		uDto.setAziende(u.getAziende().stream().map(Azienda::getId).collect(Collectors.toList()));
+		uDto.setIdAzienda(u.getAzienda().getId());
 		uDto.setRuolo(u.getRuolo());
 		return uDto;
 	}
 
 	public static Utente toEntity(UtenteDto uDto, List<UtenteTitoliStudio> listaUTitoliStudio,
-			List<UtenteCandidatura> listaUCandidati, Set<Colloquio> listaColloqui, List<Azienda> aziende) {
+			List<UtenteCandidatura> listaUCandidati, Set<Colloquio> listaColloqui, Azienda a) {
 		Utente u = new Utente();
 		u.setNome(uDto.getNome());
 		u.setCognome(uDto.getCognome());
@@ -55,7 +55,7 @@ public class UtenteMapper {
 		u.setUtenteTitoliStudio(listaUTitoliStudio);
 		u.setUtentiCandidati(listaUCandidati);
 		u.setListaColloquii(listaColloqui);
-		u.setAziende(aziende);
+		u.setAzienda(a);
 
 		return u;
 	}

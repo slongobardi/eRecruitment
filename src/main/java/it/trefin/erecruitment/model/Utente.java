@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
@@ -45,8 +46,8 @@ public class Utente {
 	@JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
 	private Set<Colloquio> listaColloquii;
 	
-	@OneToMany
-	private List<Azienda> aziende;
+	@ManyToOne
+	private Azienda azienda;
 
 	@Lob
 	private byte[] foto;
@@ -177,11 +178,11 @@ public class Utente {
 		this.ruolo = ruolo;
 	}
 
-	public List<Azienda> getAziende() {
-		return aziende;
+	public Azienda getAzienda() {
+		return azienda;
 	}
 
-	public void setAziende(List<Azienda> aziende) {
-		this.aziende = aziende;
+	public void setAzienda(Azienda azienda) {
+		this.azienda = azienda;
 	}
 }

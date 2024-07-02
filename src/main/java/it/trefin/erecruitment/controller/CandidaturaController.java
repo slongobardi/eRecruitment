@@ -1,9 +1,21 @@
 package it.trefin.erecruitment.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.erecruitment.dto.CandidaturaDto;
+import it.trefin.erecruitment.model.Candidatura;
+import it.trefin.erecruitment.model.Response;
+import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.service.CandidaturaService;
 
 @RestController
@@ -12,4 +24,29 @@ public class CandidaturaController {
 
 	@Autowired
 	private CandidaturaService cService;
+	
+	 @PostMapping("/add")
+	    public Response<Candidatura, Status> inserisciCandidatura(@RequestBody Candidatura candidatura) {
+	        return cService.inserisciCandidatura(candidatura);
+	    }
+
+	    @GetMapping("/visualizza/{id}")
+	    public Response<CandidaturaDto, Status> visualizzaCandidatura(@PathVariable long id) {
+	        return cService.visualizzaCandidatura(id);
+	    }
+
+	    @PutMapping("/aggiorna/{id}")
+	    public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody Candidatura candidatura, @PathVariable Long id) {
+	        return cService.aggiornaCandidatura(candidatura, id);
+	    }
+
+	    @DeleteMapping("/elimina/{id}")
+	    public Response<Candidatura, Status> eliminaCandidatura(@PathVariable long id) {
+	        return cService.eliminaCandidatura(id);
+	    }
+
+	    @GetMapping("/visualizzaTutteCandidature")
+	    public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
+	        return cService.visualizzaTutteCandidature();
+	    }
 }

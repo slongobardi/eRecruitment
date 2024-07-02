@@ -14,28 +14,26 @@ import javax.persistence.OneToMany;
 @Entity
 public class Azienda {
 
-	
 	@Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String nome;
 	private String indirizzo;
-	
+
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
 	private String luogo;
 	private String linkAzienda;
-	
-	
-	@OneToMany(mappedBy="azienda")
-	private List<Candidatura>listaCandidature;
-	
+
+	@OneToMany(mappedBy = "azienda")
+	private List<Candidatura> listaCandidature;
+
+	@OneToMany(mappedBy = "azienda")
+	private List<Utente> listaUtenti;
+
 	@ManyToOne()
-	@JoinColumn(name="id_tipologia")
+	@JoinColumn(name = "id_tipologia")
 	private Tipologia tipologia;
-	
-	@OneToMany(mappedBy="azienda")
-	private List<Amministratore>listaAmministratori;
 
 	public long getId() {
 		return id;
@@ -101,17 +99,16 @@ public class Azienda {
 		this.tipologia = tipologia;
 	}
 
-	public List<Amministratore> getListaAmministratori() {
-		return listaAmministratori;
-	}
-
-	public void setListaAmministratori(List<Amministratore> listaAmministratori) {
-		this.listaAmministratori = listaAmministratori;
-	}
-
 	public Azienda() {
-		
+
 	}
-	
-	
+
+	public List<Utente> getListaUtenti() {
+		return listaUtenti;
+	}
+
+	public void setListaUtenti(List<Utente> listaUtenti) {
+		this.listaUtenti = listaUtenti;
+	}
+
 }

@@ -3,12 +3,12 @@ package it.trefin.erecruitment.model;
 import java.sql.Date;
 import java.util.Set;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Colloquio {
@@ -19,9 +19,10 @@ public class Colloquio {
 	private Date prossimoColloquio;
 	private String nomeEsaminatore;
 	private String cognomeEsaminatore;
+	private Esito esito;
 
 	@Column(columnDefinition = "TEXT")
-	private String esito;
+	private String descrizione;
 
 	@ManyToMany(mappedBy = "listaColloquii")
 	private Set<Utente> listaUtenti;
@@ -66,14 +67,6 @@ public class Colloquio {
 		this.cognomeEsaminatore = cognomeEsaminatore;
 	}
 
-	public String getEsito() {
-		return esito;
-	}
-
-	public void setEsito(String esito) {
-		this.esito = esito;
-	}
-
 	public Set<Utente> getListaUtenti() {
 		return listaUtenti;
 	}
@@ -84,6 +77,22 @@ public class Colloquio {
 
 	public Colloquio() {
 
+	}
+
+	public Esito getEsito() {
+		return esito;
+	}
+
+	public void setEsito(Esito esito) {
+		this.esito = esito;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }

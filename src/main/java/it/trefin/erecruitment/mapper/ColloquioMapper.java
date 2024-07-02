@@ -26,6 +26,7 @@ public class ColloquioMapper {
 		Colloquio c = new Colloquio();
 		c.setCognomeEsaminatore(cDto.getCognomeEsaminatore());
 		c.setEsito(cDto.getEsito());
+		c.setDescrizione(cDto.getDescrizione());
 		c.setId(cDto.getId());
 		c.setNomeEsaminatore(cDto.getNomeEsaminatore());
 		c.setProssimoColloquio(cDto.getProssimoColloquio());

@@ -44,6 +44,9 @@ public class Utente {
 	@ManyToMany()
 	@JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
 	private Set<Colloquio> listaColloquii;
+	
+	@OneToMany
+	private List<Azienda> aziende;
 
 	@Lob
 	private byte[] foto;
@@ -172,5 +175,13 @@ public class Utente {
 
 	public void setRuolo(Ruolo ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public List<Azienda> getAziende() {
+		return aziende;
+	}
+
+	public void setAziende(List<Azienda> aziende) {
+		this.aziende = aziende;
 	}
 }

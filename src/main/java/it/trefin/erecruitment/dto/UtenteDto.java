@@ -19,6 +19,8 @@ public class UtenteDto {
 
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
+	private List<Long> aziende;
+
 	private Set<Long> listaColloquii;
 
 	private Ruolo ruolo;
@@ -144,6 +146,14 @@ public class UtenteDto {
 
 	public void setRuolo(Ruolo ruolo) {
 		this.ruolo = ruolo;
+	}
+
+	public List<Long> getAziende() {
+		return aziende;
+	}
+
+	public void setAziende(List<Long> aziende) {
+		this.aziende = aziende;
 	}
 
 }

@@ -83,7 +83,7 @@ public class UtenteService {
 			u.setEmail(utente.getEmail());
 			u.setIndirizzo(utente.getIndirizzo());
 			u.setNome(utente.getNome());
-			uRepository.save(utente);
+			uRepository.save(u);
 			response.setData(UtenteMapper.toDto(utente));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Utente modificato con successo.");

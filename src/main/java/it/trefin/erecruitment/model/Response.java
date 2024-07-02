@@ -11,7 +11,8 @@ public class Response<D,S> {
 		KO,
 		SYSTEM_ERROR,
 		MISSED_REQUIRED_PARAM,
-		AUTH_REQUIRED
+		AUTH_REQUIRED,
+		EXPIRED
 	}
 	
 	public Response() {

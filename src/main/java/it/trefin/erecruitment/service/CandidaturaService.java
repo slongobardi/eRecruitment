@@ -92,7 +92,7 @@ public class CandidaturaService {
 
 	}
 
-	public Response<Candidatura, Status> eliminaUtente(long id) {
+	public Response<Candidatura, Status> eliminaCandidatura(long id) {
 
 		Response<Candidatura, Status> response = new Response<>();
 

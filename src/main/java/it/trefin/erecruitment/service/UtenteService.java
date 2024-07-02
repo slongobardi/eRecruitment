@@ -48,10 +48,10 @@ public class UtenteService {
 
 		try {
 
-			Utente schedaUtente = uRepository.findById(id).get();
+			Utente utente = uRepository.findById(id).get();
 
-			if (schedaUtente != null) {
-				UtenteDto dto = UtenteMapper.toDto(schedaUtente);
+			if (utente != null) {
+				UtenteDto dto = UtenteMapper.toDto(utente);
 				response.setData(dto);
 				response.setStatus(Status.OK);
 				response.setDescrizione("risultati ritornati con successo");
@@ -84,7 +84,7 @@ public class UtenteService {
 			u.setIndirizzo(utente.getIndirizzo());
 			u.setNome(utente.getNome());
 			uRepository.save(u);
-			response.setData(UtenteMapper.toDto(utente));
+			response.setData(UtenteMapper.toDto(u));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Utente modificato con successo.");
 			return response;

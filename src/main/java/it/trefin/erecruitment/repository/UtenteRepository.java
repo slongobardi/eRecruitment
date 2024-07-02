@@ -7,5 +7,5 @@ import it.trefin.erecruitment.model.Utente;
 
 @Repository
 public interface UtenteRepository extends JpaRepository<Utente,Long>{
-
+	Utente findByEmail(String email);
 }

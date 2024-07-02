@@ -30,6 +30,7 @@ public class UtenteMapper {
 		uDto.setUtenteTitoliStudio(u.getUtenteTitoliStudio().stream().map(UtenteTitoliStudio::getId).collect(Collectors.toList()));
 		uDto.setUtentiCandidati(u.getUtentiCandidati().stream().map(UtenteCandidatura::getId).collect(Collectors.toList()));
 		uDto.setListaColloquii(u.getListaColloquii().stream().map(Colloquio::getId).collect(Collectors.toSet()));
+		uDto.setRuolo(u.getRuolo());
 		return uDto;
 	}
 	

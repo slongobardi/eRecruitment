@@ -24,29 +24,29 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService uService;
-	
+
 	@PostMapping("/add")
-    public Response<Utente, Status> inserisciUtente(@RequestBody Utente utente) {
-        return uService.inserisciUtente(utente);
-    }
+	public Response<Utente, Status> inserisciUtente(@RequestBody Utente utente) {
+		return uService.inserisciUtente(utente);
+	}
 
-    @GetMapping("/visualizza/{id}")
-    public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
-        return uService.visualizzaUtente(id);
-    }
+	@GetMapping("/visualizza/{id}")
+	public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
+		return uService.visualizzaUtente(id);
+	}
 
-    @PutMapping("/aggiorna/{id}")
-    public Response<UtenteDto, Status> aggiornaUtente(@RequestBody Utente utente, @PathVariable Long id) {
-        return uService.aggiornaUtente(utente, id);
-    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<UtenteDto, Status> aggiornaUtente(@RequestBody Utente utente, @PathVariable Long id) {
+		return uService.aggiornaUtente(utente, id);
+	}
 
-    @DeleteMapping("/elimina/{id}")
-    public Response<Utente, Status> eliminaUtente(@PathVariable long id) {
-        return uService.eliminaUtente(id);
-    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Utente, Status> eliminaUtente(@PathVariable long id) {
+		return uService.eliminaUtente(id);
+	}
 
-    @GetMapping("/visualizzaTuttiUtenti")
-    public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
-        return uService.visualizzaTuttiUtenti();
-    }
+	@GetMapping("/all")
+	public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
+		return uService.visualizzaTuttiUtenti();
+	}
 }

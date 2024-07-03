@@ -24,29 +24,29 @@ public class SkillController {
 
 	@Autowired
 	private SkillService sService;
-	
-	 @PostMapping("/add")
-	    public Response<Skill, Status> inserisciSkill(@RequestBody Skill skill) {
-	        return sService.inserisciSkill(skill);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<SkillDto, Status> visualizzaSkill(@PathVariable long id) {
-	        return sService.visualizzaSkill(id);
-	    }
+	@PostMapping("/add")
+	public Response<Skill, Status> inserisciSkill(@RequestBody Skill skill) {
+		return sService.inserisciSkill(skill);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<SkillDto, Status> aggiornaSkill(@RequestBody Skill skill, @PathVariable Long id) {
-	        return sService.aggiornaSkill(skill, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<SkillDto, Status> visualizzaSkill(@PathVariable long id) {
+		return sService.visualizzaSkill(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<Skill, Status> eliminaSkill(@PathVariable long id) {
-	        return sService.eliminaSkill(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<SkillDto, Status> aggiornaSkill(@RequestBody Skill skill, @PathVariable Long id) {
+		return sService.aggiornaSkill(skill, id);
+	}
 
-	    @GetMapping("/visualizzaTutteSkills")
-	    public Response<List<SkillDto>, Status> visualizzaTutteSkills() {
-	        return sService.visualizzaTutteSkills();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Skill, Status> eliminaSkill(@PathVariable long id) {
+		return sService.eliminaSkill(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<SkillDto>, Status> visualizzaTutteSkills() {
+		return sService.visualizzaTutteSkills();
+	}
 }

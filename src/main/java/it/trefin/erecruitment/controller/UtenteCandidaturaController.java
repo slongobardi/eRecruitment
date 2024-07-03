@@ -22,33 +22,33 @@ import it.trefin.erecruitment.service.UtenteCandidaturaService;
 @RequestMapping("api/utenteCandidatura")
 public class UtenteCandidaturaController {
 
-
-	
 	@Autowired
 	private UtenteCandidaturaService ucService;
-	
-	 @PostMapping("/add")
-	    public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(@RequestBody UtenteCandidatura utenteCandidatura) {
-	        return ucService.inserisciUtenteCandidatura(utenteCandidatura);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<UtenteCandidaturaDto, Status> visualizzaUtenteCandidatura(@PathVariable long id) {
-	        return ucService.visualizzaUtenteCandidatura(id);
-	    }
+	@PostMapping("/add")
+	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(
+			@RequestBody UtenteCandidatura utenteCandidatura) {
+		return ucService.inserisciUtenteCandidatura(utenteCandidatura);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<UtenteCandidaturaDto, Status> aggiornaUtenteCandidatura(@RequestBody UtenteCandidatura utenteCandidatura, @PathVariable Long id) {
-	        return ucService.aggiornaUtenteCandidatura(utenteCandidatura, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<UtenteCandidaturaDto, Status> visualizzaUtenteCandidatura(@PathVariable long id) {
+		return ucService.visualizzaUtenteCandidatura(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<UtenteCandidatura, Status> eliminaUtenteCandidatura(@PathVariable long id) {
-	        return ucService.eliminaUtenteCandidatura(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<UtenteCandidaturaDto, Status> aggiornaUtenteCandidatura(
+			@RequestBody UtenteCandidatura utenteCandidatura, @PathVariable Long id) {
+		return ucService.aggiornaUtenteCandidatura(utenteCandidatura, id);
+	}
 
-	    @GetMapping("/visualizzaTuttiUtenteCandidatura")
-	    public Response<List<UtenteCandidaturaDto>, Status> visualizzaTuttiUtenteCandidatura() {
-	        return ucService.visualizzaTuttiUtenteCandidatura();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<UtenteCandidatura, Status> eliminaUtenteCandidatura(@PathVariable long id) {
+		return ucService.eliminaUtenteCandidatura(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<UtenteCandidaturaDto>, Status> visualizzaTuttiUtenteCandidatura() {
+		return ucService.visualizzaTuttiUtenteCandidatura();
+	}
 }

@@ -23,24 +23,24 @@ public class AziendaController {
 
 	@Autowired
 	private AziendaService aService;
-	
-	   @PostMapping("/add")
-	    public Response<Azienda, Status> inserisciAzienda(@RequestBody Azienda azienda) {
-	        return aService.inserisciAzienda(azienda);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<AziendaDto, Status> visualizzaAzienda(@PathVariable long id) {
-	        return aService.visualizzaAzienda(id);
-	    }
+	@PostMapping("/add")
+	public Response<Azienda, Status> inserisciAzienda(@RequestBody Azienda azienda) {
+		return aService.inserisciAzienda(azienda);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<Azienda, Status> eliminaAzienda(@PathVariable long id) {
-	        return aService.eliminaAzienda(id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<AziendaDto, Status> visualizzaAzienda(@PathVariable long id) {
+		return aService.visualizzaAzienda(id);
+	}
 
-	    @GetMapping("/visualizzaTutteAziende")
-	    public Response<List<AziendaDto>, Status> visualizzaTutteAziende() {
-	        return aService.visualizzaTutteAziende();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Azienda, Status> eliminaAzienda(@PathVariable long id) {
+		return aService.eliminaAzienda(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<AziendaDto>, Status> visualizzaTutteAziende() {
+		return aService.visualizzaTutteAziende();
+	}
 }

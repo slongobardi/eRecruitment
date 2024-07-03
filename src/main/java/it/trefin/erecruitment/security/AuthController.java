@@ -49,7 +49,7 @@ public class AuthController {
         utenteRepository.save(user);
 
         if (utenteRepository.existsById(user.getId())) {
-            return "User registrato con successo! :)";
+            return "User registrato con successo";
         } else {
             return "Errore durante la registrazione";
         }

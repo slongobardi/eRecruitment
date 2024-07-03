@@ -23,31 +23,32 @@ import it.trefin.erecruitment.service.TitoliStudioService;
 public class TitoliStudioController {
 
 	@Autowired
-	
+
 	private TitoliStudioService tsService;
-	
-	   @PostMapping("/add")
-	    public Response<TitoliStudio, Status> inserisciTitoloStudio(@RequestBody TitoliStudio titoliStudio) {
-	        return tsService.inserisciTitoloStudio(titoliStudio);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<TitoliStudioDto, Status> visualizzaTitoloStudio(@PathVariable long id) {
-	        return tsService.visualizzaTitoloStudio(id);
-	    }
+	@PostMapping("/add")
+	public Response<TitoliStudio, Status> inserisciTitoloStudio(@RequestBody TitoliStudio titoliStudio) {
+		return tsService.inserisciTitoloStudio(titoliStudio);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<TitoliStudioDto, Status> aggiornaTitoloStudio(@RequestBody TitoliStudio titoliStudio, @PathVariable Long id) {
-	        return tsService.aggiornaTitoloStudio(titoliStudio, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<TitoliStudioDto, Status> visualizzaTitoloStudio(@PathVariable long id) {
+		return tsService.visualizzaTitoloStudio(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<TitoliStudio, Status> eliminaTitoloStudio(@PathVariable long id) {
-	        return tsService.eliminaTitoloStudio(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<TitoliStudioDto, Status> aggiornaTitoloStudio(@RequestBody TitoliStudio titoliStudio,
+			@PathVariable Long id) {
+		return tsService.aggiornaTitoloStudio(titoliStudio, id);
+	}
 
-	    @GetMapping("/visualizzaTuttiTitoliStudio")
-	    public Response<List<TitoliStudioDto>, Status> visualizzaTuttiTitoliStudio() {
-	        return tsService.visualizzaTuttiTitoliStudio();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<TitoliStudio, Status> eliminaTitoloStudio(@PathVariable long id) {
+		return tsService.eliminaTitoloStudio(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<TitoliStudioDto>, Status> visualizzaTuttiTitoliStudio() {
+		return tsService.visualizzaTuttiTitoliStudio();
+	}
 }

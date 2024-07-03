@@ -24,29 +24,31 @@ public class UtenteTitoliStudioController {
 
 	@Autowired
 	private UtenteTitoliStudioService utsService;
-	
-	 @PostMapping("/add")
-	    public Response<UtenteTitoliStudio, Status> inserisciUtenteTitoliStudio(@RequestBody UtenteTitoliStudio utenteTitoliStudio) {
-	        return utsService.inserisciUtenteTitoliStudio(utenteTitoliStudio);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<UtenteTitoliStudioDto, Status> visualizzaUtenteTitoliStudio(@PathVariable long id) {
-	        return utsService.visualizzaUtenteTitoliStudio(id);
-	    }
+	@PostMapping("/add")
+	public Response<UtenteTitoliStudio, Status> inserisciUtenteTitoliStudio(
+			@RequestBody UtenteTitoliStudio utenteTitoliStudio) {
+		return utsService.inserisciUtenteTitoliStudio(utenteTitoliStudio);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<UtenteTitoliStudioDto, Status> aggiornaUtenteTitoliStudio(@RequestBody UtenteTitoliStudio utenteTitoliStudio, @PathVariable Long id) {
-	        return utsService.aggiornaUtenteTitoliStudio(utenteTitoliStudio, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<UtenteTitoliStudioDto, Status> visualizzaUtenteTitoliStudio(@PathVariable long id) {
+		return utsService.visualizzaUtenteTitoliStudio(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<UtenteTitoliStudio, Status> eliminaUtenteTitoliStudio(@PathVariable long id) {
-	        return utsService.eliminaUtenteTitoliStudio(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<UtenteTitoliStudioDto, Status> aggiornaUtenteTitoliStudio(
+			@RequestBody UtenteTitoliStudio utenteTitoliStudio, @PathVariable Long id) {
+		return utsService.aggiornaUtenteTitoliStudio(utenteTitoliStudio, id);
+	}
 
-	    @GetMapping("/visualizzaTuttiUtenteTitoliStudio")
-	    public Response<List<UtenteTitoliStudioDto>, Status> visualizzaTuttiUtenteTitoliStudio() {
-	        return utsService.visualizzaTuttiUtenteTitoliStudio();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<UtenteTitoliStudio, Status> eliminaUtenteTitoliStudio(@PathVariable long id) {
+		return utsService.eliminaUtenteTitoliStudio(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<UtenteTitoliStudioDto>, Status> visualizzaTuttiUtenteTitoliStudio() {
+		return utsService.visualizzaTuttiUtenteTitoliStudio();
+	}
 }

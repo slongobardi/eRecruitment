@@ -24,29 +24,30 @@ public class CandidaturaController {
 
 	@Autowired
 	private CandidaturaService cService;
-	
-	 @PostMapping("/add")
-	    public Response<Candidatura, Status> inserisciCandidatura(@RequestBody Candidatura candidatura) {
-	        return cService.inserisciCandidatura(candidatura);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<CandidaturaDto, Status> visualizzaCandidatura(@PathVariable long id) {
-	        return cService.visualizzaCandidatura(id);
-	    }
+	@PostMapping("/add")
+	public Response<Candidatura, Status> inserisciCandidatura(@RequestBody Candidatura candidatura) {
+		return cService.inserisciCandidatura(candidatura);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody Candidatura candidatura, @PathVariable Long id) {
-	        return cService.aggiornaCandidatura(candidatura, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<CandidaturaDto, Status> visualizzaCandidatura(@PathVariable long id) {
+		return cService.visualizzaCandidatura(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<Candidatura, Status> eliminaCandidatura(@PathVariable long id) {
-	        return cService.eliminaCandidatura(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody Candidatura candidatura,
+			@PathVariable Long id) {
+		return cService.aggiornaCandidatura(candidatura, id);
+	}
 
-	    @GetMapping("/visualizzaTutteCandidature")
-	    public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
-	        return cService.visualizzaTutteCandidature();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Candidatura, Status> eliminaCandidatura(@PathVariable long id) {
+		return cService.eliminaCandidatura(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
+		return cService.visualizzaTutteCandidature();
+	}
 }

@@ -24,29 +24,29 @@ public class TipologiaController {
 
 	@Autowired
 	private TipologiaService tService;
-	
-	 @PostMapping("/add")
-	    public Response<Tipologia, Status> inserisciTipologia(@RequestBody Tipologia tipologia) {
-	        return tService.inserisciTipologia(tipologia);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<TipologiaDto, Status> visualizzaTipologia(@PathVariable long id) {
-	        return tService.visualizzaTipologia(id);
-	    }
+	@PostMapping("/add")
+	public Response<Tipologia, Status> inserisciTipologia(@RequestBody Tipologia tipologia) {
+		return tService.inserisciTipologia(tipologia);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<TipologiaDto, Status> aggiornaTipologia(@RequestBody Tipologia tipologia, @PathVariable Long id) {
-	        return tService.aggiornaTipologia(tipologia, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<TipologiaDto, Status> visualizzaTipologia(@PathVariable long id) {
+		return tService.visualizzaTipologia(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<Tipologia, Status> eliminaTipologia(@PathVariable long id) {
-	        return tService.eliminaTipologia(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<TipologiaDto, Status> aggiornaTipologia(@RequestBody Tipologia tipologia, @PathVariable Long id) {
+		return tService.aggiornaTipologia(tipologia, id);
+	}
 
-	    @GetMapping("/visualizzaTutteTipologie")
-	    public Response<List<TipologiaDto>, Status> visualizzaTutteTipologie() {
-	        return tService.visualizzaTutteTipologie();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Tipologia, Status> eliminaTipologia(@PathVariable long id) {
+		return tService.eliminaTipologia(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<TipologiaDto>, Status> visualizzaTutteTipologie() {
+		return tService.visualizzaTutteTipologie();
+	}
 }

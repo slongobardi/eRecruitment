@@ -24,29 +24,29 @@ public class ColloquioController {
 
 	@Autowired
 	private ColloquioService cService;
-	
-	 @PostMapping("/add")
-	    public Response<Colloquio, Status> inserisciColloquio(@RequestBody Colloquio colloquio) {
-	        return cService.inserisciColloquio(colloquio);
-	    }
 
-	    @GetMapping("/visualizza/{id}")
-	    public Response<ColloquioDto, Status> visualizzaColloquio(@PathVariable long id) {
-	        return cService.visualizzaColloquio(id);
-	    }
+	@PostMapping("/add")
+	public Response<Colloquio, Status> inserisciColloquio(@RequestBody Colloquio colloquio) {
+		return cService.inserisciColloquio(colloquio);
+	}
 
-	    @PutMapping("/aggiorna/{id}")
-	    public Response<ColloquioDto, Status> aggiornaColloquio(@RequestBody Colloquio colloquio, @PathVariable Long id) {
-	        return cService.aggiornaColloquio(colloquio, id);
-	    }
+	@GetMapping("/visualizza/{id}")
+	public Response<ColloquioDto, Status> visualizzaColloquio(@PathVariable long id) {
+		return cService.visualizzaColloquio(id);
+	}
 
-	    @DeleteMapping("/elimina/{id}")
-	    public Response<Colloquio, Status> eliminaColloquio(@PathVariable long id) {
-	        return cService.eliminaColloquio(id);
-	    }
+	@PutMapping("/aggiorna/{id}")
+	public Response<ColloquioDto, Status> aggiornaColloquio(@RequestBody Colloquio colloquio, @PathVariable Long id) {
+		return cService.aggiornaColloquio(colloquio, id);
+	}
 
-	    @GetMapping("/visualizzaTuttiColloqui")
-	    public Response<List<ColloquioDto>, Status> visualizzaTuttiColloqui() {
-	        return cService.visualizzaTuttiColloqui();
-	    }
+	@DeleteMapping("/elimina/{id}")
+	public Response<Colloquio, Status> eliminaColloquio(@PathVariable long id) {
+		return cService.eliminaColloquio(id);
+	}
+
+	@GetMapping("/all")
+	public Response<List<ColloquioDto>, Status> visualizzaTuttiColloqui() {
+		return cService.visualizzaTuttiColloqui();
+	}
 }

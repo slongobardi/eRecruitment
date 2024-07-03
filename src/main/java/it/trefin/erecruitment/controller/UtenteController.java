@@ -19,7 +19,7 @@ import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 
 @RestController
-@RequestMapping("api/utente")
+@RequestMapping("/api/utente")
 public class UtenteController {
 
 	@Autowired

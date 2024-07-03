@@ -19,7 +19,7 @@ import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.service.UtenteTitoliStudioService;
 
 @RestController
-@RequestMapping("api/utenteTitoliStudio")
+@RequestMapping("/api/utenteTitoliStudio")
 public class UtenteTitoliStudioController {
 
 	@Autowired

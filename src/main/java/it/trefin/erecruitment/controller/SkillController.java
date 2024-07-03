@@ -19,7 +19,7 @@ import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.service.SkillService;
 
 @RestController
-@RequestMapping("api/skill")
+@RequestMapping("/api/skill")
 public class SkillController {
 
 	@Autowired

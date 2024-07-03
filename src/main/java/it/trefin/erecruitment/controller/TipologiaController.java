@@ -19,7 +19,7 @@ import it.trefin.erecruitment.model.Tipologia;
 import it.trefin.erecruitment.service.TipologiaService;
 
 @RestController
-@RequestMapping("api/tipologia")
+@RequestMapping("/api/tipologia")
 public class TipologiaController {
 
 	@Autowired

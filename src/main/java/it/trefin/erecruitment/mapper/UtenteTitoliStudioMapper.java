@@ -9,17 +9,29 @@ public class UtenteTitoliStudioMapper {
 
 	
 	public static UtenteTitoliStudioDto toDto(UtenteTitoliStudio u) {
-		
-		UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
-		
-		uDto.setData(u.getData());
-		uDto.setDescrizione(u.getDescrizione());
-		uDto.setId(u.getId());
-		uDto.setTitoliStudio(u.getTitoliStudio().getId());
-		uDto.setUtente(u.getUtente().getId());
-	
-		return uDto;
+	    UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
+
+	    uDto.setData(u.getData());
+
+	    uDto.setDescrizione(u.getDescrizione());
+
+	    uDto.setId(u.getId());
+
+	    uDto.setTitoliStudio(
+	        u.getTitoliStudio() != null ? 
+	        u.getTitoliStudio().getId() : 
+	        -1
+	    );
+
+	    uDto.setUtente(
+	        u.getUtente() != null ? 
+	        u.getUtente().getId() : 
+	        -1
+	    );
+
+	    return uDto;
 	}
+
 	
 	public static UtenteTitoliStudio toEntity(UtenteTitoliStudioDto uDto,TitoliStudio titoliStudio,Utente utente) {
 		UtenteTitoliStudio u = new UtenteTitoliStudio();

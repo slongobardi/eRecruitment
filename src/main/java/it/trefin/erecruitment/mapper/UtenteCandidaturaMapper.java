@@ -8,17 +8,28 @@ import it.trefin.erecruitment.model.UtenteCandidatura;
 public class UtenteCandidaturaMapper {
 	
 	public static UtenteCandidaturaDto toDto(UtenteCandidatura u) {
-		
-		UtenteCandidaturaDto uDto = new UtenteCandidaturaDto();
-		uDto.setDataIscrizione(u.getDataIscrizione());
-		uDto.setId(u.getId());
-		uDto.setNota(u.getNota());
-		uDto.setStato(u.getStato());
-		uDto.setCandidatura(u.getCandidatura().getId());
-		uDto.setUtente(u.getUtente().getId());
-		
-		return uDto;
+	    UtenteCandidaturaDto uDto = new UtenteCandidaturaDto();
+
+	    uDto.setDataIscrizione(u.getDataIscrizione());
+	    uDto.setId(u.getId());
+	    uDto.setNota(u.getNota());
+	    uDto.setStato(u.getStato());
+
+	    uDto.setCandidatura(
+	        u.getCandidatura() != null ? 
+	        u.getCandidatura().getId() : 
+	        -1
+	    );
+
+	    uDto.setUtente(
+	        u.getUtente() != null ? 
+	        u.getUtente().getId() : 
+	        -1
+	    );
+
+	    return uDto;
 	}
+
 	
 	public static UtenteCandidatura toEntity(UtenteCandidaturaDto uDto,Candidatura candidatura,Utente utente) {
 		UtenteCandidatura u = new UtenteCandidatura();

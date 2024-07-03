@@ -19,7 +19,7 @@ import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.service.TitoliStudioService;
 
 @RestController
-@RequestMapping("api/titoliStudio")
+@RequestMapping("/api/titoliStudio")
 public class TitoliStudioController {
 
 	@Autowired

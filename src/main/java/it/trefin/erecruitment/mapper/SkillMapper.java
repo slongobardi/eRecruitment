@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.mapper;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,14 +12,26 @@ import it.trefin.erecruitment.model.Tipologia;
 public class SkillMapper {
 	
 	public static SkillDto toDto(Skill s) {
-		SkillDto sDto = new SkillDto();
-		
-		sDto.setId(s.getId());
-		sDto.setNome(s.getNome());
-		sDto.setTipologia(s.getTipologia().getId());
-		sDto.setListaCandidature(s.getListaCandidature().stream().map(Candidatura::getId).collect(Collectors.toSet()));
-		return sDto;
+	    SkillDto sDto = new SkillDto();
+
+	    sDto.setId(s.getId());
+	    sDto.setNome(s.getNome());
+
+	    sDto.setTipologia(
+	        s.getTipologia() != null ? 
+	        s.getTipologia().getId() : 
+	        -1
+	    );
+
+	    sDto.setListaCandidature(
+	        s.getListaCandidature() != null ? 
+	        s.getListaCandidature().stream().map(Candidatura::getId).collect(Collectors.toSet()) : 
+	        new HashSet<>()
+	    );
+
+	    return sDto;
 	}
+
 	
 	public static Skill toEntity(SkillDto sDto,Tipologia tipologia,Set<Candidatura>listaCandidature) {
 		Skill s = new Skill();

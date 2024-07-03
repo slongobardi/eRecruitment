@@ -18,7 +18,7 @@ import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.service.AziendaService;
 
 @RestController
-@RequestMapping("api/azienda")
+@RequestMapping("/api/azienda")
 public class AziendaController {
 
 	@Autowired

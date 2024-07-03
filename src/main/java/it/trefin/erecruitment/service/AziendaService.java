@@ -106,7 +106,7 @@ public class AziendaService {
 		} catch (Exception e) {
 
 			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaAzienda in errore " + e.getMessage());
+			response.setDescrizione("visualizzaTutteAzienda in errore " + e.getMessage());
 			return response;
 
 		}

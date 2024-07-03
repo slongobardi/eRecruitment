@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.mapper;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -10,16 +11,24 @@ import it.trefin.erecruitment.model.Utente;
 public class ColloquioMapper {
 	
 	public static ColloquioDto toDto(Colloquio c) {
-		ColloquioDto cDto = new ColloquioDto();
-		cDto.setCognomeEsaminatore(c.getCognomeEsaminatore());
-		cDto.setEsito(c.getEsito());
-		cDto.setId(c.getId());
-		cDto.setNomeEsaminatore(c.getNomeEsaminatore());
-		cDto.setProssimoColloquio(c.getProssimoColloquio());
-		cDto.setUltimoColloquio(c.getUltimoColloquio());
-		cDto.setListaUtenti(c.getListaUtenti().stream().map(Utente::getId).collect(Collectors.toSet()));
-		return cDto;
+	    ColloquioDto cDto = new ColloquioDto();
+
+	    cDto.setCognomeEsaminatore(c.getCognomeEsaminatore());
+	    cDto.setEsito(c.getEsito());
+	    cDto.setId(c.getId());
+	    cDto.setNomeEsaminatore(c.getNomeEsaminatore());
+	    cDto.setProssimoColloquio(c.getProssimoColloquio());
+	    cDto.setUltimoColloquio(c.getUltimoColloquio());
+
+	    cDto.setListaUtenti(
+	        c.getListaUtenti() != null ? 
+	        c.getListaUtenti().stream().map(Utente::getId).collect(Collectors.toSet()) : 
+	        new HashSet<>()
+	    );
+
+	    return cDto;
 	}
+
 	
 	
 	public static Colloquio toEntity(ColloquioDto cDto,Set<Utente>listaUtenti) {

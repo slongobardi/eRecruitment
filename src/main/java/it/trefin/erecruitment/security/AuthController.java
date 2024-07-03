@@ -18,7 +18,7 @@ import it.trefin.erecruitment.repository.UtenteRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("auth")
 public class AuthController {
 
     @Autowired

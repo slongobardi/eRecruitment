@@ -20,7 +20,7 @@ public class Skill {
 	private String nome;
 	
 	@ManyToOne()
-	@JoinColumn(name="id_tipoligia")
+	@JoinColumn(name="id_tipologia")
 	private Tipologia tipologia;
 	
 	

@@ -135,4 +135,21 @@ public class CandidaturaService {
 		}
 
 	}
+
+	public Response<List<CandidaturaDto>, Status> visualizzaCandidatureAziendali(long id_azienda) {
+		Response<List<CandidaturaDto>, Status> response = new Response<>();
+		
+		try {
+			response.setData(cRepository.findAllByAziendaId(id_azienda).stream().map(CandidaturaMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Candidature aziendali ritornate con successo");
+			return response;
+			
+		}catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaCandidatureAziendali in errore " + e.getMessage());
+			return response;
+		}
+		
+	}
 }

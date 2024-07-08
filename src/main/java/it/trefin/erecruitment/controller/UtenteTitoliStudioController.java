@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.erecruitment.dto.TitoliStudioDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -53,4 +54,10 @@ public class UtenteTitoliStudioController {
 	public Response<List<UtenteTitoliStudioDto>, Status> visualizzaTuttiUtenteTitoliStudio() {
 		return utsService.visualizzaTuttiUtenteTitoliStudio();
 	}
+	
+	@GetMapping("/titoliUtente/{id_utente}")
+	public Response<List<TitoliStudioDto>,Status> titoliUtente(@PathVariable long id_utente){
+		return utsService.titoliUtente(id_utente);
+	}
+	
 }

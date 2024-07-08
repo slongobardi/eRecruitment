@@ -1,13 +1,17 @@
 package it.trefin.erecruitment.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
+import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.UtenteCandidaturaMapper;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.UtenteCandidatura;
@@ -18,8 +22,7 @@ public class UtenteCandidaturaService {
 
 	@Autowired
 	private UtenteCandidaturaRepository ucRepository;
-	
-	
+
 	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(UtenteCandidatura utenteCandidatura) {
 
 		Response<UtenteCandidatura, Status> response = new Response<>();
@@ -68,21 +71,21 @@ public class UtenteCandidaturaService {
 		return response;
 	}
 
-	public Response<UtenteCandidaturaDto, Status> aggiornaUtenteCandidatura(UtenteCandidatura utenteCandidatura, Long id) {
+	public Response<UtenteCandidaturaDto, Status> aggiornaUtenteCandidatura(UtenteCandidatura utenteCandidatura,
+			Long id) {
 
 		Response<UtenteCandidaturaDto, Status> response = new Response<>();
 
 		try {
 
 			UtenteCandidatura uc = ucRepository.findById(id).get();
-			
+
 			uc.setDataIscrizione(utenteCandidatura.getDataIscrizione());
 			uc.setCandidatura(utenteCandidatura.getCandidatura());
 			uc.setNota(utenteCandidatura.getNota());
 			uc.setStato(utenteCandidatura.getStato());
 			uc.setUtente(utenteCandidatura.getUtente());
-		
-		
+
 			ucRepository.save(uc);
 			response.setData(UtenteCandidaturaMapper.toDto(uc));
 			response.setStatus(Status.OK);
@@ -127,8 +130,8 @@ public class UtenteCandidaturaService {
 
 		try {
 
-			response.setData(ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto)
-					.collect(Collectors.toList()));
+			response.setData(
+					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("UtenteCandidatura ritornati con successo.");
 			return response;
@@ -144,7 +147,7 @@ public class UtenteCandidaturaService {
 	}
 
 	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByUtente(long id) {
-		
+
 		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
 
 		try {
@@ -181,5 +184,7 @@ public class UtenteCandidaturaService {
 			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
 			return response;
 
-		}	}
+		}
+	}
+
 }

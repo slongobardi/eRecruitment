@@ -53,4 +53,13 @@ public class UtenteCandidaturaController {
 	public Response<List<UtenteCandidaturaDto>, Status> visualizzaTuttiUtenteCandidatura() {
 		return ucService.visualizzaTuttiUtenteCandidatura();
 	}
+	
+	@GetMapping("/byUtente/{id}")
+	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByUtente(@PathVariable long id){
+		return ucService.visualizzaByUtente(id);
+	}
+	@GetMapping("byCandidatura/{id}")
+	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByCandidatura(@PathVariable long id){
+		return ucService.visualizzaByCandidatura(id);
+	}
 }

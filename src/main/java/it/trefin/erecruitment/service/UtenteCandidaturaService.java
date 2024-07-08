@@ -142,4 +142,44 @@ public class UtenteCandidaturaService {
 		}
 
 	}
+
+	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByUtente(long id) {
+		
+		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
+
+		try {
+
+			response.setData(ucRepository.findAllByUtenteId(id).stream().map(UtenteCandidaturaMapper::toDto)
+					.collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("UtenteCandidatura ritornati con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
+			return response;
+
+		}
+	}
+
+	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByCandidatura(long id) {
+		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
+
+		try {
+
+			response.setData(ucRepository.findAllByCandidaturaId(id).stream().map(UtenteCandidaturaMapper::toDto)
+					.collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("UtenteCandidatura ritornati con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
+			return response;
+
+		}	}
 }

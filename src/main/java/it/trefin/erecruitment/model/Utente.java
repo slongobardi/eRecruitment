@@ -50,6 +50,13 @@ public class Utente {
 	@JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
 	private Set<Colloquio> listaColloquii;
 	
+	@ManyToMany()
+	@JoinTable(
+			  name = "utenteSkill", 
+			  joinColumns = @JoinColumn(name = "id_utente"), 
+			  inverseJoinColumns = @JoinColumn(name = "id_skill"))
+	private Set<Skill>listaSkill;
+	
 	@ManyToOne
 	private Azienda azienda;
 

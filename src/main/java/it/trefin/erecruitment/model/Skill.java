@@ -27,6 +27,10 @@ public class Skill {
 	
 	@ManyToMany(mappedBy="listaSkill")
 	private Set<Candidatura> listaCandidature;
+	
+
+	@ManyToMany(mappedBy="listaSkill")
+	private Set<Utente> listaUtente;
 
 	public long getId() {
 		return id;

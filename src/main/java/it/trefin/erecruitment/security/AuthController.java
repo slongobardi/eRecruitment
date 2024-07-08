@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,56 +23,55 @@ import it.trefin.erecruitment.repository.UtenteRepository;
 @RequestMapping("auth")
 public class AuthController {
 
-    @Autowired
-    private UtenteRepository utenteRepository;
+	@Autowired
+	private UtenteRepository utenteRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+	@Autowired
+	private JwtUtil jwtUtil;
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        Utente user = utenteRepository.findByEmail(request.getEmail());
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+		Utente user = utenteRepository.findByEmail(request.getEmail());
 
-        if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
+		if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
 
-        String token = jwtUtil.generateToken(request.getEmail(), user.getRuolo().toString());
-        LoginResponse response = new LoginResponse(user.getId(), token);
-        return ResponseEntity.ok(response);
-    }
+		String token = jwtUtil.generateToken(request.getEmail(), user.getRuolo().toString());
+		LoginResponse response = new LoginResponse(user.getId(), token);
+		return ResponseEntity.ok(response);
+	}
 
-    @PostMapping("/register")
-    public String register(@RequestBody Utente user) {
+	@PostMapping("/register")
+    public long register(@RequestBody Utente user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         utenteRepository.save(user);
-
+       
         if (utenteRepository.existsById(user.getId())) {
-            return "User registrato con successo";
+            return user.getId();
         } else {
-            return "Errore durante la registrazione";
+            return -1;
         }
     }
 
-    @PostMapping("/cambiaPassword")
-    public ResponseEntity<String> cambiaPassword(@RequestBody PasswordChangeRequest request) {
-        Utente utente = utenteRepository.findByEmail(request.getEmail());
+	@PostMapping("/cambiaPassword")
+	public ResponseEntity<String> cambiaPassword(@RequestBody PasswordChangeRequest request) {
+		Utente utente = utenteRepository.findByEmail(request.getEmail());
 
-        if (utente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
+		if (utente == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+		}
 
-        if (!passwordEncoder.matches(request.getOldPassword(), utente.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid old password");
-        }
+		if (!passwordEncoder.matches(request.getOldPassword(), utente.getPassword())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid old password");
+		}
 
-        utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        utenteRepository.save(utente);
-        return ResponseEntity.ok("Password changed successfully");
-    }
-
+		utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
+		utenteRepository.save(utente);
+		return ResponseEntity.ok("Password changed successfully");
+	}
 
 }

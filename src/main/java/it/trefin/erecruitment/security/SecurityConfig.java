@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
@@ -27,9 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/auth/login", "/auth/register").permitAll()
-				.antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.cors(withDefaults()).csrf(csrf -> csrf.disable())
+				.authorizeRequests(requests -> requests
+						.antMatchers("/auth/login", "/auth/register", "/api/sendEmail/inviaEmail",
+								"/api/candidatura/all", "/api/candidatura/visualizza/?")
+						.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
+				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}

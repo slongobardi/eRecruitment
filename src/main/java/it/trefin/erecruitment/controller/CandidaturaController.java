@@ -52,4 +52,9 @@ public class CandidaturaController {
 	public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
 		return cService.visualizzaTutteCandidature();
 	}
+	
+	@GetMapping("/visualizzaCandidatureAziendali/{id_azienda}")
+	public Response<List<CandidaturaDto>,Status> visualizzaCandidatureAziendali(@PathVariable long id_azienda){
+		return cService.visualizzaCandidatureAziendali(id_azienda);
+	}
 }

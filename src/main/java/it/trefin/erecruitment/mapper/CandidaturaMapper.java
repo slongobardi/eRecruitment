@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
+import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.model.UtenteCandidatura;
@@ -24,6 +25,12 @@ public class CandidaturaMapper {
 	    cDto.setNumeroCandidati(c.getNumeroCandidati());
 	    cDto.setPubblicazione(c.getPubblicazione());
 
+	    
+	    cDto.setListaColloqui(
+		        c.getListaColloqui() != null ? 
+		        c.getListaColloqui().stream().map(Colloquio::getId).collect(Collectors.toList()) : 
+		        new ArrayList<>()
+		    );
 	    cDto.setAzienda(
 	        c.getAzienda() != null ? 
 	        c.getAzienda().getId() : 

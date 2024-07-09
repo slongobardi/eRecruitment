@@ -51,4 +51,9 @@ public class ColloquioController {
 	public Response<List<ColloquioDto>, Status> visualizzaTuttiColloqui() {
 		return cService.visualizzaTuttiColloqui();
 	}
+	
+	@GetMapping("/colloquiCandidatura/{id}")
+	public Response<List<ColloquioDto>, Status> colloquiCandidatura(@PathVariable long id) {
+		return cService.colloquiCandidatura(id);
+	}
 }

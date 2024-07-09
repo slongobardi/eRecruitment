@@ -3,6 +3,7 @@ package it.trefin.erecruitment.dto;
 import java.sql.Date;
 import java.util.Set;
 
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Esito;
 
 public class ColloquioDto {
@@ -16,6 +17,19 @@ public class ColloquioDto {
 	private String descrizione;
 	private Esito esito;
 	private Set<Long> listaUtenti;
+	private long candidatura;
+
+	
+	
+	
+	
+	public long getCandidatura() {
+		return candidatura;
+	}
+
+	public void setCandidatura(long candidatura) {
+		this.candidatura = candidatura;
+	}
 
 	public long getId() {
 		return id;

@@ -34,6 +34,9 @@ public class Candidatura {
 	@OneToMany(mappedBy="candidatura")
 	private List<UtenteCandidatura>utenteCandidature;
 	
+	@OneToMany(mappedBy="candidatura")
+	private List<Colloquio>listaColloqui;
+	
 	@ManyToOne()
 	@JoinColumn(name="id_azienda")
 	private Azienda azienda;
@@ -53,6 +56,16 @@ public class Candidatura {
 	private Set<TitoliStudio>listaTitoliStudio;
 	
 	
+
+
+	public List<Colloquio> getListaColloqui() {
+		return listaColloqui;
+	}
+
+
+	public void setListaColloqui(List<Colloquio> listaColloqui) {
+		this.listaColloqui = listaColloqui;
+	}
 
 
 	public long getId() {

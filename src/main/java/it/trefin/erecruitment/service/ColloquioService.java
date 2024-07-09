@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.mapper.ColloquioMapper;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.ColloquioRepository;
 
 @Service
@@ -18,8 +20,9 @@ public class ColloquioService {
 
 	@Autowired
 	private ColloquioRepository cRepository;
-	
-	
+
+    private CandidaturaRepository candidaturaRepository;
+
 	public Response<Colloquio, Status> inserisciColloquio(Colloquio colloquio) {
 
 		Response<Colloquio, Status> response = new Response<>();
@@ -74,15 +77,15 @@ public class ColloquioService {
 
 		try {
 
-			Colloquio c =  cRepository.findById(id).get();
-	
+			Colloquio c = cRepository.findById(id).get();
+
 			c.setCognomeEsaminatore(colloquio.getCognomeEsaminatore());
 			c.setDescrizione(colloquio.getDescrizione());
 			c.setEsito(colloquio.getEsito());
 			c.setNomeEsaminatore(colloquio.getNomeEsaminatore());
 			c.setProssimoColloquio(colloquio.getProssimoColloquio());
 			c.setUltimoColloquio(colloquio.getUltimoColloquio());
-			
+
 			cRepository.save(c);
 			response.setData(ColloquioMapper.toDto(c));
 			response.setStatus(Status.OK);
@@ -127,8 +130,7 @@ public class ColloquioService {
 
 		try {
 
-			response.setData(cRepository.findAll().stream().map(ColloquioMapper::toDto)
-					.collect(Collectors.toList()));
+			response.setData(cRepository.findAll().stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Colloquii ritornati con successo.");
 			return response;
@@ -141,5 +143,29 @@ public class ColloquioService {
 
 		}
 
+	}
+
+	public Response<List<ColloquioDto>, Status> colloquiCandidatura(long idCandidatura) {
+
+		Response<List<ColloquioDto>, Status> response = new Response<>();
+
+		try {
+			//Candidatura candidatura = candidaturaRepository.findById(idCandidatura).get();
+
+			List<Colloquio> colloquiList = cRepository.findByCandidaturaId(idCandidatura);
+
+			List<ColloquioDto> colloquiDtoList = colloquiList.stream().map(ColloquioMapper::toDto)
+					.collect(Collectors.toList());
+
+			response.setData(colloquiDtoList);
+			response.setStatus(Status.OK);
+			response.setDescrizione("Colloqui ritornati con successo.");
+			return response;
+
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTuttiColloqui in errore " + e.getMessage());
+			return response;
+		}
 	}
 }

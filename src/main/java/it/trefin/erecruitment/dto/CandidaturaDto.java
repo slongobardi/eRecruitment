@@ -17,10 +17,14 @@ private long id;
 	private long azienda;
 	private Set<Long>listaSkill;
 	private Set<Long>listaTitoliStudio;
-
+	private List<Long>listaColloqui;
 	
-	
-	
+	public List<Long> getListaColloqui() {
+		return listaColloqui;
+	}
+	public void setListaColloqui(List<Long> listaColloqui) {
+		this.listaColloqui = listaColloqui;
+	}
 	public long getId() {
 		return id;
 	}

@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Colloquio {
@@ -26,6 +28,18 @@ public class Colloquio {
 
 	@ManyToMany(mappedBy = "listaColloquii")
 	private Set<Utente> listaUtenti;
+
+	@ManyToOne()
+	@JoinColumn(name = "id_candidatura")
+	private Candidatura candidatura;
+
+	public Candidatura getCandidatura() {
+		return candidatura;
+	}
+
+	public void setCandidatura(Candidatura candidatura) {
+		this.candidatura = candidatura;
+	}
 
 	public long getId() {
 		return id;

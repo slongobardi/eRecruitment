@@ -20,6 +20,8 @@ public class ColloquioMapper {
 	    cDto.setProssimoColloquio(c.getProssimoColloquio());
 	    cDto.setUltimoColloquio(c.getUltimoColloquio());
 
+	    cDto.setCandidatura(c.getCandidatura().getId());
+	    
 	    cDto.setListaUtenti(
 	        c.getListaUtenti() != null ? 
 	        c.getListaUtenti().stream().map(Utente::getId).collect(Collectors.toSet()) : 

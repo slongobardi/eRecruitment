@@ -1,17 +1,13 @@
 package it.trefin.erecruitment.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
-import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.UtenteCandidaturaMapper;
-import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.UtenteCandidatura;
@@ -102,16 +98,15 @@ public class UtenteCandidaturaService {
 
 	}
 
-	public Response<UtenteCandidatura, Status> eliminaUtenteCandidatura(long id) {
+	public Response<List<UtenteCandidaturaDto>, Status> eliminaUtenteCandidatura(long id) {
 
-		Response<UtenteCandidatura, Status> response = new Response<>();
-
+		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
 		try {
-
-			response.setData(ucRepository.findById(id).get());
-			ucRepository.delete(response.getData());
+			ucRepository.deleteById(id);
+			response.setData(
+					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
-			response.setDescrizione("UtenteCandidatura eliminato con successo.");
+			response.setDescrizione("eliminata con successo.");
 			return response;
 
 		} catch (Exception e) {
@@ -121,6 +116,7 @@ public class UtenteCandidaturaService {
 			return response;
 
 		}
+		
 
 	}
 

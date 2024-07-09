@@ -196,4 +196,13 @@ public class Utente {
 	public void setAzienda(Azienda azienda) {
 		this.azienda = azienda;
 	}
+
+	public Set<Skill> getListaSkill() {
+		return listaSkill;
+	}
+
+	public void setListaSkill(Set<Skill> listaSkill) {
+		this.listaSkill = listaSkill;
+	}
+	
 }

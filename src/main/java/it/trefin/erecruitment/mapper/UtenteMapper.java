@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Colloquio;
+import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
@@ -29,6 +30,12 @@ public class UtenteMapper {
 	    uDto.setDescrizione(u.getDescrizione());
 	    uDto.setCitta(u.getCitta());
 	    uDto.setIndirizzo(u.getIndirizzo());
+	    
+	    uDto.setListaSkill(
+	    	u.getListaSkill() != null ? 
+	    	u.getListaSkill().stream().map(Skill :: getId).collect(Collectors.toSet()): 
+	    	new HashSet<>()
+	    );
 	    
 	    uDto.setUtenteTitoliStudio(
 	        u.getUtenteTitoliStudio() != null ? 

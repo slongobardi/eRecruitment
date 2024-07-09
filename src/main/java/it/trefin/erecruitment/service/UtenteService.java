@@ -1,16 +1,23 @@
 package it.trefin.erecruitment.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
+import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
+import it.trefin.erecruitment.mapper.SkillMapper;
 import it.trefin.erecruitment.mapper.UtenteMapper;
+import it.trefin.erecruitment.mapper.UtenteTitoliStudioMapper;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.repository.UtenteRepository;
 
 
@@ -142,4 +149,65 @@ public class UtenteService {
 		}
 
 	}
+	
+	public Response<List<SkillDto>, Status>skillUtente(long id) {
+		
+		Response<List<SkillDto>, Status> response = new Response<>();
+
+		try {
+			List<Skill> listaSkillUtente=new ArrayList<>(this.uRepository.getReferenceById(id).getListaSkill());
+			response.setData(listaSkillUtente.stream().map(SkillMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("SkillUtente con successo.");
+
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("SkillUtente in errore " + e.getMessage());
+			return response;
+
+		}
+	}
+	
+	public Response<List<UtenteTitoliStudioDto>, Status>titoliUtente(long id) {
+		
+		Response<List<UtenteTitoliStudioDto>, Status> response = new Response<>();
+
+		try {
+			List<UtenteTitoliStudio> listaSkillUtente=new ArrayList<>(this.uRepository.getReferenceById(id).getUtenteTitoliStudio());
+			response.setData(listaSkillUtente.stream().map(UtenteTitoliStudioMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("titoliUtente con successo.");
+
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("titoliUtente in errore " + e.getMessage());
+			return response;
+
+		}
+	}
+	
+	public Response<List<UtenteDto>,Status> getAllNotUser(){
+		Response<List<UtenteDto>, Status> response = new Response<>();
+		
+		try {
+			List<Utente> responseQuery = uRepository.findAllNotUser();
+			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+			
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("allNotUser in errore " + e.getMessage());
+			return response;
+		}
+	}
+	
+	
 }

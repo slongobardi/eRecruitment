@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -62,4 +63,5 @@ public class UtenteCandidaturaController {
 	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByCandidatura(@PathVariable long id){
 		return ucService.visualizzaByCandidatura(id);
 	}
+
 }

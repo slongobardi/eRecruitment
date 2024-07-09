@@ -1,15 +1,19 @@
 package it.trefin.erecruitment.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.trefin.erecruitment.dto.TitoliStudioDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
+import it.trefin.erecruitment.mapper.TitoliStudioMapper;
 import it.trefin.erecruitment.mapper.UtenteTitoliStudioMapper;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.repository.UtenteTitoliStudioRepository;
 
@@ -140,4 +144,26 @@ public class UtenteTitoliStudioService {
 		}
 
 	}
+
+	public Response<List<TitoliStudioDto>, Status> titoliUtente(long id_utente) {
+		Response<List<TitoliStudioDto>, Status> response =new Response<>();
+		List<TitoliStudio> listaTitoli = new ArrayList<>();
+		try {
+			for (UtenteTitoliStudio utenteTitolo : this.utsRepository.findAllByUtenteId(id_utente)) {
+				listaTitoli.add(utenteTitolo.getTitoliStudio());
+			}
+			response.setData(listaTitoli.stream().map(TitoliStudioMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("TitoliStudio dell'utente ritornati con successo.");
+			return response;
+			
+		}catch(Exception e){
+			
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTuttiUtenteTitoliStudio in errore " + e.getMessage());
+			return response;
+		}
+	}
+	
+
 }

@@ -20,6 +20,8 @@ public class UtenteDto {
 
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
+	private Set<Long> listaSkill;
+
 
 	private Set<Long> listaColloquii;
 
@@ -155,5 +157,15 @@ public class UtenteDto {
 	public void setIdAzienda(long idAzienda) {
 		this.idAzienda = idAzienda;
 	}
+
+	public Set<Long> getListaSkill() {
+		return listaSkill;
+	}
+
+	public void setListaSkill(Set<Long> listaSkill) {
+		this.listaSkill = listaSkill;
+	}
+	
+	
 
 }

@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
-import it.trefin.erecruitment.model.Utente;
-import it.trefin.erecruitment.service.UtenteService;
+import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.service.UtenteService;
 
 @RestController
 @RequestMapping("/api/utente")
@@ -50,5 +52,20 @@ public class UtenteController {
 	@GetMapping("/all")
 	public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
 		return uService.visualizzaTuttiUtenti();
+	}
+
+	@GetMapping("/skillUtente/{id}")
+	public Response<List<SkillDto>, Status> skillUtente(@PathVariable long id) {
+		return uService.skillUtente(id);
+	}
+
+	@GetMapping("/titoliUtente/{id}")
+	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(@PathVariable long id) {
+		return uService.titoliUtente(id);
+	}
+	
+	@GetMapping("/allNotUser")
+	public Response<List<UtenteDto>,Status> notUser(){
+		return uService.getAllNotUser();
 	}
 }

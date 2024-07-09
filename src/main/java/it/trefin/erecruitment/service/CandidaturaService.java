@@ -1,16 +1,20 @@
 package it.trefin.erecruitment.service;
 
-import java.util.List;
+import java.util.*;
+
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.CandidaturaDto;
+import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.mapper.CandidaturaMapper;
+import it.trefin.erecruitment.mapper.SkillMapper;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
 
 @Service
@@ -18,7 +22,8 @@ public class CandidaturaService {
 
 	@Autowired
 	private CandidaturaRepository cRepository;
-
+	
+	
 	public Response<Candidatura, Status> inserisciCandidatura(Candidatura candidatura) {
 
 		Response<Candidatura, Status> response = new Response<>();
@@ -151,5 +156,21 @@ public class CandidaturaService {
 			return response;
 		}
 		
+	}
+
+	public Response<List<SkillDto>, Status> skillDellaCandidatura(long id_candidatura) {
+		
+		Response<List<SkillDto>, Status> response = new Response<>();
+		try {
+			List<Skill> listaSkill = new ArrayList<>(cRepository.getReferenceById(id_candidatura).getListaSkill());
+			response.setData(listaSkill.stream().map(SkillMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Candidature aziendali ritornate con successo");
+			return response;
+		}catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaCandidatureAziendali in errore " + e.getMessage());
+			return response;
+		}
 	}
 }

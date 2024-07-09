@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.trefin.erecruitment.dto.CandidaturaDto;
+import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -56,5 +57,10 @@ public class CandidaturaController {
 	@GetMapping("/visualizzaCandidatureAziendali/{id_azienda}")
 	public Response<List<CandidaturaDto>,Status> visualizzaCandidatureAziendali(@PathVariable long id_azienda){
 		return cService.visualizzaCandidatureAziendali(id_azienda);
+	}
+	
+	@GetMapping("/skillDellaCandidatura/{id_candidatura}")
+	public Response<List<SkillDto>,Status> skillDellaCandidatura(@PathVariable long id_candidatura){
+		return cService.skillDellaCandidatura(id_candidatura);
 	}
 }

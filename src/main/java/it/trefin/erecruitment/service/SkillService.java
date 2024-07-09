@@ -138,4 +138,20 @@ public class SkillService {
 		}
 
 	}
+
+//	public Response<List<SkillDto>, Status> skillCandidatura(Long id_candidatura) {
+//		Response<List<SkillDto>, Status> response = new Response<>();
+//		
+//		try {
+//			response.setData(sRepository.findAllByCandidaturaId(id_candidatura).stream().map(SkillMapper::toDto).collect(Collectors.toList()));
+//			response.setStatus(Status.OK);
+//			response.setDescrizione("Skills ritornate con successo.");
+//			return response;
+//			
+//		}catch(Exception e) {
+//			response.setStatus(Status.SYSTEM_ERROR);
+//			response.setDescrizione("skillCandidatura in errore " + e.getMessage());
+//			return response;
+//		}	
+//	}
 }

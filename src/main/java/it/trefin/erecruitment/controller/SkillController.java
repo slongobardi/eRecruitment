@@ -51,4 +51,10 @@ public class SkillController {
 	public Response<List<SkillDto>, Status> visualizzaTutteSkills() {
 		return sService.visualizzaTutteSkills();
 	}
+	
+//	@GetMapping("/skillCandidatura/{id_candidatura}")
+//	public Response<List<SkillDto>,Status> skillCandidatura(@PathVariable long id_candidatura){
+//		return sService.skillCandidatura(id_candidatura);
+//	}
+	
 }

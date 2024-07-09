@@ -53,12 +53,19 @@ public class UtenteController {
 	public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
 		return uService.visualizzaTuttiUtenti();
 	}
+
 	@GetMapping("/skillUtente/{id}")
 	public Response<List<SkillDto>, Status> skillUtente(@PathVariable long id) {
 		return uService.skillUtente(id);
 	}
+
 	@GetMapping("/titoliUtente/{id}")
 	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(@PathVariable long id) {
 		return uService.titoliUtente(id);
+	}
+	
+	@GetMapping("/allNotUser")
+	public Response<List<UtenteDto>,Status> notUser(){
+		return uService.getAllNotUser();
 	}
 }

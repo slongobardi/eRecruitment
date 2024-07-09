@@ -192,7 +192,22 @@ public class UtenteService {
 		}
 	}
 	
-
-
+	public Response<List<UtenteDto>,Status> getAllNotUser(){
+		Response<List<UtenteDto>, Status> response = new Response<>();
+		
+		try {
+			List<Utente> responseQuery = uRepository.findAllNotUser();
+			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+			
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("allNotUser in errore " + e.getMessage());
+			return response;
+		}
+	}
+	
 	
 }

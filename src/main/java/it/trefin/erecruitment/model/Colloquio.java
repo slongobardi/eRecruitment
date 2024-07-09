@@ -21,6 +21,7 @@ public class Colloquio {
 	private Date prossimoColloquio;
 	private String nomeEsaminatore;
 	private String cognomeEsaminatore;
+	private String tipo;
 	private Esito esito;
 
 	@Column(columnDefinition = "TEXT")
@@ -47,6 +48,14 @@ public class Colloquio {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public Date getUltimoColloquio() {

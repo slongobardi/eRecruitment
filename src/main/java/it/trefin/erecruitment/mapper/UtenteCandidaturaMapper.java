@@ -12,7 +12,7 @@ public class UtenteCandidaturaMapper {
 
 	    uDto.setDataIscrizione(u.getDataIscrizione());
 	    uDto.setId(u.getId());
-	    uDto.setNota(u.getNota());
+	    uDto.setNota(u.getNota() != null ? u.getNota() : "");
 	    uDto.setStato(u.getStato());
 
 	    uDto.setCandidatura(

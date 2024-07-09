@@ -23,7 +23,7 @@ public class EmailService {
 	@Value("${spring.mail.from}")
 	private String from;
 
-	public Response<SimpleMailMessage, Status> inviaEmail(String destinatario, String oggetto, String testo) {
+	public Response<SimpleMailMessage, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		Response<SimpleMailMessage, Status> response = new Response<>();
 		try {

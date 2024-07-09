@@ -19,7 +19,7 @@ public class ColloquioMapper {
 	    cDto.setNomeEsaminatore(c.getNomeEsaminatore());
 	    cDto.setProssimoColloquio(c.getProssimoColloquio());
 	    cDto.setUltimoColloquio(c.getUltimoColloquio());
-
+	    cDto.setTipo(c.getTipo());
 	    cDto.setCandidatura(c.getCandidatura().getId());
 	    
 	    cDto.setListaUtenti(

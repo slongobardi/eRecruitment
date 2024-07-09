@@ -34,7 +34,7 @@ public class CandidaturaController {
 		return cService.inserisciCandidatura(candidatura);
 	}
 
-	@GetMapping("/visualizza/{id}")
+	@GetMapping("/visualizza")
 	public Response<CandidaturaDto, Status> visualizzaCandidatura(@RequestParam long id) {
 		return cService.visualizzaCandidatura(id);
 	}

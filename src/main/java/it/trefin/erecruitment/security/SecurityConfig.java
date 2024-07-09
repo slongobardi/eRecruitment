@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors(withDefaults()).csrf(csrf -> csrf.disable())
 				.authorizeRequests(requests -> requests
 						.antMatchers("/auth/login", "/auth/register", "/api/sendEmail/inviaEmail",
-								"/api/candidatura/all", "/api/candidatura/visualizza/?","/api/sendEmail/inviaEmail/**")
+								"/api/candidatura/all", "/api/azienda/visualizza/**","/api/sendEmail/inviaEmail/**")
 						.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

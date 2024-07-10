@@ -68,4 +68,9 @@ public class UtenteController {
 	public Response<List<UtenteDto>,Status> notUser(){
 		return uService.getAllNotUser();
 	}
+
+	@PutMapping("/modificaColloquio/{idCandidato}/{idColloquio}")
+	public Response<Utente,Status> modificaColloquio(@PathVariable long idCandidato,@PathVariable long idColloquio){
+		return uService.modificaColloquio(idCandidato,idColloquio);
+	}
 }

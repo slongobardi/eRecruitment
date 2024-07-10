@@ -13,6 +13,7 @@ import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
 import it.trefin.erecruitment.mapper.SkillMapper;
 import it.trefin.erecruitment.mapper.UtenteMapper;
 import it.trefin.erecruitment.mapper.UtenteTitoliStudioMapper;
+import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
@@ -209,5 +210,24 @@ public class UtenteService {
 		}
 	}
 	
+	public Response<Utente,Status>modificaColloquio(Long idCandidato,Long idColloquio){
+		Response<Utente, Status> response = new Response<>();
+		try {
+			Utente u =  uRepository.findById(idCandidato).get();
+            Colloquio colloquio = new Colloquio();
+            colloquio.setId(idColloquio);
+            u.getListaColloquii().add(colloquio);
+            uRepository.save(u);
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+			
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
+			return response;
+		}
+		
+	}
 	
 }

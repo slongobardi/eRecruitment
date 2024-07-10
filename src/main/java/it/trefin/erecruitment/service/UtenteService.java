@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
@@ -21,12 +22,13 @@ import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.repository.UtenteRepository;
 
-
 @Service
 public class UtenteService {
 
 	@Autowired
 	private UtenteRepository uRepository;
+    private ColloquioService cService;
+
 
 	public Response<Utente, Status> inserisciUtente(Utente utente) {
 
@@ -82,8 +84,8 @@ public class UtenteService {
 
 		try {
 
-			Utente u =  uRepository.findById(id).get();
-	
+			Utente u = uRepository.findById(id).get();
+
 			u.setCellulare(utente.getCellulare());
 			u.setCitta(utente.getCitta());
 			u.setCognome(utente.getCognome());
@@ -135,8 +137,7 @@ public class UtenteService {
 
 		try {
 
-			response.setData(uRepository.findAll().stream().map(UtenteMapper::toDto)
-					.collect(Collectors.toList()));
+			response.setData(uRepository.findAll().stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Utente ritornati con successo.");
 			return response;
@@ -150,13 +151,13 @@ public class UtenteService {
 		}
 
 	}
-	
-	public Response<List<SkillDto>, Status>skillUtente(long id) {
-		
+
+	public Response<List<SkillDto>, Status> skillUtente(long id) {
+
 		Response<List<SkillDto>, Status> response = new Response<>();
 
 		try {
-			List<Skill> listaSkillUtente=new ArrayList<>(this.uRepository.getReferenceById(id).getListaSkill());
+			List<Skill> listaSkillUtente = new ArrayList<>(this.uRepository.getReferenceById(id).getListaSkill());
 			response.setData(listaSkillUtente.stream().map(SkillMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("SkillUtente con successo.");
@@ -171,14 +172,16 @@ public class UtenteService {
 
 		}
 	}
-	
-	public Response<List<UtenteTitoliStudioDto>, Status>titoliUtente(long id) {
-		
+
+	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(long id) {
+
 		Response<List<UtenteTitoliStudioDto>, Status> response = new Response<>();
 
 		try {
-			List<UtenteTitoliStudio> listaSkillUtente=new ArrayList<>(this.uRepository.getReferenceById(id).getUtenteTitoliStudio());
-			response.setData(listaSkillUtente.stream().map(UtenteTitoliStudioMapper::toDto).collect(Collectors.toList()));
+			List<UtenteTitoliStudio> listaSkillUtente = new ArrayList<>(
+					this.uRepository.getReferenceById(id).getUtenteTitoliStudio());
+			response.setData(
+					listaSkillUtente.stream().map(UtenteTitoliStudioMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("titoliUtente con successo.");
 
@@ -192,42 +195,46 @@ public class UtenteService {
 
 		}
 	}
-	
-	public Response<List<UtenteDto>,Status> getAllNotUser(){
+
+
+
+	public Response<List<UtenteDto>, Status> getAllNotUser() {
 		Response<List<UtenteDto>, Status> response = new Response<>();
-		
+
 		try {
 			List<Utente> responseQuery = uRepository.findAllNotUser();
 			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");
-			
+
 			return response;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("allNotUser in errore " + e.getMessage());
 			return response;
 		}
 	}
-	
-	public Response<Utente,Status>modificaColloquio(Long idCandidato,Long idColloquio){
+
+	public Response<Utente, Status> modificaColloquio(Long idCandidato, Long idColloquio) {
 		Response<Utente, Status> response = new Response<>();
 		try {
-			Utente u =  uRepository.findById(idCandidato).get();
-            Colloquio colloquio = new Colloquio();
-            colloquio.setId(idColloquio);
-            u.getListaColloquii().add(colloquio);
-            uRepository.save(u);
+			Utente u = uRepository.findById(idCandidato).get();
+			Colloquio colloquio = new Colloquio();
+			colloquio.setId(idColloquio);
+			u.getListaColloquii().add(colloquio);
+			uRepository.save(u);
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");
-			
+
 			return response;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
 			return response;
 		}
-		
+
 	}
 	
+
+
 }

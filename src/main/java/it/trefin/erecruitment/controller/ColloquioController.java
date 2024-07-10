@@ -56,4 +56,7 @@ public class ColloquioController {
 	public Response<List<ColloquioDto>, Status> colloquiCandidatura(@PathVariable long id) {
 		return cService.colloquiCandidatura(id);
 	}
+	
+
+	
 }

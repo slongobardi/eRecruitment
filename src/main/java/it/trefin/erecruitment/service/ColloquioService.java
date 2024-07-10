@@ -150,9 +150,9 @@ public class ColloquioService {
 		Response<List<ColloquioDto>, Status> response = new Response<>();
 
 		try {
-			//Candidatura candidatura = candidaturaRepository.findById(idCandidatura).get();
 
 			List<Colloquio> colloquiList = cRepository.findByCandidaturaId(idCandidatura);
+			
 
 			List<ColloquioDto> colloquiDtoList = colloquiList.stream().map(ColloquioMapper::toDto)
 					.collect(Collectors.toList());
@@ -168,4 +168,6 @@ public class ColloquioService {
 			return response;
 		}
 	}
+	
+
 }

@@ -139,6 +139,22 @@ public class SkillService {
 
 	}
 
+	public Response<List<SkillDto>, Status> visualizzaSkillsTipologia(long id) {
+		Response<List<SkillDto>,Status> listaSkills=new Response<>();
+		
+		try {
+			listaSkills.setData(this.sRepository.findAllByTipologiaId(id).stream().map(SkillMapper::toDto).collect(Collectors.toList()));
+			listaSkills.setStatus(Status.OK);
+			listaSkills.setDescrizione("Skill recuperate correttamente");
+			return listaSkills;
+		}catch(Exception e) {
+			listaSkills.setStatus(Status.SYSTEM_ERROR);
+			listaSkills.setDescrizione("Le skill non sono state trovate per via di un errore "+e.getMessage());
+			return listaSkills;
+		}
+
+	}
+
 //	public Response<List<SkillDto>, Status> skillCandidatura(Long id_candidatura) {
 //		Response<List<SkillDto>, Status> response = new Response<>();
 //		

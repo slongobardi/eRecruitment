@@ -51,4 +51,9 @@ public class TipologiaController {
 	public Response<List<TipologiaDto>, Status> visualizzaTutteTipologie() {
 		return tService.visualizzaTutteTipologie();
 	}
+	
+	@GetMapping("/visualizzaTipologiaAzienda/{id}")
+	public Response<TipologiaDto,Status> visualizzaTipologiaAzienda(@PathVariable long id){
+		return tService.visualizzaTipologiaAzienda(id);
+	}
 }

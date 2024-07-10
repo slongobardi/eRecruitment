@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.TipologiaDto;
 import it.trefin.erecruitment.mapper.TipologiaMapper;
+import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Tipologia;
+import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.TipologiaRepository;
 
 @Service
@@ -18,7 +20,8 @@ public class TipologiaService {
 
 	@Autowired
 	private TipologiaRepository tRepository;
-	
+	@Autowired
+	private AziendaRepository aRepository;
 	
 	
 	public Response<Tipologia, Status> inserisciTipologia(Tipologia tipologia) {
@@ -138,5 +141,28 @@ public class TipologiaService {
 
 		}
 
+	}
+
+	public Response<TipologiaDto, Status> visualizzaTipologiaAzienda(long id) {
+		Response<TipologiaDto, Status> response = new Response<>();
+		try {
+			Azienda azienda = this.aRepository.getReferenceById(id);
+			Tipologia tipologia = tRepository.getReferenceById(azienda.getTipologia().getId());
+			if(tipologia!=null) {
+				TipologiaDto tdto = TipologiaMapper.toDto(tipologia);
+						response.setData(tdto);
+						response.setStatus(Status.OK);
+						response.setDescrizione("Tipologia ritornate con successo.");
+			}else {
+				response.setStatus(Status.SYSTEM_ERROR);
+				response.setDescrizione("l'id della tipologia non corrisponde ad alcuna occorrenza!!");
+			}
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTipologiaAzienda in errore " + e.getMessage());
+
+		}
+		return response;
 	}
 }

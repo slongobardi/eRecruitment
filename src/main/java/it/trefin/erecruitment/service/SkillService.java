@@ -77,7 +77,6 @@ public class SkillService {
 			Skill s =  sRepository.findById(id).get();
 	
 			s.setNome(skill.getNome());
-			s.setTipologia(skill.getTipologia());
 			
 			sRepository.save(s);
 			response.setData(SkillMapper.toDto(s));

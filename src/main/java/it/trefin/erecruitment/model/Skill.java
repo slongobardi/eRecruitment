@@ -19,12 +19,6 @@ public class Skill {
 	private long id;
 	private String nome;
 	
-	@ManyToOne()
-	@JoinColumn(name="id_tipologia")
-	private Tipologia tipologia;
-	
-	
-	
 	@ManyToMany(mappedBy="listaSkill")
 	private Set<Candidatura> listaCandidature;
 	
@@ -47,16 +41,6 @@ public class Skill {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Tipologia getTipologia() {
-		return tipologia;
-	}
-
-	public void setTipologia(Tipologia tipologia) {
-		this.tipologia = tipologia;
-	}
-
-	
 
 	public Set<Candidatura> getListaCandidature() {
 		return listaCandidature;

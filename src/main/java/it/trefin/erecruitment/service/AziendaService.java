@@ -67,8 +67,6 @@ public class AziendaService {
 		return response;
 	}
 
-	
-
 	public Response<Azienda, Status> eliminaAzienda(long id) {
 
 		Response<Azienda, Status> response = new Response<>();
@@ -97,8 +95,7 @@ public class AziendaService {
 
 		try {
 
-			response.setData(aRepository.findAll().stream().map(AziendaMapper::toDto)
-					.collect(Collectors.toList()));
+			response.setData(aRepository.findAll().stream().map(AziendaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Azienda ritornate con successo.");
 			return response;
@@ -112,4 +109,25 @@ public class AziendaService {
 		}
 
 	}
+	
+	public Response<AziendaDto,Status> getByNome(String nome){
+		Response<AziendaDto,Status> response = new Response<>();
+		
+		try {
+			Azienda a = aRepository.findByNome(nome);
+			
+			response.setData(AziendaMapper.toDto(a));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Azienda ritornata con successo.");
+			
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("getByNome in errore " + e.getMessage());
+			return response;
+		}
+		
+		
+	}
+	
 }

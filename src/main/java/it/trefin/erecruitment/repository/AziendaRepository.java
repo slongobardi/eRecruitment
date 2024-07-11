@@ -7,5 +7,5 @@ import it.trefin.erecruitment.model.Azienda;
 
 @Repository
 public interface AziendaRepository extends JpaRepository<Azienda, Long>{
-
+	Azienda findByNome(String nome);
 }

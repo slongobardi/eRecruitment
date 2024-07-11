@@ -45,4 +45,9 @@ public class AziendaController {
 	public Response<List<AziendaDto>, Status> visualizzaTutteAziende() {
 		return aService.visualizzaTutteAziende();
 	}
+	
+	@GetMapping("/byNome/{nome}")
+	public Response<AziendaDto,Status> byNome(@PathVariable String nome){
+		return aService.getByNome(nome);
+	}
 }

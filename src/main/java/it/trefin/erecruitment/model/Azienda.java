@@ -17,7 +17,6 @@ public class Azienda {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String nome;
 	private String indirizzo;
 
 	@Column(columnDefinition = "TEXT")
@@ -31,9 +30,8 @@ public class Azienda {
 	@OneToMany(mappedBy = "azienda")
 	private List<Utente> listaUtenti;
 
-	@ManyToOne()
-	@JoinColumn(name = "id_tipologia")
-	private Tipologia tipologia;
+	@Column(unique = true)
+	private String nome;
 
 	public long getId() {
 		return id;
@@ -89,14 +87,6 @@ public class Azienda {
 
 	public void setListaCandidature(List<Candidatura> listaCandidature) {
 		this.listaCandidature = listaCandidature;
-	}
-
-	public Tipologia getTipologia() {
-		return tipologia;
-	}
-
-	public void setTipologia(Tipologia tipologia) {
-		this.tipologia = tipologia;
 	}
 
 	public Azienda() {

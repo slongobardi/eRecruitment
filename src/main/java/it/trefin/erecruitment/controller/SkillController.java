@@ -57,9 +57,5 @@ public class SkillController {
 //		return sService.skillCandidatura(id_candidatura);
 //	}
 	
-	@GetMapping("/visualizzaSkillsTipologia/{id}")
-	public Response<List<SkillDto>,Status> visualizzaSkillsTipologia(@PathVariable long id){
-		return sService.visualizzaSkillsTipologia(id);
-	}
 	
 }

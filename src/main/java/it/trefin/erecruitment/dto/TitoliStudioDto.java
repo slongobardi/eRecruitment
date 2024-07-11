@@ -11,10 +11,8 @@ public class TitoliStudioDto {
 	
 	private long id;
 	private Studi studi;
-	
 	private List<Long>titoliStudio;
 	private Set<Long>listaCandidature;
-
 
 	public long getId() {
 		return id;

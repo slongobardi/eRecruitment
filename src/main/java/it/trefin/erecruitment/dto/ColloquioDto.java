@@ -8,7 +8,6 @@ import it.trefin.erecruitment.model.Esito;
 public class ColloquioDto {
 
 	private long id;
-
 	private Date ultimoColloquio;
 	private Date prossimoColloquio;
 	private String nomeEsaminatore;
@@ -19,10 +18,6 @@ public class ColloquioDto {
 	private long candidatura;
 	private String tipo;
 
-	
-	
-	
-	
 	public long getCandidatura() {
 		return candidatura;
 	}

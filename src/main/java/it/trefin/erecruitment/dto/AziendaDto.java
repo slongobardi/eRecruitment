@@ -5,7 +5,6 @@ import java.util.List;
 public class AziendaDto {
 
 	private long id;
-	private long tipologia;
 	private String nome;
 	private String indirizzo;
 	private String descrizione;
@@ -69,14 +68,6 @@ public class AziendaDto {
 
 	public void setListaCandidature(List<Long> listaCandidature) {
 		this.listaCandidature = listaCandidature;
-	}
-
-	public long getTipologia() {
-		return tipologia;
-	}
-
-	public void setTipologia(long tipologia) {
-		this.tipologia = tipologia;
 	}
 
 	public List<Long> getUtenti() {

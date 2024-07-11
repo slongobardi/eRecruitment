@@ -9,11 +9,7 @@ public class SkillDto {
 	
 	private long id;
 	private String nome;
-	private long tipologia;
-
 	private Set<Long> listaCandidature;
-
-	
 	
 	public long getId() {
 		return id;
@@ -29,14 +25,6 @@ public class SkillDto {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public long getTipologia() {
-		return tipologia;
-	}
-
-	public void setTipologia(long tipologia) {
-		this.tipologia = tipologia;
 	}
 
 	public Set<Long> getListaCandidature() {

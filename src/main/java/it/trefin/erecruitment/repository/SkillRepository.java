@@ -13,6 +13,8 @@ import it.trefin.erecruitment.model.Skill;
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, Long>{
 
+	List<Skill> findAllByUtenteId(long id);
+
 
 //	List<Skill> findAllByListaCandidature(Long id_candidatura);
 

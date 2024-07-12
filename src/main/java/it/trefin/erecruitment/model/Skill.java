@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Skill {
@@ -48,6 +46,15 @@ public class Skill {
 
 	public void setListaCandidature(Set<Candidatura> listaCandidature) {
 		this.listaCandidature = listaCandidature;
+	}
+	
+
+	public Set<Utente> getListaUtente() {
+		return listaUtente;
+	}
+
+	public void setListaUtente(Set<Utente> listaUtente) {
+		this.listaUtente = listaUtente;
 	}
 
 	public Skill() {

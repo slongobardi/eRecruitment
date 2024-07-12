@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Skill;
+import it.trefin.erecruitment.model.Utente;
 
 public class SkillMapper {
 	
@@ -21,6 +22,11 @@ public class SkillMapper {
 	        s.getListaCandidature().stream().map(Candidatura::getId).collect(Collectors.toSet()) : 
 	        new HashSet<>()
 	    );
+	    sDto.setListaUtenti(
+		        s.getListaUtente() != null ? 
+		        s.getListaUtente().stream().map(Utente::getId).collect(Collectors.toSet()) : 
+		        new HashSet<>()
+		    );
 
 	    return sDto;
 	}

@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
-import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
@@ -20,6 +20,7 @@ import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
+import it.trefin.erecruitment.repository.ColloquioRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
@@ -27,8 +28,11 @@ public class UtenteService {
 
 	@Autowired
 	private UtenteRepository uRepository;
-    private ColloquioService cService;
+	@Autowired
+	private ColloquioRepository cRepository;
 
+
+	private EmailService eService;
 
 	public Response<Utente, Status> inserisciUtente(Utente utente) {
 
@@ -215,12 +219,11 @@ public class UtenteService {
 		}
 	}
 
-	public Response<Utente, Status> modificaColloquio(Long idCandidato, Long idColloquio) {
+	/*public Response<Utente, Status> modificaColloquio(Long idCandidato, Long idColloquio) {
 		Response<Utente, Status> response = new Response<>();
 		try {
 			Utente u = uRepository.findById(idCandidato).get();
-			Colloquio colloquio = new Colloquio();
-			colloquio.setId(idColloquio);
+			Colloquio colloquio = cRepository.findById(idColloquio).get();
 			u.getListaColloquii().add(colloquio);
 			uRepository.save(u);
 			response.setStatus(Status.OK);
@@ -233,8 +236,29 @@ public class UtenteService {
 			return response;
 		}
 
+	}*/
+	public Response<Utente, Status> modificaColloquio(Long idCandidato,Colloquio c, SimpleMailMessage s) {
+		Response<Utente, Status> response = new Response<>();
+		try {
+			
+			Utente u = uRepository.findById(idCandidato).get();
+			Colloquio col = cRepository.save(c);
+			u.getListaColloquii().add(col);
+			uRepository.save(u);
+			
+			System.out.println(s.getTo());
+			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
+
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+
+			return response;
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
+			return response;
+		}
 	}
-	
 
 
 }

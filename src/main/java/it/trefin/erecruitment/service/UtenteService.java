@@ -31,7 +31,7 @@ public class UtenteService {
 	@Autowired
 	private ColloquioRepository cRepository;
 
-
+	@Autowired
 	private EmailService eService;
 
 	public Response<Utente, Status> inserisciUtente(Utente utente) {
@@ -246,8 +246,8 @@ public class UtenteService {
 			u.getListaColloquii().add(col);
 			uRepository.save(u);
 			
-			System.out.println(s.getTo());
-			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
+			
+			 eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
 
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");

@@ -10,11 +10,14 @@ public class SkillDto {
 	private long id;
 	private String nome;
 	private Set<Long> listaCandidature;
+	private Set<Long> listaUtenti;
+
 	
 	public long getId() {
 		return id;
 	}
 
+	
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -33,6 +36,16 @@ public class SkillDto {
 
 	public void setListaCandidature(Set<Long> listaCandidature) {
 		this.listaCandidature = listaCandidature;
+	}
+
+
+	public Set<Long> getListaUtenti() {
+		return listaUtenti;
+	}
+
+
+	public void setListaUtenti(Set<Long> listaUtenti) {
+		this.listaUtenti = listaUtenti;
 	}
 
 	

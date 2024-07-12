@@ -22,6 +22,27 @@ public class Skill {
 	@ManyToMany(mappedBy="listaSkill")
 	private Set<Candidatura> listaCandidature;
 	
+	@ManyToOne()
+	@JoinColumn(name = "id_utente")
+	private Utente utente;
+	
+	
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	public Set<Utente> getListaUtente() {
+		return listaUtente;
+	}
+
+	public void setListaUtente(Set<Utente> listaUtente) {
+		this.listaUtente = listaUtente;
+	}
 
 	@ManyToMany(mappedBy="listaSkill")
 	private Set<Utente> listaUtente;
@@ -49,6 +70,8 @@ public class Skill {
 	public void setListaCandidature(Set<Candidatura> listaCandidature) {
 		this.listaCandidature = listaCandidature;
 	}
+	
+
 
 	public Skill() {
 		

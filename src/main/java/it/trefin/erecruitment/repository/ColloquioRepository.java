@@ -13,5 +13,7 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long>{
 
 	List<Colloquio> findByCandidaturaId(long idCandidatura);
 
+	List<ColloquioDto> findAllByCandidaturaId(long idCandidatura);
+
 
 }

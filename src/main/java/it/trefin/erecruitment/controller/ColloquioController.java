@@ -52,11 +52,15 @@ public class ColloquioController {
 		return cService.visualizzaTuttiColloqui();
 	}
 	
-	@GetMapping("/colloquiCandidatura/{id}")
-	public Response<List<ColloquioDto>, Status> colloquiCandidatura(@PathVariable long id) {
-		return cService.colloquiCandidatura(id);
+	@GetMapping("/colloquiCandidatura/{idCandidatura}/{idUtente}")
+	public Response<List<ColloquioDto>, Status> colloquiCandidatura(@PathVariable long idCandidatura, @PathVariable long idUtente) {
+		return cService.colloquiCandidatura(idCandidatura,idUtente);
 	}
 	
-
+	/*@GetMapping("/colloquioUtenteCand/{idUtente}/{idCandidatura")
+	public Response<List<ColloquioDto>, Status> colloquioUtenteCand(@PathVariable long idCandidatura) {
+		return cService.colloquioUtenteCand(idCandidatura);
+	}*/
+	
 	
 }

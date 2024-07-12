@@ -21,6 +21,7 @@ public class ColloquioService {
 	@Autowired
 	private ColloquioRepository cRepository;
 
+	@Autowired
     private CandidaturaRepository candidaturaRepository;
 
 	public Response<Colloquio, Status> inserisciColloquio(Colloquio colloquio) {
@@ -145,7 +146,7 @@ public class ColloquioService {
 
 	}
 
-	public Response<List<ColloquioDto>, Status> colloquiCandidatura(long idCandidatura) {
+	public Response<List<ColloquioDto>, Status> colloquiCandidatura(long idCandidatura,long idUtente) {
 
 		Response<List<ColloquioDto>, Status> response = new Response<>();
 
@@ -156,6 +157,9 @@ public class ColloquioService {
 
 			List<ColloquioDto> colloquiDtoList = colloquiList.stream().map(ColloquioMapper::toDto)
 					.collect(Collectors.toList());
+			
+			colloquiDtoList.stream().filter(c-> c.getListaUtenti().contains(idUtente)).collect(Collectors.toList()); 
+
 
 			response.setData(colloquiDtoList);
 			response.setStatus(Status.OK);
@@ -168,6 +172,7 @@ public class ColloquioService {
 			return response;
 		}
 	}
+	
 	
 
 }

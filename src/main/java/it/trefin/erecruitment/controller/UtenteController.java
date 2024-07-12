@@ -1,8 +1,10 @@
 package it.trefin.erecruitment.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
+import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Utente;
@@ -28,6 +33,8 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService uService;
+	
+	private  ObjectMapper objectMapper = new ObjectMapper();
 
 	@PostMapping("/add")
 	public Response<Utente, Status> inserisciUtente(@RequestBody Utente utente) {
@@ -69,8 +76,16 @@ public class UtenteController {
 		return uService.getAllNotUser();
 	}
 
-	@PutMapping("/modificaColloquio/{idCandidato}/{idColloquio}")
-	public Response<Utente,Status> modificaColloquio(@PathVariable long idCandidato,@PathVariable long idColloquio){
-		return uService.modificaColloquio(idCandidato,idColloquio);
+	@PutMapping("/modificaColloquio/{idCandidato}")
+	public Response<Utente,Status> modificaColloquio(@PathVariable long idCandidato,@RequestBody Map<Object,Object> c){
+		//return uService.modificaColloquio(idCandidato,idColloquio);
+		Object colloquio = c.get("colloquio");         
+		Object simpleMailMessage = c.get("simpleMailMessage");
+
+		Colloquio coll = objectMapper.convertValue(c.get("colloquio"), Colloquio.class);
+		SimpleMailMessage simpleM = objectMapper.convertValue(c.get("simpleMailMessage"), SimpleMailMessage.class);
+
+		return uService.modificaColloquio(idCandidato,coll, simpleM);
+		
 	}
 }

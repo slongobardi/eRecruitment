@@ -16,127 +16,135 @@ import it.trefin.erecruitment.repository.SkillRepository;
 @Service
 public class SkillService {
 
-	@Autowired
-	private SkillRepository sRepository;
-	
-	
-	public Response<Skill, Status> inserisciSkill(Skill skill) {
+    @Autowired
+    private SkillRepository sRepository;
 
-		Response<Skill, Status> response = new Response<>();
+    public Response<Skill, Status> inserisciSkill(Skill skill) {
+        Response<Skill, Status> response = new Response<>();
 
-		try {
+        try {
+            sRepository.save(skill);
+            response.setData(skill);
+            response.setStatus(Status.OK);
+            response.setDescrizione("Skill salvata con successo.");
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("inserisciSkill in errore " + e.getMessage());
+        }
 
-			sRepository.save(skill);
-			response.setData(skill);
-			response.setStatus(Status.OK);
-			response.setDescrizione("Skill salvata con successo.");
-			return response;
+        return response;
+    }
 
-		} catch (Exception e) {
+    public Response<SkillDto, Status> visualizzaSkill(long id) {
+        Response<SkillDto, Status> response = new Response<>();
 
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("inserisciSkill in errore " + e.getMessage());
-			return response;
+        try {
+            Skill skill = sRepository.findById(id).orElse(null);
 
-		}
+            if (skill != null) {
+                SkillDto dto = SkillMapper.toDto(skill);
+                response.setData(dto);
+                response.setStatus(Status.OK);
+                response.setDescrizione("risultati ritornati con successo");
+            } else {
+                response.setStatus(Status.SYSTEM_ERROR);
+                response.setDescrizione("Nessuna skill trovata con l'ID fornito");
+            }
 
-	}
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("visualizzaSkill in errore: " + e.getMessage());
+        }
 
-	public Response<SkillDto, Status> visualizzaSkill(long id) {
+        return response;
+    }
 
-		Response<SkillDto, Status> response = new Response<>();
+    public Response<SkillDto, Status> aggiornaSkill(Skill skill, Long id) {
+        Response<SkillDto, Status> response = new Response<>();
 
-		try {
+        try {
+            Skill s = sRepository.findById(id).orElse(null);
 
-			Skill skill = sRepository.findById(id).get();
+            if (s != null) {
+                s.setNome(skill.getNome());
+                sRepository.save(s);
+                response.setData(SkillMapper.toDto(s));
+                response.setStatus(Status.OK);
+                response.setDescrizione("Skill modificata con successo.");
+            } else {
+                response.setStatus(Status.SYSTEM_ERROR);
+                response.setDescrizione("Nessuna skill trovata con l'ID fornito");
+            }
 
-			if (skill != null) {
-				SkillDto dto = SkillMapper.toDto(skill);
-				response.setData(dto);
-				response.setStatus(Status.OK);
-				response.setDescrizione("risultati ritornati con successo");
-			} else {
-				response.setStatus(Status.SYSTEM_ERROR);
-				response.setDescrizione("Nessuna skill trovata con l'ID fornito");
-			}
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("aggiornaSkill in errore " + e.getMessage());
+        }
 
-		} catch (Exception e) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaSkill in errore: " + e.getMessage());
-		}
+        return response;
+    }
 
-		return response;
-	}
+    public Response<Skill, Status> eliminaSkill(long id) {
+        Response<Skill, Status> response = new Response<>();
 
-	public Response<SkillDto, Status> aggiornaSkill(Skill skill, Long id) {
+        try {
+            Skill skill = sRepository.findById(id).orElse(null);
 
-		Response<SkillDto, Status> response = new Response<>();
+            if (skill != null) {
+                sRepository.delete(skill);
+                response.setData(skill);
+                response.setStatus(Status.OK);
+                response.setDescrizione("Skill eliminata con successo.");
+            } else {
+                response.setStatus(Status.SYSTEM_ERROR);
+                response.setDescrizione("Nessuna skill trovata con l'ID fornito");
+            }
 
-		try {
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("eliminaSkill in errore " + e.getMessage());
+        }
 
-			Skill s =  sRepository.findById(id).get();
-	
-			s.setNome(skill.getNome());
-			
-			sRepository.save(s);
-			response.setData(SkillMapper.toDto(s));
-			response.setStatus(Status.OK);
-			response.setDescrizione("Skill modificata con successo.");
-			return response;
+        return response;
+    }
 
-		} catch (Exception e) {
+    public Response<List<SkillDto>, Status> visualizzaTutteSkills() {
+        Response<List<SkillDto>, Status> response = new Response<>();
 
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("aggiornaSkill in errore " + e.getMessage());
-			return response;
+        try {
+            List<SkillDto> skillDtos = sRepository.findAll().stream()
+                    .map(SkillMapper::toDto)
+                    .collect(Collectors.toList());
+            response.setData(skillDtos);
+            response.setStatus(Status.OK);
+            response.setDescrizione("Skills ritornate con successo.");
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("visualizzaTutteSkills in errore " + e.getMessage());
+        }
 
-		}
+        return response;
+    }
 
-	}
+    public Response<List<SkillDto>, Status> visualizzaSkillUtente(long id) {
+        Response<List<SkillDto>, Status> response = new Response<>();
 
-	public Response<Skill, Status> eliminaSkill(long id) {
+        try {
+            List<SkillDto> skillDtos = sRepository.findAllByUtenteId(id).stream()
+                    .map(SkillMapper::toDto)
+                    .collect(Collectors.toList());
+            response.setData(skillDtos);
+            response.setStatus(Status.OK);
+            response.setDescrizione("Skills ritornate con successo per l'utente con ID: " + id);
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("visualizzaSkillUtente in errore: " + e.getMessage());
+        }
 
-		Response<Skill, Status> response = new Response<>();
+        return response;
+    }
 
-		try {
-
-			response.setData((sRepository.findById(id).get()));
-			sRepository.delete(response.getData());
-			response.setStatus(Status.OK);
-			response.setDescrizione("Skill eliminato con successo.");
-			return response;
-
-		} catch (Exception e) {
-
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("eliminaSkill in errore " + e.getMessage());
-			return response;
-
-		}
-
-	}
-
-	public Response<List<SkillDto>, Status> visualizzaTutteSkills() {
-
-		Response<List<SkillDto>, Status> response = new Response<>();
-
-		try {
-
-			response.setData(sRepository.findAll().stream().map(SkillMapper::toDto)
-					.collect(Collectors.toList()));
-			response.setStatus(Status.OK);
-			response.setDescrizione("Skills ritornate con successo.");
-			return response;
-
-		} catch (Exception e) {
-
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaTutteSkills in errore " + e.getMessage());
-			return response;
-
-		}
-
-	}
+}
 
 //	public Response<List<SkillDto>, Status> skillCandidatura(Long id_candidatura) {
 //		Response<List<SkillDto>, Status> response = new Response<>();
@@ -153,4 +161,4 @@ public class SkillService {
 //			return response;
 //		}	
 //	}
-}
+

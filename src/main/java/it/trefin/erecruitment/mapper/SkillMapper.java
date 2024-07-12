@@ -34,8 +34,7 @@ public class SkillMapper {
 		s.setListaCandidature(listaCandidature);
 		
 		return s;
-	
-		
 	}
+	
 
 }

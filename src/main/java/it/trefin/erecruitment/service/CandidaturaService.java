@@ -11,18 +11,21 @@ import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SkillMapper;
+import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
+import it.trefin.erecruitment.repository.SkillRepository;
 
 @Service
 public class CandidaturaService {
 
 	@Autowired
 	private CandidaturaRepository cRepository;
-	
+	@Autowired
+	private SkillRepository sRepository;
 	
 	public Response<Candidatura, Status> inserisciCandidatura(Candidatura candidatura) {
 
@@ -72,17 +75,20 @@ public class CandidaturaService {
 		return response;
 	}
 
-	public Response<CandidaturaDto, Status> aggiornaCandidatura(Candidatura candidatura, Long id) {
+	public Response<CandidaturaDto, Status> aggiornaCandidatura(CandidaturaDto candidaturaDTO) {
 
 		Response<CandidaturaDto, Status> response = new Response<>();
-
+		Candidatura candidatura = this.cRepository.getReferenceById(candidaturaDTO.getId());
+		Set<Skill> listaSkill = new HashSet<>();
+		for (long skill : candidaturaDTO.getListaSkill()) {
+			listaSkill.add(this.sRepository.getReferenceById(skill));
+		}
 		try {
 
-			Candidatura c = cRepository.findById(id).get();
-			c.setDescrizione(candidatura.getDescrizione());
-			c.setNome(candidatura.getNome());
-			cRepository.save(c);
-			response.setData(CandidaturaMapper.toDto(c));
+			
+			candidatura=CandidaturaMapper.toEntity(candidaturaDTO,candidatura.getAzienda(),candidatura.getUtenteCandidature(),listaSkill,candidatura.getListaTitoliStudio());
+			this.cRepository.save(candidatura);
+			response.setData(CandidaturaMapper.toDto(candidatura));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Candidatura modificata con successo.");
 			return response;

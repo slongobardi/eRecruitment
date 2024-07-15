@@ -40,11 +40,6 @@ public class UtenteController {
 	
 	private  ObjectMapper objectMapper = new ObjectMapper();
 
-	@PostMapping("/add")
-	public Response<Utente, Status> inserisciUtente(@RequestBody Utente utente) {
-		return uService.inserisciUtente(utente);
-	}
-
 	@GetMapping("/visualizza/{id}")
 	public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
 		return uService.visualizzaUtente(id);

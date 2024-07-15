@@ -47,7 +47,7 @@ public class AuthController {
 
 	@PostMapping("/register")
     public long register(@RequestBody Utente user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
         utenteRepository.save(user);
        
         if (utenteRepository.existsById(user.getId())) {

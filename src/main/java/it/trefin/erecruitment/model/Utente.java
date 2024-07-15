@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Utente {
@@ -30,17 +34,18 @@ public class Utente {
 	private String cellulare;
 	private String indirizzo;
 	private String citta;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	private Ruolo ruolo;
 
 	@Column(unique = true)
+	@Email(message = "Inserisci una email valida.")
 	private String email;
-	
+
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
-	
-	@OneToMany(mappedBy = "utente")
+
+	@OneToMany(mappedBy = "utente",fetch = FetchType.EAGER)
 	private List<UtenteTitoliStudio> utenteTitoliStudio;
 
 	@OneToMany(mappedBy = "utente")
@@ -49,14 +54,11 @@ public class Utente {
 	@ManyToMany()
 	@JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
 	private Set<Colloquio> listaColloquii;
-	
+
 	@ManyToMany()
-	@JoinTable(
-			  name = "utenteSkill", 
-			  joinColumns = @JoinColumn(name = "id_utente"), 
-			  inverseJoinColumns = @JoinColumn(name = "id_skill"))
-	private Set<Skill>listaSkill;
-	
+	@JoinTable(name = "utenteSkill", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
+	private Set<Skill> listaSkill;
+
 	@ManyToOne
 	private Azienda azienda;
 
@@ -204,5 +206,4 @@ public class Utente {
 	public void setListaSkill(Set<Skill> listaSkill) {
 		this.listaSkill = listaSkill;
 	}
-	
 }

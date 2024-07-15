@@ -36,28 +36,6 @@ public class UtenteService {
 	@Autowired
 	private EmailService eService;
 
-	public Response<Utente, Status> inserisciUtente(Utente utente) {
-
-		Response<Utente, Status> response = new Response<>();
-
-		try {
-
-			uRepository.save(utente);
-			response.setData(utente);
-			response.setStatus(Status.OK);
-			response.setDescrizione("Utente salvato con successo.");
-			return response;
-
-		} catch (Exception e) {
-
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("inserisciUtente in errore " + e.getMessage());
-			return response;
-
-		}
-
-	}
-
 	public Response<UtenteDto, Status> visualizzaUtente(long id) {
 
 		Response<UtenteDto, Status> response = new Response<>();
@@ -291,8 +269,14 @@ public class UtenteService {
 			Colloquio col = cRepository.save(c);
 			u.getListaColloquii().add(col);
 			uRepository.save(u);
+<<<<<<< Updated upstream
 
 			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
+=======
+			
+			
+			 eService.inviaEmail(s.getTo()[0], s.getSubject(), s.getText());
+>>>>>>> Stashed changes
 
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");

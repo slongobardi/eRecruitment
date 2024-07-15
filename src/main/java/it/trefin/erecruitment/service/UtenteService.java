@@ -2,11 +2,13 @@ package it.trefin.erecruitment.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
@@ -109,6 +111,7 @@ public class UtenteService {
 		}
 
 	}
+
 	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(Utente utente, Long id) {
 
 		Response<UtenteDto, Status> response = new Response<>();
@@ -118,7 +121,33 @@ public class UtenteService {
 			Utente u = uRepository.findById(id).get();
 
 			u.setDescrizione(utente.getDescrizione());
-	
+
+			uRepository.save(u);
+			response.setData(UtenteMapper.toDto(u));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Utente modificato con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
+			return response;
+
+		}
+
+	}
+
+	public Response<UtenteDto, Status> modificaSkill(Set<Skill> listaSkill, Long id) {
+
+		Response<UtenteDto, Status> response = new Response<>();
+
+		try {
+
+			Utente u = uRepository.findById(id).get();
+
+			u.setListaSkill(listaSkill);
+
 			uRepository.save(u);
 			response.setData(UtenteMapper.toDto(u));
 			response.setStatus(Status.OK);
@@ -222,8 +251,6 @@ public class UtenteService {
 		}
 	}
 
-
-
 	public Response<List<UtenteDto>, Status> getAllNotUser() {
 		Response<List<UtenteDto>, Status> response = new Response<>();
 
@@ -241,35 +268,31 @@ public class UtenteService {
 		}
 	}
 
-	/*public Response<Utente, Status> modificaColloquio(Long idCandidato, Long idColloquio) {
+	/*
+	 * public Response<Utente, Status> modificaColloquio(Long idCandidato, Long
+	 * idColloquio) { Response<Utente, Status> response = new Response<>(); try {
+	 * Utente u = uRepository.findById(idCandidato).get(); Colloquio colloquio =
+	 * cRepository.findById(idColloquio).get();
+	 * u.getListaColloquii().add(colloquio); uRepository.save(u);
+	 * response.setStatus(Status.OK); response.setDescrizione("ok");
+	 * 
+	 * return response; } catch (Exception e) {
+	 * response.setStatus(Status.SYSTEM_ERROR);
+	 * response.setDescrizione("modificaColloquio in errore " + e.getMessage());
+	 * return response; }
+	 * 
+	 * }
+	 */
+	public Response<Utente, Status> modificaColloquio(Long idCandidato, Colloquio c, SimpleMailMessage s) {
 		Response<Utente, Status> response = new Response<>();
 		try {
-			Utente u = uRepository.findById(idCandidato).get();
-			Colloquio colloquio = cRepository.findById(idColloquio).get();
-			u.getListaColloquii().add(colloquio);
-			uRepository.save(u);
-			response.setStatus(Status.OK);
-			response.setDescrizione("ok");
 
-			return response;
-		} catch (Exception e) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
-			return response;
-		}
-
-	}*/
-	public Response<Utente, Status> modificaColloquio(Long idCandidato,Colloquio c, SimpleMailMessage s) {
-		Response<Utente, Status> response = new Response<>();
-		try {
-			
 			Utente u = uRepository.findById(idCandidato).get();
 			Colloquio col = cRepository.save(c);
 			u.getListaColloquii().add(col);
 			uRepository.save(u);
-			
-			
-			 eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
+
+			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
 
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");
@@ -282,5 +305,38 @@ public class UtenteService {
 		}
 	}
 
+	public Response<UtenteDto, Status> aggiornaCV(long id, MultipartFile cv) {
+
+		Response<UtenteDto, Status> response = new Response<>();
+
+		try {
+			Utente u = uRepository.findById(id).get();
+			if (!cv.isEmpty()) {
+
+				u.setCv(cv.getBytes());
+				uRepository.save(u);
+
+				UtenteDto dto = UtenteMapper.toDto(u);
+
+				response.setData(dto);
+				response.setStatus(Status.OK);
+				response.setDescrizione("Cv Utente salvato con successo.");
+				return response;
+
+			}
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("Cv è null.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiornaCV  in errore " + e.getMessage());
+			return response;
+
+		}
+
+	}
 
 }

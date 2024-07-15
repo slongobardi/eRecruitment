@@ -2,6 +2,7 @@ package it.trefin.erecruitment.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,6 +26,7 @@ import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
 import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.service.UtenteService;
 
@@ -53,6 +57,15 @@ public class UtenteController {
 	@PutMapping("/aggiornaDescrizione/{id}")
 	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(@RequestBody Utente utente, @PathVariable Long id) {
 		return uService.aggiornaDescrizioneUtente(utente, id);
+	}
+	@PutMapping("/modificaSkill/{id}")
+	public Response<UtenteDto, Status> modificaSkill(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
+		return uService.modificaSkill(listaSkill, id);
+	}
+	
+	@PutMapping("/aggiornaCV/{id}")
+	public Response<UtenteDto, Status> aggiornaCV(@PathVariable Long id,@RequestParam("cv") MultipartFile cv) {
+		return uService.aggiornaCV(id,cv);
 	}
 
 	@DeleteMapping("/elimina/{id}")

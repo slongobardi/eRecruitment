@@ -39,10 +39,9 @@ public class CandidaturaController {
 		return cService.visualizzaCandidatura(id);
 	}
 
-	@PutMapping("/aggiorna/{id}")
-	public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody Candidatura candidatura,
-			@PathVariable Long id) {
-		return cService.aggiornaCandidatura(candidatura, id);
+	@PutMapping("/aggiorna")
+	public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody CandidaturaDto candidatura) {
+		return cService.aggiornaCandidatura(candidatura);
 	}
 
 	@DeleteMapping("/elimina/{id}")

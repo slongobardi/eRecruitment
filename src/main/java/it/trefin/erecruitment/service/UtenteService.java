@@ -269,14 +269,9 @@ public class UtenteService {
 			Colloquio col = cRepository.save(c);
 			u.getListaColloquii().add(col);
 			uRepository.save(u);
-<<<<<<< Updated upstream
 
-			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
-=======
-			
 			
 			 eService.inviaEmail(s.getTo()[0], s.getSubject(), s.getText());
->>>>>>> Stashed changes
 
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");

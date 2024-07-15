@@ -50,6 +50,10 @@ public class UtenteController {
 	public Response<UtenteDto, Status> aggiornaUtente(@RequestBody Utente utente, @PathVariable Long id) {
 		return uService.aggiornaUtente(utente, id);
 	}
+	@PutMapping("/aggiornaDescrizione/{id}")
+	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(@RequestBody Utente utente, @PathVariable Long id) {
+		return uService.aggiornaDescrizioneUtente(utente, id);
+	}
 
 	@DeleteMapping("/elimina/{id}")
 	public Response<Utente, Status> eliminaUtente(@PathVariable long id) {

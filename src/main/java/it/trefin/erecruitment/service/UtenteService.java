@@ -92,11 +92,33 @@ public class UtenteService {
 
 			u.setCellulare(utente.getCellulare());
 			u.setCitta(utente.getCitta());
-			u.setCognome(utente.getCognome());
-			u.setDescrizione(utente.getDescrizione());
 			u.setEmail(utente.getEmail());
 			u.setIndirizzo(utente.getIndirizzo());
-			u.setNome(utente.getNome());
+			uRepository.save(u);
+			response.setData(UtenteMapper.toDto(u));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Utente modificato con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
+			return response;
+
+		}
+
+	}
+	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(Utente utente, Long id) {
+
+		Response<UtenteDto, Status> response = new Response<>();
+
+		try {
+
+			Utente u = uRepository.findById(id).get();
+
+			u.setDescrizione(utente.getDescrizione());
+	
 			uRepository.save(u);
 			response.setData(UtenteMapper.toDto(u));
 			response.setStatus(Status.OK);

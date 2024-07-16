@@ -104,7 +104,7 @@ public class UtenteCandidaturaService {
 		try {
 			ucRepository.deleteById(id);
 			response.setData(
-					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
+			ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("eliminata con successo.");
 			return response;

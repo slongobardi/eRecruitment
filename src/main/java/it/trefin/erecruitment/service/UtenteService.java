@@ -270,8 +270,8 @@ public class UtenteService {
 			u.getListaColloquii().add(col);
 			uRepository.save(u);
 
-			
-			 eService.inviaEmail(s.getTo()[0], s.getSubject(), s.getText());
+			System.out.println(s.getTo()[0]);
+			eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
 
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");

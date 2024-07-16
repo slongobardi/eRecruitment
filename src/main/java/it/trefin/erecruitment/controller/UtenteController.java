@@ -64,7 +64,7 @@ public class UtenteController {
 	}
 
 	@DeleteMapping("/elimina/{id}")
-	public Response<Utente, Status> eliminaUtente(@PathVariable long id) {
+	public Response<UtenteDto, Status> eliminaUtente(@PathVariable long id) {
 		return uService.eliminaUtente(id);
 	}
 

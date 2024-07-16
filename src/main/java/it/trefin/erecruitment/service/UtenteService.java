@@ -142,14 +142,14 @@ public class UtenteService {
 
 	}
 
-	public Response<Utente, Status> eliminaUtente(long id) {
+	public Response<UtenteDto, Status> eliminaUtente(long id) {
 
-		Response<Utente, Status> response = new Response<>();
+		Response<UtenteDto, Status> response = new Response<>();
 
 		try {
-
-			response.setData((uRepository.findById(id).get()));
-			uRepository.delete(response.getData());
+			Utente u = uRepository.findById(id).get();
+			response.setData(UtenteMapper.toDto(u));
+			uRepository.delete(u);
 			response.setStatus(Status.OK);
 			response.setDescrizione("Utente eliminato con successo.");
 			return response;

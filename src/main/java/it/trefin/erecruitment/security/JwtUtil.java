@@ -19,7 +19,7 @@ public class JwtUtil {
 	@Value("${jwt.token.secret}")
 	private String secret;
 
-	private static final long EXPIRATION_TIME = 3_600_000;
+	private static final long EXPIRATION_TIME = 300000;
 
 	private Key getSigningKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(this.secret);

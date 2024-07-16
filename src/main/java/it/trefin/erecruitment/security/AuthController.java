@@ -1,22 +1,29 @@
 package it.trefin.erecruitment.security;
 
+import java.nio.charset.Charset;
+import java.time.LocalDateTime;
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.keygen.BytesKeyGenerator;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.trefin.erecruitment.model.ConfirmToken;
 import it.trefin.erecruitment.model.LoginRequest;
 import it.trefin.erecruitment.model.LoginResponse;
 import it.trefin.erecruitment.model.PasswordChangeRequest;
 import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
+import it.trefin.erecruitment.service.EmailService;
 
 @CrossOrigin
 @RestController
@@ -27,10 +34,18 @@ public class AuthController {
 	private UtenteRepository utenteRepository;
 
 	@Autowired
+	private ConfirmTokenRepository tokenRepository;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Autowired
 	private JwtUtil jwtUtil;
+
+	private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
@@ -46,16 +61,17 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-    public long register(@RequestBody Utente user) {
+	public long register(@RequestBody Utente user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-        utenteRepository.save(user);
-       
-        if (utenteRepository.existsById(user.getId())) {
-            return user.getId();
-        } else {
-            return -1;
-        }
-    }
+		utenteRepository.save(user);
+
+		if (utenteRepository.existsById(user.getId())) {
+			sendRegistrationConfirmationEmail(user);
+			return user.getId();
+		} else {
+			return -1;
+		}
+	}
 
 	@PostMapping("/cambiaPassword")
 	public ResponseEntity<String> cambiaPassword(@RequestBody PasswordChangeRequest request) {
@@ -72,6 +88,18 @@ public class AuthController {
 		utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		utenteRepository.save(utente);
 		return ResponseEntity.ok("Password changed successfully");
+	}
+
+	public void sendRegistrationConfirmationEmail(Utente user) {
+		// Generate the token
+		String tokenValue = new String(Base64.getEncoder().encodeToString(DEFAULT_TOKEN_GENERATOR.generateKey()));
+		ConfirmToken emailConfirmationToken = new ConfirmToken();
+		emailConfirmationToken.setToken(tokenValue);
+		emailConfirmationToken.setTimeStamp(LocalDateTime.now());
+		emailConfirmationToken.setUser(user);
+		tokenRepository.save(emailConfirmationToken);
+		// Send email
+		emailService.confirmEmail(emailConfirmationToken,user.getEmail());
 	}
 
 }

@@ -34,6 +34,7 @@ public class Utente {
 	private String cellulare;
 	private String indirizzo;
 	private String citta;
+	private boolean verified;
 
 	@Enumerated(EnumType.ORDINAL)
 	private Ruolo ruolo;
@@ -206,4 +207,13 @@ public class Utente {
 	public void setListaSkill(Set<Skill> listaSkill) {
 		this.listaSkill = listaSkill;
 	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+	
 }

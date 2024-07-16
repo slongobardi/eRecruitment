@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -13,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.model.ConfirmToken;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
@@ -40,17 +39,9 @@ public class EmailService {
 	@Value("${spring.mail.from}")
 	private String from;
 
-	public boolean validateEmail(String email) {
-		try {
-			InternetAddress internetAddress = new InternetAddress(email);
-			internetAddress.validate();
-			return true;
-		} catch (AddressException e) {
-			return false;
-		}
-	}
+	
 
-	public Response<SimpleMailMessage, Status> inviaEmail(String destinatario, String oggetto, String testo) {
+	public Response<SimpleMailMessage, Status> inviaEmail(String [] destinatario, String oggetto, String testo) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		Response<SimpleMailMessage, Status> response = new Response<>();
 		try {

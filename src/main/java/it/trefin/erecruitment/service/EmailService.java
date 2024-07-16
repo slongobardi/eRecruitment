@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.model.ConfirmToken;
@@ -39,9 +41,7 @@ public class EmailService {
 	@Value("${spring.mail.from}")
 	private String from;
 
-	
-
-	public Response<SimpleMailMessage, Status> inviaEmail(String [] destinatario, String oggetto, String testo) {
+	public Response<SimpleMailMessage, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		Response<SimpleMailMessage, Status> response = new Response<>();
 		try {
@@ -71,6 +71,7 @@ public class EmailService {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setTo(destinatario);
+			helper.setFrom(from);
 			helper.setSubject("Conferma la tua email");
 			helper.setText("<html>" + "<body>" + "<h2>Dear " + token.getUser().getNome() + ",</h2>"
 					+ "<br/> We're excited to have you get started. "
@@ -93,7 +94,7 @@ public class EmailService {
 	}
 
 	private String generateConfirmationLink(String token) {
-		return "<a href=http://localhost:8080/confirmEmail?token=" + token + ">Confirm Email</a>";
+		return "<a href=http://localhost:4200/conferma/" + token + " >Confirm Email</a>";
 	}
 
 	public boolean verifyUser(String token) {

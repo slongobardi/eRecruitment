@@ -67,6 +67,10 @@ public class UtenteController {
 	public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id,@RequestBody Skill s) {
 		return uService.aggiungiSkill(id,s);
 	}
+	@PutMapping("/aggiornaFoto/{id}")
+	public Response<UtenteDto, Status> aggiornaFoto(@PathVariable Long id,@RequestBody MultipartFile foto) {
+		return uService.aggiornaFoto(id,foto);
+	}
 	@DeleteMapping("/elimina/{id}")
 	public Response<UtenteDto, Status> eliminaUtente(@PathVariable long id) {
 		return uService.eliminaUtente(id);

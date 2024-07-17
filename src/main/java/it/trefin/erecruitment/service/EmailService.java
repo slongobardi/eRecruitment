@@ -2,8 +2,6 @@ package it.trefin.erecruitment.service;
 
 import java.util.Objects;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
@@ -72,11 +70,14 @@ public class EmailService {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setTo(destinatario);
 			helper.setFrom(from);
-			helper.setSubject("Conferma la tua email");
-			helper.setText("<html>" + "<body>" + "<h2>Dear " + token.getUser().getNome() + ",</h2>"
-					+ "<br/> We're excited to have you get started. "
-					+ "Please click on below link to confirm your account." + "<br/> "
-					+ generateConfirmationLink(token.getToken()) + "" + "<br/> Regards,<br/>" + "MFA Registration team"
+			helper.setSubject("Conferma account");
+			helper.setText("<html>" 
+					+ "<body>" 
+					+ "<h2>Benvenut* " + token.getUser().getNome() + ",</h2>"
+					+ "Clicca sul link per verificare il tuo account." + "<br/> "
+					+ generateConfirmationLink(token.getToken()) +"<br/>"
+					+ "La sua prima password per accedere è la seguente: Erecruitment2024!"
+					+"<br/> Cordiali saluti,<br/>" + "3F & Edin S.P.A."
 					+ "</body>" + "</html>", true);
 
 			javaMailSender.send(message);
@@ -94,7 +95,7 @@ public class EmailService {
 	}
 
 	private String generateConfirmationLink(String token) {
-		return "<a href=http://localhost:4200/conferma/" + token + " >Confirm Email</a>";
+		return "<a href=http://localhost:4200/conferma?token=" + token + " >Conferma account</a>";
 	}
 
 	public boolean verifyUser(String token) {

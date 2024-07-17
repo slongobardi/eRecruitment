@@ -380,4 +380,18 @@ public class UtenteService {
 		}
 
 	}
+	public Response<UtenteDto, Status> byEmail(String email) {
+		Response<UtenteDto, Status> response = new Response<>();
+		
+		try {
+			response.setData(UtenteMapper.toDto(uRepository.findByEmail(email)));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Utente trovato");
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione(e.getMessage());
+			return response;
+		}
+	}
 }

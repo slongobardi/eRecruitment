@@ -50,7 +50,6 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 		Utente user = utenteRepository.findByEmail(request.getEmail());
-
 		if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}

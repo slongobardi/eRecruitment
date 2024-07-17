@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +36,8 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService uService;
-	
-	private  ObjectMapper objectMapper = new ObjectMapper();
+
+	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@GetMapping("/visualizza/{id}")
 	public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
@@ -49,28 +48,32 @@ public class UtenteController {
 	public Response<UtenteDto, Status> aggiornaUtente(@RequestBody Utente utente, @PathVariable Long id) {
 		return uService.aggiornaUtente(utente, id);
 	}
+
 	@PutMapping("/aggiornaDescrizione/{id}")
 	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(@RequestBody Utente utente, @PathVariable Long id) {
 		return uService.aggiornaDescrizioneUtente(utente, id);
 	}
+
 	@PutMapping("/modificaSkill/{id}")
 	public Response<UtenteDto, Status> modificaSkill(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
 		return uService.modificaSkill(listaSkill, id);
 	}
-	
+
 	@PutMapping("/aggiornaCV/{id}")
-	public Response<UtenteDto, Status> aggiornaCV(@PathVariable Long id,@RequestParam("cv") MultipartFile cv) {
-		return uService.aggiornaCV(id,cv);
+	public Response<UtenteDto, Status> aggiornaCV(@PathVariable Long id, @RequestParam("cv") MultipartFile cv) {
+		return uService.aggiornaCV(id, cv);
 	}
 
 	@PutMapping("/aggiungiSkill/{id}")
-	public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id,@RequestBody Skill s) {
-		return uService.aggiungiSkill(id,s);
+	public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id, @RequestBody Skill s) {
+		return uService.aggiungiSkill(id, s);
 	}
+
 	@PutMapping("/aggiornaFoto/{id}")
-	public Response<UtenteDto, Status> aggiornaFoto(@PathVariable Long id,@RequestBody MultipartFile foto) {
-		return uService.aggiornaFoto(id,foto);
+	public Response<UtenteDto, Status> aggiornaFoto(@PathVariable Long id, @RequestBody MultipartFile foto) {
+		return uService.aggiornaFoto(id, foto);
 	}
+
 	@DeleteMapping("/elimina/{id}")
 	public Response<UtenteDto, Status> eliminaUtente(@PathVariable long id) {
 		return uService.eliminaUtente(id);
@@ -90,22 +93,28 @@ public class UtenteController {
 	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(@PathVariable long id) {
 		return uService.titoliUtente(id);
 	}
-	
+
 	@GetMapping("/allNotUser")
-	public Response<List<UtenteDto>,Status> notUser(){
+	public Response<List<UtenteDto>, Status> notUser() {
 		return uService.getAllNotUser();
 	}
 
 	@PutMapping("/modificaColloquio/{idCandidato}")
-	public Response<Utente,Status> modificaColloquio(@PathVariable long idCandidato,@RequestBody Map<Object,Object> c){
-		//return uService.modificaColloquio(idCandidato,idColloquio);
-		Object colloquio = c.get("colloquio");         
+	public Response<Utente, Status> modificaColloquio(@PathVariable long idCandidato,
+			@RequestBody Map<Object, Object> c) {
+		// return uService.modificaColloquio(idCandidato,idColloquio);
+		Object colloquio = c.get("colloquio");
 		Object simpleMailMessage = c.get("simpleMailMessage");
 
 		Colloquio coll = objectMapper.convertValue(c.get("colloquio"), Colloquio.class);
 		SimpleMailMessage simpleM = objectMapper.convertValue(c.get("simpleMailMessage"), SimpleMailMessage.class);
 
-		return uService.modificaColloquio(idCandidato,coll, simpleM);
-		
+		return uService.modificaColloquio(idCandidato, coll, simpleM);
+
+	}
+
+	@GetMapping("/getByEmail/{email}")
+	public Response<UtenteDto, Status> getByEmail(@PathVariable String email) {
+		return uService.byEmail(email);
 	}
 }

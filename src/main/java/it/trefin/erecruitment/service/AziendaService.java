@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,16 +10,23 @@ import org.springframework.stereotype.Service;
 import it.trefin.erecruitment.dto.AziendaDto;
 import it.trefin.erecruitment.mapper.AziendaMapper;
 import it.trefin.erecruitment.model.Azienda;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.repository.AziendaRepository;
+import it.trefin.erecruitment.repository.CandidaturaRepository;
+import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
 public class AziendaService {
 
 	@Autowired
 	private AziendaRepository aRepository;
-
+	@Autowired
+	private UtenteRepository uRepository;
+	@Autowired
+	private CandidaturaRepository cRepository;
 	public Response<Azienda, Status> inserisciAzienda(Azienda azienda) {
 
 		Response<Azienda, Status> response = new Response<>();
@@ -127,6 +135,20 @@ public class AziendaService {
 			return response;
 		}
 		
+		
+	}
+
+	public void aggiornaAzienda(AziendaDto azienda) {
+		List<Utente> listaUtenti = new ArrayList<>();
+		List<Candidatura> listaCandidature = new ArrayList<>();
+			for(long idUtente :	azienda.getUtenti()) {
+				listaUtenti.add(this.uRepository.getReferenceById(idUtente));
+			}
+			for(long idCandidatura : azienda.getListaCandidature()) {
+				listaCandidature.add(this.cRepository.getReferenceById(idCandidatura));
+			}
+			Azienda aziendaAggiornata=AziendaMapper.toEntity(azienda, listaUtenti, listaCandidature);
+			this.aRepository.save(aziendaAggiornata);
 		
 	}
 	

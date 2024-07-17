@@ -1,6 +1,5 @@
 package it.trefin.erecruitment.security;
 
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
@@ -20,6 +19,8 @@ import it.trefin.erecruitment.model.ConfirmToken;
 import it.trefin.erecruitment.model.LoginRequest;
 import it.trefin.erecruitment.model.LoginResponse;
 import it.trefin.erecruitment.model.PasswordChangeRequest;
+import it.trefin.erecruitment.model.Response;
+import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
@@ -73,20 +74,26 @@ public class AuthController {
 	}
 
 	@PostMapping("/cambiaPassword")
-	public ResponseEntity<String> cambiaPassword(@RequestBody PasswordChangeRequest request) {
+	public Response<String,Status> cambiaPassword(@RequestBody PasswordChangeRequest request) {
 		Utente utente = utenteRepository.findByEmail(request.getEmail());
 
+		Response<String, Status> response = new Response<>();
 		if (utente == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setData("Utente non trovato");
 		}
+		
 
 		if (!passwordEncoder.matches(request.getOldPassword(), utente.getPassword())) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid old password");
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setData("Password non corretta");
 		}
 
 		utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		utenteRepository.save(utente);
-		return ResponseEntity.ok("Password changed successfully");
+		response.setStatus(Status.OK);
+		response.setData("Password modificata con successo");
+		return response;
 	}
 
 	public void sendRegistrationConfirmationEmail(Utente user) {

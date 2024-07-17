@@ -63,6 +63,10 @@ public class UtenteController {
 		return uService.aggiornaCV(id,cv);
 	}
 
+	@PutMapping("/aggiungiSkill/{id}")
+	public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id,@RequestBody Skill s) {
+		return uService.aggiungiSkill(id,s);
+	}
 	@DeleteMapping("/elimina/{id}")
 	public Response<Utente, Status> eliminaUtente(@PathVariable long id) {
 		return uService.eliminaUtente(id);

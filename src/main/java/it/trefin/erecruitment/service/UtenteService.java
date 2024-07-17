@@ -318,4 +318,35 @@ public class UtenteService {
 
 	}
 
+	public Response<UtenteDto, Status> aggiungiSkill(Long id, Skill s) {
+	    Response<UtenteDto, Status> response = new Response<>();
+
+	    try {
+	        Utente u = uRepository.findById(id).get();
+
+	       
+
+	        if (u.getListaSkill().contains(s)) {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            System.out.println("ciaoo");
+	            response.setDescrizione("La skill è già presente nella lista.");
+	        } else {
+	            u.getListaSkill().add(s);
+	            uRepository.save(u);
+	            
+	            UtenteDto dto = UtenteMapper.toDto(u);
+
+	            response.setData(dto);
+	            response.setStatus(Status.OK);
+	            response.setDescrizione("Skill aggiunta con successo.");
+	        }
+
+	        return response;
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("aggiungiSkill in errore " + e.getMessage());
+	        return response;
+	    }
+	}
+
 }

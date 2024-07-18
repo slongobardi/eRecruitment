@@ -18,7 +18,8 @@ public class UtenteDto {
 	private String indirizzo;
 	private String citta;
 	private boolean verified;
-
+	private boolean completed;
+	
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
 	private Set<Long> listaSkill;
@@ -173,4 +174,11 @@ public class UtenteDto {
 		this.verified = verified;
 	}
 
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 }

@@ -32,6 +32,7 @@ public class Utente {
 	private String indirizzo;
 	private String citta;
 	private boolean verified;
+	private boolean completed;
 
 	@Enumerated(EnumType.ORDINAL)
 	private Ruolo ruolo;
@@ -212,5 +213,12 @@ public class Utente {
 	public void setVerified(boolean verified) {
 		this.verified = verified;
 	}
-	
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 }

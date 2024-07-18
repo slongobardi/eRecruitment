@@ -31,6 +31,7 @@ public class UtenteMapper {
 	    uDto.setCitta(u.getCitta());
 	    uDto.setIndirizzo(u.getIndirizzo());
 	    uDto.setVerified(u.isVerified());
+	    uDto.setCompleted(u.isCompleted());
 	    
 	    uDto.setListaSkill(
 	    	u.getListaSkill() != null ? 

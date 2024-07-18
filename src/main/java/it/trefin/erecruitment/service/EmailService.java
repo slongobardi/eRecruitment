@@ -39,18 +39,20 @@ public class EmailService {
 	@Value("${spring.mail.from}")
 	private String from;
 
-	public Response<SimpleMailMessage, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
-		SimpleMailMessage msg = new SimpleMailMessage();
-		Response<SimpleMailMessage, Status> response = new Response<>();
+	public Response<MimeMessageHelper, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
+		
+		Response<MimeMessageHelper, Status> response = new Response<>();
 		try {
-			msg.setTo(destinatario);
-			msg.setFrom(from);
-			msg.setCc("christian.mascolo.3fedin@hotmail.com");
-			msg.setSubject(oggetto);
-			msg.setText(testo);
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			helper.setTo(destinatario);
+			helper.setFrom(from);
+			helper.setCc("christian.mascolo.3fedin@hotmail.com");
+			helper.setSubject(oggetto);
+			helper.setText(testo,true);
 
-			javaMailSender.send(msg);
-			response.setData(msg);
+			javaMailSender.send(message);
+			response.setData(helper);
 			response.setStatus(Status.OK);
 			response.setDescrizione("Email inviata con successo ");
 			return response;

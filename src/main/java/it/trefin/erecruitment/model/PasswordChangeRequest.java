@@ -27,5 +27,12 @@ public class PasswordChangeRequest {
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
+		
+	}
+
+	@Override
+	public String toString() {
+		return "PasswordChangeRequest [email=" + email + ", oldPassword=" + oldPassword + ", newPassword=" + newPassword
+				+ "]";
 	}
 }

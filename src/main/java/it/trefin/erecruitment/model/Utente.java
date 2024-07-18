@@ -19,9 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 @Entity
 public class Utente {
 
@@ -30,7 +27,7 @@ public class Utente {
 	private long id;
 	private String nome;
 	private String cognome;
-	private String password;
+	private String password="Erecruitment2024!";
 	private String cellulare;
 	private String indirizzo;
 	private String citta;

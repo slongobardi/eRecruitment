@@ -17,12 +17,11 @@ public class UtenteDto {
 	private String descrizione;
 	private String indirizzo;
 	private String citta;
+	private boolean verified;
 
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
 	private Set<Long> listaSkill;
-
-
 	private Set<Long> listaColloquii;
 
 	private Ruolo ruolo;
@@ -165,7 +164,13 @@ public class UtenteDto {
 	public void setListaSkill(Set<Long> listaSkill) {
 		this.listaSkill = listaSkill;
 	}
-	
-	
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
 
 }

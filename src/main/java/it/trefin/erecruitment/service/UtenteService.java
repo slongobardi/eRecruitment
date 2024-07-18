@@ -319,34 +319,79 @@ public class UtenteService {
 	}
 
 	public Response<UtenteDto, Status> aggiungiSkill(Long id, Skill s) {
-	    Response<UtenteDto, Status> response = new Response<>();
+		Response<UtenteDto, Status> response = new Response<>();
 
-	    try {
-	        Utente u = uRepository.findById(id).get();
+		try {
+			Utente u = uRepository.findById(id).get();
 
-	       
+			if (u.getListaSkill().contains(s)) {
+				response.setStatus(Status.SYSTEM_ERROR);
+				System.out.println("ciaoo");
+				response.setDescrizione("La skill è già presente nella lista.");
+			} else {
+				u.getListaSkill().add(s);
+				uRepository.save(u);
 
-	        if (u.getListaSkill().contains(s)) {
-	            response.setStatus(Status.SYSTEM_ERROR);
-	            System.out.println("ciaoo");
-	            response.setDescrizione("La skill è già presente nella lista.");
-	        } else {
-	            u.getListaSkill().add(s);
-	            uRepository.save(u);
-	            
-	            UtenteDto dto = UtenteMapper.toDto(u);
+				UtenteDto dto = UtenteMapper.toDto(u);
 
-	            response.setData(dto);
-	            response.setStatus(Status.OK);
-	            response.setDescrizione("Skill aggiunta con successo.");
-	        }
+				response.setData(dto);
+				response.setStatus(Status.OK);
+				response.setDescrizione("Skill aggiunta con successo.");
+			}
 
-	        return response;
-	    } catch (Exception e) {
-	        response.setStatus(Status.SYSTEM_ERROR);
-	        response.setDescrizione("aggiungiSkill in errore " + e.getMessage());
-	        return response;
-	    }
+			return response;
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiungiSkill in errore " + e.getMessage());
+			return response;
+		}
 	}
 
+	public Response<UtenteDto, Status> aggiornaFoto(long id, MultipartFile foto) {
+
+		Response<UtenteDto, Status> response = new Response<>();
+
+		try {
+			Utente u = uRepository.findById(id).get();
+			if (!foto.isEmpty()) {
+				
+				u.setFoto(foto.getBytes());
+
+				uRepository.save(u);
+				UtenteDto dto = UtenteMapper.toDto(u);
+				response.setData(dto);
+				response.setStatus(Status.OK);
+				response.setDescrizione("Foto Utente salvato con successo.");
+				return response;
+			} else {
+
+				response.setStatus(Status.SYSTEM_ERROR);
+				response.setDescrizione("Foto è null.");
+				return response;
+
+			}
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiornaFoto  in errore " + e.getMessage());
+			return response;
+
+		}
+
+	}
+	public Response<UtenteDto, Status> byEmail(String email) {
+		Response<UtenteDto, Status> response = new Response<>();
+		
+		try {
+			response.setData(UtenteMapper.toDto(uRepository.findByEmail(email)));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Utente trovato");
+			return response;
+		}catch(Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione(e.getMessage());
+			return response;
+		}
+	}
 }

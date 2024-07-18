@@ -13,6 +13,5 @@ public interface CandidaturaRepository extends JpaRepository<Candidatura, Long>{
 
 	List<Candidatura> findAllByAziendaId(long id_azienda);
 
-	Azienda getAziendaById(long id);
 
 }

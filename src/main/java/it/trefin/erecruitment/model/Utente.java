@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.model;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -27,10 +28,11 @@ public class Utente {
 	private long id;
 	private String nome;
 	private String cognome;
-	private String password="Erecruitment2024!";
+	private String password = "Erecruitment2024!";
 	private String cellulare;
 	private String indirizzo;
 	private String citta;
+	private Date dataNascita;
 	private boolean verified;
 	private boolean completed;
 
@@ -44,7 +46,7 @@ public class Utente {
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
 
-	@OneToMany(mappedBy = "utente",fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
 	private List<UtenteTitoliStudio> utenteTitoliStudio;
 
 	@OneToMany(mappedBy = "utente")
@@ -221,4 +223,13 @@ public class Utente {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
+
+	public Date getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+
 }

@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.dto;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +30,8 @@ public class UtenteDto {
 
 	private byte[] foto;
 	private byte[] cv;
+	
+	private Date dataNascita;
 
 	public long getId() {
 		return id;
@@ -181,4 +184,13 @@ public class UtenteDto {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
+
+	public Date getDataNascita() {
+		return dataNascita;
+	}
+
+	public void setDataNascita(Date dataNascita) {
+		this.dataNascita = dataNascita;
+	}
+	
 }

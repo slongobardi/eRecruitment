@@ -32,7 +32,7 @@ public class UtenteMapper {
 	    uDto.setIndirizzo(u.getIndirizzo());
 	    uDto.setVerified(u.isVerified());
 	    uDto.setCompleted(u.isCompleted());
-	    
+	    uDto.setDataNascita(u.getDataNascita());    
 	    uDto.setListaSkill(
 	    	u.getListaSkill() != null ? 
 	    	u.getListaSkill().stream().map(Skill :: getId).collect(Collectors.toSet()): 

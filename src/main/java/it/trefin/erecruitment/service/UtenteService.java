@@ -349,38 +349,29 @@ public class UtenteService {
 	}
 
 	public Response<UtenteDto, Status> aggiornaFoto(long id, MultipartFile foto) {
+		  Response<UtenteDto, Status> response = new Response<>();
 
-		Response<UtenteDto, Status> response = new Response<>();
-
-		try {
-			Utente u = uRepository.findById(id).get();
-			if (!foto.isEmpty()) {
-
-				u.setFoto(foto.getBytes());
-
-				uRepository.save(u);
-				UtenteDto dto = UtenteMapper.toDto(u);
-				response.setData(dto);
-				response.setStatus(Status.OK);
-				response.setDescrizione("Foto Utente salvato con successo.");
-				return response;
-			} else {
-
-				response.setStatus(Status.SYSTEM_ERROR);
-				response.setDescrizione("Foto è null.");
-				return response;
-
-			}
-
-		} catch (Exception e) {
-
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("aggiornaFoto  in errore " + e.getMessage());
-			return response;
-
+		  try {
+		    Utente u = uRepository.findById(id).get();
+		    if (!foto.isEmpty()) {
+		      u.setFoto(foto.getBytes());
+		      uRepository.save(u);
+		      UtenteDto dto = UtenteMapper.toDto(u);
+		      response.setData(dto);
+		      response.setStatus(Status.OK);
+		      response.setDescrizione("Foto Utente salvato con successo.");
+		      return response;
+		    } else {
+		      response.setStatus(Status.SYSTEM_ERROR);
+		      response.setDescrizione("Foto è null.");
+		      return response;
+		    }
+		  } catch (Exception e) {
+		    response.setStatus(Status.SYSTEM_ERROR);
+		    response.setDescrizione("aggiornaFoto in errore " + e.getMessage());
+		    return response;
+		  }
 		}
-
-	}
 
 	public Response<UtenteDto, Status> byEmail(String email) {
 		Response<UtenteDto, Status> response = new Response<>();

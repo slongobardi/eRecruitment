@@ -74,6 +74,7 @@ public class UtenteService {
 			u.setCitta(utente.getCitta());
 			u.setEmail(utente.getEmail());
 			u.setIndirizzo(utente.getIndirizzo());
+			u.setDataNascita(utente.getDataNascita());
 			uRepository.save(u);
 			response.setData(UtenteMapper.toDto(u));
 			response.setStatus(Status.OK);
@@ -354,7 +355,7 @@ public class UtenteService {
 		try {
 			Utente u = uRepository.findById(id).get();
 			if (!foto.isEmpty()) {
-				
+
 				u.setFoto(foto.getBytes());
 
 				uRepository.save(u);
@@ -380,15 +381,34 @@ public class UtenteService {
 		}
 
 	}
+
 	public Response<UtenteDto, Status> byEmail(String email) {
 		Response<UtenteDto, Status> response = new Response<>();
-		
+
 		try {
 			response.setData(UtenteMapper.toDto(uRepository.findByEmail(email)));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Utente trovato");
 			return response;
-		}catch(Exception e) {
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione(e.getMessage());
+			return response;
+		}
+	}
+	
+	public Response<UtenteDto,Status> complete(Long id){
+		Response<UtenteDto, Status> response = new Response<>();
+
+		try {
+			Utente u = uRepository.findById(id).get();
+			u.setCompleted(true);
+			uRepository.save(u);
+			response.setData(UtenteMapper.toDto(u));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Utente completato");
+			return response;
+		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione(e.getMessage());
 			return response;

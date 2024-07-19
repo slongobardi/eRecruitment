@@ -117,4 +117,9 @@ public class UtenteController {
 	public Response<UtenteDto, Status> getByEmail(@PathVariable String email) {
 		return uService.byEmail(email);
 	}
+	
+	@PutMapping("/complete/{id}")
+	public Response<UtenteDto,Status> complete(@PathVariable Long id){
+		return uService.complete(id);
+	}
 }

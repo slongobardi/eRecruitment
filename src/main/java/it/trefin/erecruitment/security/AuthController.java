@@ -11,6 +11,7 @@ import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,15 +83,27 @@ public class AuthController {
 			response.setData("Utente non trovato");
 		}
 
-		if (!passwordEncoder.matches(request.getOldPassword(), utente.getPassword())) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setData("Password non corretta");
-		}
-
 		utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
 		utenteRepository.save(utente);
 		response.setStatus(Status.OK);
 		response.setData("Password modificata con successo");
+		return response;
+	}
+
+	@PostMapping("/resetPassword/{email}/{pwd}")
+	public Response<String, Status> resetPassword(@PathVariable("email") String email,@PathVariable("pwd") String pwd) {
+		Utente u = utenteRepository.findByEmail(email);
+		Response<String, Status> response = new Response<>();
+		if (u == null) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setData("Utente non trovato");
+		}
+
+		u.setPassword(passwordEncoder.encode(pwd));
+		utenteRepository.save(u);
+		response.setStatus(Status.OK);
+		response.setData("Password resettata con successo");
+		
 		return response;
 	}
 

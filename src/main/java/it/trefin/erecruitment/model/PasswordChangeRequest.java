@@ -2,7 +2,6 @@ package it.trefin.erecruitment.model;
 
 public class PasswordChangeRequest {
 	private String email;
-	private String oldPassword;
 	private String newPassword;
 
 	public String getEmail() {
@@ -13,14 +12,6 @@ public class PasswordChangeRequest {
 		this.email = email;
 	}
 
-	public String getOldPassword() {
-		return oldPassword;
-	}
-
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
-
 	public String getNewPassword() {
 		return newPassword;
 	}
@@ -28,11 +19,5 @@ public class PasswordChangeRequest {
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 		
-	}
-
-	@Override
-	public String toString() {
-		return "PasswordChangeRequest [email=" + email + ", oldPassword=" + oldPassword + ", newPassword=" + newPassword
-				+ "]";
 	}
 }

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
 import it.trefin.erecruitment.mapper.UtenteCandidaturaMapper;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.UtenteCandidatura;
+import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 
 @Service
@@ -19,12 +21,17 @@ public class UtenteCandidaturaService {
 	@Autowired
 	private UtenteCandidaturaRepository ucRepository;
 
+	@Autowired
+	private CandidaturaRepository cRepository;
+
 	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(UtenteCandidatura utenteCandidatura) {
 
 		Response<UtenteCandidatura, Status> response = new Response<>();
 
 		try {
-
+			Candidatura c = cRepository.findById(utenteCandidatura.getCandidatura().getId()).get();
+			c.setNumeroCandidati(c.getNumeroCandidati()+ 1);
+			cRepository.save(c);
 			ucRepository.save(utenteCandidatura);
 			response.setData(utenteCandidatura);
 			response.setStatus(Status.OK);
@@ -104,7 +111,7 @@ public class UtenteCandidaturaService {
 		try {
 			ucRepository.deleteById(id);
 			response.setData(
-			ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
+					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("eliminata con successo.");
 			return response;
@@ -116,7 +123,6 @@ public class UtenteCandidaturaService {
 			return response;
 
 		}
-		
 
 	}
 

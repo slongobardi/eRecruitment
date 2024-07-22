@@ -1,7 +1,8 @@
 package it.trefin.erecruitment.security;
 
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
-import java.util.Base64;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,14 +40,12 @@ public class AuthController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private EmailService emailService;
 
 	@Autowired
 	private JwtUtil jwtUtil;
-
-	private static final BytesKeyGenerator DEFAULT_TOKEN_GENERATOR = KeyGenerators.secureRandom(15);
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
@@ -74,7 +73,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/cambiaPassword")
-	public Response<String,Status> cambiaPassword(@RequestBody PasswordChangeRequest request) {
+	public Response<String, Status> cambiaPassword(@RequestBody PasswordChangeRequest request) {
 		Utente utente = utenteRepository.findByEmail(request.getEmail());
 
 		Response<String, Status> response = new Response<>();
@@ -82,7 +81,6 @@ public class AuthController {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setData("Utente non trovato");
 		}
-		
 
 		if (!passwordEncoder.matches(request.getOldPassword(), utente.getPassword())) {
 			response.setStatus(Status.SYSTEM_ERROR);
@@ -98,14 +96,41 @@ public class AuthController {
 
 	public void sendRegistrationConfirmationEmail(Utente user) {
 		// Generate the token
-		String tokenValue = new String(Base64.getEncoder().encodeToString(DEFAULT_TOKEN_GENERATOR.generateKey()));
+		String tokenValue = getAlphaNumericString(15);
 		ConfirmToken emailConfirmationToken = new ConfirmToken();
 		emailConfirmationToken.setToken(tokenValue);
 		emailConfirmationToken.setTimeStamp(LocalDateTime.now());
 		emailConfirmationToken.setUser(user);
 		tokenRepository.save(emailConfirmationToken);
 		// Send email
-		emailService.confirmEmail(emailConfirmationToken,user.getEmail());
+		emailService.confirmEmail(emailConfirmationToken, user.getEmail());
 	}
 
+	private String getAlphaNumericString(int n) {
+
+		// length is bounded by 256 Character
+		byte[] array = new byte[256];
+		new Random().nextBytes(array);
+
+		String randomString = new String(array, Charset.forName("UTF-8"));
+
+		// Create a StringBuffer to store the result
+		StringBuffer r = new StringBuffer();
+
+		// Append first 20 alphanumeric characters
+		// from the generated random String into the result
+		for (int k = 0; k < randomString.length(); k++) {
+
+			char ch = randomString.charAt(k);
+
+			if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) && (n > 0)) {
+
+				r.append(ch);
+				n--;
+			}
+		}
+
+		// return the resultant string
+		return r.toString();
+	}
 }

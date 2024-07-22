@@ -47,7 +47,6 @@ public class EmailService {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 			helper.setTo(destinatario);
 			helper.setFrom(from);
-			helper.setCc("christian.mascolo.3fedin@hotmail.com");
 			helper.setSubject(oggetto);
 			helper.setText(testo,true);
 

@@ -20,38 +20,39 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+	@Autowired
+	private JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	http.cors(withDefaults()).csrf(csrf -> csrf.disable())
-		.authorizeRequests(requests -> requests
-				.antMatchers("/auth/login", "/auth/register","/auth/cambiaPassword", "/api/sendEmail/inviaEmail",
-						"/api/candidatura/all", "/api/candidatura/visualizza/?","/api/sendEmail/inviaEmail/**","/api/sendEmail/confirmEmail/**")
-				.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
-		.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors(withDefaults()).csrf(csrf -> csrf.disable())
+				.authorizeRequests(requests -> requests
+						.antMatchers("/auth/login", "/auth/register", "/auth/cambiaPassword",
+								"/api/sendEmail/inviaEmail", "/api/candidatura/all", "/api/candidatura/visualizza/?",
+								"/api/sendEmail/inviaEmail/**", "/api/sendEmail/confirmEmail/**")
+						.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
+				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-    }
+	}
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 }

@@ -90,8 +90,8 @@ public class AuthController {
 		return response;
 	}
 
-	@PostMapping("/resetPassword/{email}/{pwd}")
-	public Response<String, Status> resetPassword(@PathVariable("email") String email,@PathVariable("pwd") String pwd) {
+	@PostMapping("/resetPassword/{email}")
+	public Response<String, Status> resetPassword(@PathVariable("email") String email) {
 		Utente u = utenteRepository.findByEmail(email);
 		Response<String, Status> response = new Response<>();
 		if (u == null) {
@@ -99,11 +99,11 @@ public class AuthController {
 			response.setData("Utente non trovato");
 		}
 
-		u.setPassword(passwordEncoder.encode(pwd));
+		u.setPassword(passwordEncoder.encode("Erecruitment2024!"));
 		utenteRepository.save(u);
 		response.setStatus(Status.OK);
 		response.setData("Password resettata con successo");
-		
+
 		return response;
 	}
 

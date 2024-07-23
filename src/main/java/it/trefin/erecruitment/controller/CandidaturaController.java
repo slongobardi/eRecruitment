@@ -29,7 +29,7 @@ public class CandidaturaController {
 	private CandidaturaService cService;
 
 	@PostMapping("/add")
-	public Response<Candidatura, Status> inserisciCandidatura(@RequestBody CandidaturaDto candidaturaDto) {
+	public Response<CandidaturaDto, Status> inserisciCandidatura(@RequestBody CandidaturaDto candidaturaDto) {
 		return cService.inserisciCandidatura(candidaturaDto);
 	}
 
@@ -45,7 +45,7 @@ public class CandidaturaController {
 	}
 
 	@DeleteMapping("/elimina/{id}")
-	public Response<Candidatura, Status> eliminaCandidatura(@PathVariable long id) {
+	public Response<CandidaturaDto, Status> eliminaCandidatura(@PathVariable long id) {
 		return cService.eliminaCandidatura(id);
 	}
 

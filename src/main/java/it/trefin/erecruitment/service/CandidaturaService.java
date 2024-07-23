@@ -13,6 +13,7 @@ import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SkillMapper;
+import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -31,9 +32,9 @@ public class CandidaturaService {
 	@Autowired
 	private AziendaRepository aRepository;
 	
-	public Response<Candidatura, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
+	public Response<CandidaturaDto, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
 
-		Response<Candidatura, Status> response = new Response<>();
+		Response<CandidaturaDto, Status> response = new Response<>();
 		Azienda azienda = this.aRepository.getReferenceById(candidaturaDto.getAzienda());
 		Set<Skill> listaSkill = new HashSet<>();
 		for (long skill : candidaturaDto.getListaSkill()) {
@@ -42,7 +43,7 @@ public class CandidaturaService {
 		try {
 			Candidatura candidatura = CandidaturaMapper.toEntity(candidaturaDto, azienda, null, listaSkill, null);
 			cRepository.save(candidatura);
-			response.setData(candidatura);
+			response.setData(CandidaturaMapper.toDto(candidatura));
 			response.setStatus(Status.OK);
 			response.setDescrizione("candidatura salvata con successo.");
 			return response;
@@ -111,14 +112,14 @@ public class CandidaturaService {
 
 	}
 
-	public Response<Candidatura, Status> eliminaCandidatura(long id) {
+	public Response<CandidaturaDto, Status> eliminaCandidatura(long id) {
 
-		Response<Candidatura, Status> response = new Response<>();
+		Response<CandidaturaDto, Status> response = new Response<>();
 
 		try {
-
-			response.setData(cRepository.findById(id).get());
-			cRepository.delete(response.getData());
+			Candidatura c = cRepository.findById(id).get();
+			response.setData(CandidaturaMapper.toDto(c));
+			cRepository.delete(c);
 			response.setStatus(Status.OK);
 			response.setDescrizione("Candidatura eliminata con successo.");
 			return response;

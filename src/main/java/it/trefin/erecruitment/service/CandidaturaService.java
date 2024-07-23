@@ -17,6 +17,7 @@ import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
+import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.SkillRepository;
 
@@ -27,13 +28,19 @@ public class CandidaturaService {
 	private CandidaturaRepository cRepository;
 	@Autowired
 	private SkillRepository sRepository;
+	@Autowired
+	private AziendaRepository aRepository;
 	
-	public Response<Candidatura, Status> inserisciCandidatura(Candidatura candidatura) {
+	public Response<Candidatura, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
 
 		Response<Candidatura, Status> response = new Response<>();
-
+		Azienda azienda = this.aRepository.getReferenceById(candidaturaDto.getAzienda());
+		Set<Skill> listaSkill = new HashSet<>();
+		for (long skill : candidaturaDto.getListaSkill()) {
+			listaSkill.add(sRepository.getReferenceById(skill));
+		}
 		try {
-
+			Candidatura candidatura = CandidaturaMapper.toEntity(candidaturaDto, azienda, null, listaSkill, null);
 			cRepository.save(candidatura);
 			response.setData(candidatura);
 			response.setStatus(Status.OK);

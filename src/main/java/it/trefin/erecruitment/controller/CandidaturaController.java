@@ -29,8 +29,8 @@ public class CandidaturaController {
 	private CandidaturaService cService;
 
 	@PostMapping("/add")
-	public Response<Candidatura, Status> inserisciCandidatura(@RequestBody Candidatura candidatura) {
-		return cService.inserisciCandidatura(candidatura);
+	public Response<Candidatura, Status> inserisciCandidatura(@RequestBody CandidaturaDto candidaturaDto) {
+		return cService.inserisciCandidatura(candidaturaDto);
 	}
 
 

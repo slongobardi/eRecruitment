@@ -45,9 +45,9 @@ public class UtenteTitoliStudioController {
 		return utsService.aggiornaUtenteTitoliStudio(utenteTitoliStudio, id);
 	}
 
-	@DeleteMapping("/elimina/{id}")
-	public Response<UtenteTitoliStudio, Status> eliminaUtenteTitoliStudio(@PathVariable long id) {
-		return utsService.eliminaUtenteTitoliStudio(id);
+	@DeleteMapping("/elimina/{idU}/{idT}")
+	public Response<UtenteTitoliStudioDto, Status> eliminaUtenteTitoliStudio(@PathVariable("idU") long idU,@PathVariable("idT") long idT) {
+		return utsService.eliminaUtenteTitoliStudio(idU,idT);
 	}
 
 	@GetMapping("/all")

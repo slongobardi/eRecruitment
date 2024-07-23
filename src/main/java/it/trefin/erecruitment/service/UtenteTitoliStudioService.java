@@ -101,16 +101,16 @@ public class UtenteTitoliStudioService {
 
 	}
 
-	public Response<UtenteTitoliStudio, Status> eliminaUtenteTitoliStudio(long id) {
+	public Response<UtenteTitoliStudioDto, Status> eliminaUtenteTitoliStudio(long idU,long idT) {
 
-		Response<UtenteTitoliStudio, Status> response = new Response<>();
+		Response<UtenteTitoliStudioDto, Status> response = new Response<>();
 
 		try {
-
-			response.setData(utsRepository.findById(id).get());
-			utsRepository.delete(response.getData());
+			UtenteTitoliStudio uts = utsRepository.findByUtenteIdAndTitoliStudioId(idU, idT);
+			utsRepository.delete(uts);
+			response.setData(UtenteTitoliStudioMapper.toDto(uts));
 			response.setStatus(Status.OK);
-			response.setDescrizione("UtenteTitoliStudio eliminato con successo.");
+			response.setDescrizione("eliminata");
 			return response;
 
 		} catch (Exception e) {

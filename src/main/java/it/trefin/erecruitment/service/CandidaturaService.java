@@ -15,12 +15,14 @@ import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SkillMapper;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
+import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.SkillRepository;
+import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 
 @Service
 public class CandidaturaService {
@@ -30,7 +32,11 @@ public class CandidaturaService {
 	@Autowired
 	private SkillRepository sRepository;
 	@Autowired
+<<<<<<< Updated upstream
 	private AziendaRepository aRepository;
+=======
+	private UtenteCandidaturaRepository uRepository;
+>>>>>>> Stashed changes
 	
 	public Response<CandidaturaDto, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
 
@@ -89,13 +95,18 @@ public class CandidaturaService {
 		Response<CandidaturaDto, Status> response = new Response<>();
 		Candidatura candidatura = this.cRepository.getReferenceById(candidaturaDTO.getId());
 		Set<Skill> listaSkill = new HashSet<>();
+		List<UtenteCandidatura> listaUtenteCandidatura = new ArrayList<>();
+		
 		for (long skill : candidaturaDTO.getListaSkill()) {
 			listaSkill.add(this.sRepository.getReferenceById(skill));
 		}
+		for (long utenteCandidatura : candidaturaDTO.getUtenteCandidature()) {
+			listaUtenteCandidatura.add(this.uRepository.getReferenceById(utenteCandidatura));
+		}
 		try {
-
 			
-			candidatura=CandidaturaMapper.toEntity(candidaturaDTO,candidatura.getAzienda(),candidatura.getUtenteCandidature(),listaSkill,candidatura.getListaTitoliStudio());
+			candidatura=CandidaturaMapper.toEntity(candidaturaDTO,candidatura.getAzienda(),listaUtenteCandidatura,listaSkill,candidatura.getListaTitoliStudio());
+			System.out.println(candidatura.getNumeroCandidati());
 			this.cRepository.save(candidatura);
 			response.setData(CandidaturaMapper.toDto(candidatura));
 			response.setStatus(Status.OK);

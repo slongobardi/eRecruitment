@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.model;
 
+import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.List;
 import java.util.Set;
@@ -23,213 +24,224 @@ import javax.validation.constraints.Email;
 @Entity
 public class Utente {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	private String nome;
-	private String cognome;
-	private String password = "Erecruitment2024!";
-	private String cellulare;
-	private String indirizzo;
-	private String citta;
-	private Date dataNascita;
-	private boolean verified;
-	private boolean completed;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String nome;
+    private String cognome;
+    private String password;
+    private String cellulare;
+    private String indirizzo;
+    private String citta;
+    private Date dataNascita;
+    private boolean verified;
+    private boolean completed;
 
-	@Enumerated(EnumType.ORDINAL)
-	private Ruolo ruolo;
+    @Enumerated(EnumType.ORDINAL)
+    private Ruolo ruolo;
 
-	@Column(unique = true)
-	@Email(message = "Inserisci una email valida.")
-	private String email;
+    @Column(unique = true)
+    @Email(message = "Inserisci una email valida.")
+    private String email;
 
-	@Column(columnDefinition = "TEXT")
-	private String descrizione;
+    @Column(columnDefinition = "TEXT")
+    private String descrizione;
 
-	@OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
-	private List<UtenteTitoliStudio> utenteTitoliStudio;
+    @OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
+    private List<UtenteTitoliStudio> utenteTitoliStudio;
 
-	@OneToMany(mappedBy = "utente")
-	private List<UtenteCandidatura> utentiCandidati;
+    @OneToMany(mappedBy = "utente")
+    private List<UtenteCandidatura> utentiCandidati;
 
-	@ManyToMany()
-	@JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
-	private Set<Colloquio> listaColloquii;
+    @ManyToMany()
+    @JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
+    private Set<Colloquio> listaColloquii;
 
-	@ManyToMany()
-	@JoinTable(name = "utenteSkill", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
-	private Set<Skill> listaSkill;
+    @ManyToMany()
+    @JoinTable(name = "utenteSkill", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
+    private Set<Skill> listaSkill;
 
-	@ManyToOne
-	private Azienda azienda;
+    @ManyToOne
+    private Azienda azienda;
 
-	@Lob
-	private byte[] foto;
-	@Lob
-	private byte[] cv;
+    @Lob
+    private byte[] foto;
+    @Lob
+    private byte[] cv;
 
-	public Utente() {
+    public Utente() {
+        this.password = generateRandomPassword();
+    }
 
-	}
+    private String generateRandomPassword() {
+        int length = 12;
+        SecureRandom random = new SecureRandom();
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()-_=+";
+        StringBuilder password = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            password.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return password.toString();
+    }
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getCognome() {
-		return cognome;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+    public String getCognome() {
+        return cognome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getCellulare() {
-		return cellulare;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setCellulare(String cellulare) {
-		this.cellulare = cellulare;
-	}
+    public String getCellulare() {
+        return cellulare;
+    }
 
-	public String getDescrizione() {
-		return descrizione;
-	}
+    public void setCellulare(String cellulare) {
+        this.cellulare = cellulare;
+    }
 
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
+    public String getDescrizione() {
+        return descrizione;
+    }
 
-	public List<UtenteTitoliStudio> getUtenteTitoliStudio() {
-		return utenteTitoliStudio;
-	}
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
 
-	public void setUtenteTitoliStudio(List<UtenteTitoliStudio> utenteTitoliStudio) {
-		this.utenteTitoliStudio = utenteTitoliStudio;
-	}
+    public List<UtenteTitoliStudio> getUtenteTitoliStudio() {
+        return utenteTitoliStudio;
+    }
 
-	public List<UtenteCandidatura> getUtentiCandidati() {
-		return utentiCandidati;
-	}
+    public void setUtenteTitoliStudio(List<UtenteTitoliStudio> utenteTitoliStudio) {
+        this.utenteTitoliStudio = utenteTitoliStudio;
+    }
 
-	public void setUtentiCandidati(List<UtenteCandidatura> utentiCandidati) {
-		this.utentiCandidati = utentiCandidati;
-	}
+    public List<UtenteCandidatura> getUtentiCandidati() {
+        return utentiCandidati;
+    }
 
-	public byte[] getFoto() {
-		return foto;
-	}
+    public void setUtentiCandidati(List<UtenteCandidatura> utentiCandidati) {
+        this.utentiCandidati = utentiCandidati;
+    }
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
+    public byte[] getFoto() {
+        return foto;
+    }
 
-	public byte[] getCv() {
-		return cv;
-	}
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
 
-	public void setCv(byte[] cv) {
-		this.cv = cv;
-	}
+    public byte[] getCv() {
+        return cv;
+    }
 
-	public String getIndirizzo() {
-		return indirizzo;
-	}
+    public void setCv(byte[] cv) {
+        this.cv = cv;
+    }
 
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
-	}
+    public String getIndirizzo() {
+        return indirizzo;
+    }
 
-	public String getCitta() {
-		return citta;
-	}
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
 
-	public void setCitta(String citta) {
-		this.citta = citta;
-	}
+    public String getCitta() {
+        return citta;
+    }
 
-	public Set<Colloquio> getListaColloquii() {
-		return listaColloquii;
-	}
+    public void setCitta(String citta) {
+        this.citta = citta;
+    }
 
-	public void setListaColloquii(Set<Colloquio> listaColloquii) {
-		this.listaColloquii = listaColloquii;
-	}
+    public Set<Colloquio> getListaColloquii() {
+        return listaColloquii;
+    }
 
-	public Ruolo getRuolo() {
-		return ruolo;
-	}
+    public void setListaColloquii(Set<Colloquio> listaColloquii) {
+        this.listaColloquii = listaColloquii;
+    }
 
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
-	}
+    public Ruolo getRuolo() {
+        return ruolo;
+    }
 
-	public Azienda getAzienda() {
-		return azienda;
-	}
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
+    }
 
-	public void setAzienda(Azienda azienda) {
-		this.azienda = azienda;
-	}
+    public Azienda getAzienda() {
+        return azienda;
+    }
 
-	public Set<Skill> getListaSkill() {
-		return listaSkill;
-	}
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
 
-	public void setListaSkill(Set<Skill> listaSkill) {
-		this.listaSkill = listaSkill;
-	}
+    public Set<Skill> getListaSkill() {
+        return listaSkill;
+    }
 
-	public boolean isVerified() {
-		return verified;
-	}
+    public void setListaSkill(Set<Skill> listaSkill) {
+        this.listaSkill = listaSkill;
+    }
 
-	public void setVerified(boolean verified) {
-		this.verified = verified;
-	}
+    public boolean isVerified() {
+        return verified;
+    }
 
-	public boolean isCompleted() {
-		return completed;
-	}
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
+    public boolean isCompleted() {
+        return completed;
+    }
 
-	public Date getDataNascita() {
-		return dataNascita;
-	}
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
+    public Date getDataNascita() {
+        return dataNascita;
+    }
 
+    public void setDataNascita(Date dataNascita) {
+        this.dataNascita = dataNascita;
+    }
 }

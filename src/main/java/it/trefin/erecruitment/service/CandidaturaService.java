@@ -32,11 +32,11 @@ public class CandidaturaService {
 	@Autowired
 	private SkillRepository sRepository;
 	@Autowired
-<<<<<<< Updated upstream
+
 	private AziendaRepository aRepository;
-=======
+
 	private UtenteCandidaturaRepository uRepository;
->>>>>>> Stashed changes
+
 	
 	public Response<CandidaturaDto, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
 

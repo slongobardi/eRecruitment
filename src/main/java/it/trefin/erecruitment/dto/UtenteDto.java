@@ -20,6 +20,7 @@ public class UtenteDto {
 	private String citta;
 	private boolean verified;
 	private boolean completed;
+	private boolean categoriaProtetta;
 	
 	private List<Long> utenteTitoliStudio;
 	private List<Long> utentiCandidati;
@@ -201,6 +202,13 @@ public class UtenteDto {
 	public void setListaEsperienze(List<Long> listaEsperienze) {
 		this.listaEsperienze = listaEsperienze;
 	}
+	 public boolean isCategoriaProtetta() {
+	        return categoriaProtetta;
+	    }
+
+	    public void setInCategoriaProtetta(boolean categoriaProtetta) {
+	        this.categoriaProtetta = categoriaProtetta;
+	    }
 	
 	
 }

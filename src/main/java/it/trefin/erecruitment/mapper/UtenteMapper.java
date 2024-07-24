@@ -26,6 +26,7 @@ public class UtenteMapper {
 	    uDto.setEmail(u.getEmail());
 	    uDto.setPassword(u.getPassword());
 	    uDto.setCv(u.getCv());
+	    uDto.setInCategoriaProtetta(u.isCategoriaProtetta());
 	    uDto.setFoto(u.getFoto());
 	    uDto.setId(u.getId());
 	    uDto.setDescrizione(u.getDescrizione());

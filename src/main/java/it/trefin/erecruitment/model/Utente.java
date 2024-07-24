@@ -36,43 +36,44 @@ public class Utente {
     private Date dataNascita;
     private boolean verified;
     private boolean completed;
-
+    
     @Enumerated(EnumType.ORDINAL)
     private Ruolo ruolo;
-
+    
     @Column(unique = true)
     @Email(message = "Inserisci una email valida.")
     private String email;
-
+    
     @Column(columnDefinition = "TEXT")
     private String descrizione;
-
+    
     @OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
     private List<UtenteTitoliStudio> utenteTitoliStudio;
-
+    
     @OneToMany(mappedBy = "utente")
     private List<UtenteCandidatura> utentiCandidati;
-
-    @ManyToMany()
+    
+    @ManyToMany
     @JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
     private Set<Colloquio> listaColloquii;
-
-    @ManyToMany()
+    
+    @ManyToMany
     @JoinTable(name = "utenteSkill", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
     private Set<Skill> listaSkill;
-
+    
     @ManyToOne
     private Azienda azienda;
 
-	@OneToMany(mappedBy = "utente")
-	private List<Esperienza> esperienze;
+    @OneToMany(mappedBy = "utente")
+    private List<Esperienza> esperienze;
+    
+    @Lob
+    private byte[] foto;
+    
+    @Lob
+    private byte[] cv;
 
-	@Lob
-	private byte[] foto;
-	@Lob
-	private byte[] cv;
-
-
+    private boolean categoriaProtetta; 
     public Utente() {
         this.password = generateRandomPassword();
     }
@@ -87,7 +88,6 @@ public class Utente {
         }
         return password.toString();
     }
-
 
     public long getId() {
         return id;
@@ -245,16 +245,23 @@ public class Utente {
         return dataNascita;
     }
 
-	public List<Esperienza> getEsperienze() {
-		return esperienze;
-	}
-
-	public void setEsperienze(List<Esperienza> esperienze) {
-		this.esperienze = esperienze;
-	}
-
-
     public void setDataNascita(Date dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public List<Esperienza> getEsperienze() {
+        return esperienze;
+    }
+
+    public void setEsperienze(List<Esperienza> esperienze) {
+        this.esperienze = esperienze;
+    }
+
+    public boolean isCategoriaProtetta() {
+        return categoriaProtetta;
+    }
+
+    public void setCategoriaProtetta(boolean categoriaProtetta) {
+        this.categoriaProtetta = categoriaProtetta;
     }
 }

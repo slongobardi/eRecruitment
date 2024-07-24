@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Colloquio;
+import it.trefin.erecruitment.model.Esperienza;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
@@ -44,6 +45,11 @@ public class UtenteMapper {
 	        u.getUtenteTitoliStudio().stream().map(UtenteTitoliStudio::getId).collect(Collectors.toList()) : 
 	        new ArrayList<>()
 	    );
+	    uDto.setListaEsperienze(
+		        u.getEsperienze() != null ? 
+		        u.getEsperienze().stream().map(Esperienza::getId).collect(Collectors.toList()) : 
+		        new ArrayList<>()
+		    );
 	    
 	    uDto.setUtentiCandidati(
 	        u.getUtentiCandidati() != null ? 
@@ -70,7 +76,7 @@ public class UtenteMapper {
 
 
 	public static Utente toEntity(UtenteDto uDto, List<UtenteTitoliStudio> listaUTitoliStudio,
-			List<UtenteCandidatura> listaUCandidati, Set<Colloquio> listaColloqui, Azienda a) {
+			List<UtenteCandidatura> listaUCandidati, Set<Colloquio> listaColloqui, Azienda a,List<Esperienza>listaEsperienze) {
 		Utente u = new Utente();
 		u.setNome(uDto.getNome());
 		u.setCognome(uDto.getCognome());
@@ -86,6 +92,7 @@ public class UtenteMapper {
 		u.setUtenteTitoliStudio(listaUTitoliStudio);
 		u.setUtentiCandidati(listaUCandidati);
 		u.setListaColloquii(listaColloqui);
+		u.setEsperienze(listaEsperienze);
 		u.setAzienda(a);
 
 		return u;

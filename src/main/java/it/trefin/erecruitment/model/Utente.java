@@ -63,6 +63,9 @@ public class Utente {
 	@ManyToOne
 	private Azienda azienda;
 
+	@OneToMany(mappedBy = "utente")
+	private List<Esperienza> esperienze;
+
 	@Lob
 	private byte[] foto;
 	@Lob
@@ -230,6 +233,14 @@ public class Utente {
 
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
+	}
+
+	public List<Esperienza> getEsperienze() {
+		return esperienze;
+	}
+
+	public void setEsperienze(List<Esperienza> esperienze) {
+		this.esperienze = esperienze;
 	}
 
 }

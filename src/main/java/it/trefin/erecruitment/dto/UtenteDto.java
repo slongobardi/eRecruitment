@@ -25,6 +25,7 @@ public class UtenteDto {
 	private List<Long> utentiCandidati;
 	private Set<Long> listaSkill;
 	private Set<Long> listaColloquii;
+	private List<Long>listaEsperienze;
 
 	private Ruolo ruolo;
 
@@ -192,5 +193,14 @@ public class UtenteDto {
 	public void setDataNascita(Date dataNascita) {
 		this.dataNascita = dataNascita;
 	}
+
+	public List<Long> getListaEsperienze() {
+		return listaEsperienze;
+	}
+
+	public void setListaEsperienze(List<Long> listaEsperienze) {
+		this.listaEsperienze = listaEsperienze;
+	}
+	
 	
 }

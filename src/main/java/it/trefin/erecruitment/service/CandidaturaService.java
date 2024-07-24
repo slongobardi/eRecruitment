@@ -35,6 +35,8 @@ public class CandidaturaService {
 	private AziendaRepository aRepository;
 	@Autowired
 	private UtenteCandidaturaRepository uRepository;
+
+	
 	
 	public Response<CandidaturaDto, Status> inserisciCandidatura(CandidaturaDto candidaturaDto) {
 

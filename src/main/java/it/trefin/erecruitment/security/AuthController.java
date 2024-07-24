@@ -1,14 +1,13 @@
 package it.trefin.erecruitment.security;
 
 import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.keygen.BytesKeyGenerator;
-import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,117 +32,134 @@ import it.trefin.erecruitment.service.EmailService;
 @RequestMapping("auth")
 public class AuthController {
 
-	@Autowired
-	private UtenteRepository utenteRepository;
+    @Autowired
+    private UtenteRepository utenteRepository;
 
-	@Autowired
-	private ConfirmTokenRepository tokenRepository;
+    @Autowired
+    private ConfirmTokenRepository tokenRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
-	@Autowired
-	private JwtUtil jwtUtil;
+    @Autowired
+    private JwtUtil jwtUtil;
 
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-		Utente user = utenteRepository.findByEmail(request.getEmail());
-		if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        Utente user = utenteRepository.findByEmail(request.getEmail());
+        if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
-		String token = jwtUtil.generateToken(request.getEmail(), user.getRuolo().toString());
-		LoginResponse response = new LoginResponse(user.getId(), token);
-		return ResponseEntity.ok(response);
-	}
+        String token = jwtUtil.generateToken(request.getEmail(), user.getRuolo().toString());
+        LoginResponse response = new LoginResponse(user.getId(), token);
+        return ResponseEntity.ok(response);
+    }
 
-	@PostMapping("/register")
-	public long register(@RequestBody Utente user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		utenteRepository.save(user);
+    @PostMapping("/register")
+    public long register(@RequestBody Utente user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        utenteRepository.save(user);
 
-		if (utenteRepository.existsById(user.getId())) {
-			sendRegistrationConfirmationEmail(user);
-			return user.getId();
-		} else {
-			return -1;
-		}
-	}
+        if (utenteRepository.existsById(user.getId())) {
+            sendRegistrationConfirmationEmail(user);
+            return user.getId();
+        } else {
+            return -1;
+        }
+    }
 
-	@PostMapping("/cambiaPassword")
-	public Response<String, Status> cambiaPassword(@RequestBody PasswordChangeRequest request) {
-		Utente utente = utenteRepository.findByEmail(request.getEmail());
+    @PostMapping("/cambiaPassword")
+    public Response<String, Status> cambiaPassword(@RequestBody PasswordChangeRequest request) {
+        Utente utente = utenteRepository.findByEmail(request.getEmail());
 
-		Response<String, Status> response = new Response<>();
-		if (utente == null) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setData("Utente non trovato");
-		}
+        Response<String, Status> response = new Response<>();
+        if (utente == null) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setData("Utente non trovato");
+        } else {
+            utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            utenteRepository.save(utente);
+            response.setStatus(Status.OK);
+            response.setData("Password modificata con successo");
+        }
+        return response;
+    }
 
-		utente.setPassword(passwordEncoder.encode(request.getNewPassword()));
-		utenteRepository.save(utente);
-		response.setStatus(Status.OK);
-		response.setData("Password modificata con successo");
-		return response;
-	}
+    @PostMapping("/resetPassword/{email}")
+    public Response<String, Status> resetPassword(@PathVariable("email") String email) {
+        Utente u = utenteRepository.findByEmail(email);
+        Response<String, Status> response = new Response<>();
+        if (u == null) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setData("Utente non trovato");
+        } else {
+            // Generare una password casuale
+            String newPassword = generateRandomPassword();
+            u.setPassword(passwordEncoder.encode(newPassword));
+            utenteRepository.save(u);
+            response.setStatus(Status.OK);
+            response.setData("Password resettata con successo");
+            // Inviare email con la nuova password
+            sendPasswordResetEmail(u, newPassword);
+        }
+        return response;
+    }
 
-	@PostMapping("/resetPassword/{email}")
-	public Response<String, Status> resetPassword(@PathVariable("email") String email) {
-		Utente u = utenteRepository.findByEmail(email);
-		Response<String, Status> response = new Response<>();
-		if (u == null) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setData("Utente non trovato");
-		}
+    public void sendRegistrationConfirmationEmail(Utente user) {
+        // Generate the token
+        String tokenValue = getAlphaNumericString(15);
+        ConfirmToken emailConfirmationToken = new ConfirmToken();
+        emailConfirmationToken.setToken(tokenValue);
+        emailConfirmationToken.setTimeStamp(LocalDateTime.now());
+        emailConfirmationToken.setUser(user);
+        tokenRepository.save(emailConfirmationToken);
+        // Send email
+        emailService.confirmEmail(emailConfirmationToken, user.getEmail());
+    }
 
-		u.setPassword(passwordEncoder.encode("Erecruitment2024!"));
-		utenteRepository.save(u);
-		response.setStatus(Status.OK);
-		response.setData("Password resettata con successo");
+    private String getAlphaNumericString(int n) {
+        byte[] array = new byte[256];
+        new Random().nextBytes(array);
 
-		return response;
-	}
+        String randomString = new String(array, Charset.forName("UTF-8"));
 
-	public void sendRegistrationConfirmationEmail(Utente user) {
-		// Generate the token
-		String tokenValue = getAlphaNumericString(15);
-		ConfirmToken emailConfirmationToken = new ConfirmToken();
-		emailConfirmationToken.setToken(tokenValue);
-		emailConfirmationToken.setTimeStamp(LocalDateTime.now());
-		emailConfirmationToken.setUser(user);
-		tokenRepository.save(emailConfirmationToken);
-		// Send email
-		emailService.confirmEmail(emailConfirmationToken, user.getEmail());
-	}
+        StringBuffer r = new StringBuffer();
 
-	private String getAlphaNumericString(int n) {
+        for (int k = 0; k < randomString.length(); k++) {
+            char ch = randomString.charAt(k);
 
-		// length is bounded by 256 Character
-		byte[] array = new byte[256];
-		new Random().nextBytes(array);
+            if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) && (n > 0)) {
+                r.append(ch);
+                n--;
+            }
+        }
 
-		String randomString = new String(array, Charset.forName("UTF-8"));
+        return r.toString();
+    }
 
-		// Create a StringBuffer to store the result
-		StringBuffer r = new StringBuffer();
+    private String generateRandomPassword() {
+        int length = 12;
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder password = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            password.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        return password.toString();
+    }
 
-		// Append first 20 alphanumeric characters
-		// from the generated random String into the result
-		for (int k = 0; k < randomString.length(); k++) {
-
-			char ch = randomString.charAt(k);
-
-			if (((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) && (n > 0)) {
-
-				r.append(ch);
-				n--;
-			}
-		}
-
-		// return the resultant string
-		return r.toString();
-	}
+    public void sendPasswordResetEmail(Utente user, String newPassword) {
+        String emailContent = "<html>" 
+                + "<body>" 
+                + "<h2>Ciao " + user.getNome() + ",</h2>"
+                + "La tua password è stata resettata. La nuova password è: <strong>" + newPassword + "</strong><br/>"
+                + "Per favore, accedi al tuo account e cambia la password appena possibile.<br/>"
+                + "Cordiali saluti,<br/>" + "3F & Edin S.P.A."
+                + "</body>" + "</html>";
+        emailService.inviaEmail(new String[] { user.getEmail() }, "Reset della password", emailContent);
+    }
 }

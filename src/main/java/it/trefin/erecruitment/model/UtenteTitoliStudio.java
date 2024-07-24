@@ -29,6 +29,7 @@ public class UtenteTitoliStudio {
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
 	private Date data;
+	private int voto;
 	
 	
 	public UtenteTitoliStudio() {
@@ -44,6 +45,16 @@ public class UtenteTitoliStudio {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+
+	public int getVoto() {
+		return voto;
+	}
+
+
+	public void setVoto(int voto) {
+		this.voto = voto;
 	}
 
 

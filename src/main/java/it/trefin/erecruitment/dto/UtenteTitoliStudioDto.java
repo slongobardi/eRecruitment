@@ -13,7 +13,7 @@ public class UtenteTitoliStudioDto {
 
 	private String descrizione;
 	private Date data;
-	
+	private int voto;
 	
 	public long getId() {
 		return id;
@@ -44,6 +44,12 @@ public class UtenteTitoliStudioDto {
 	}
 	public void setData(Date data) {
 		this.data = data;
+	}
+	public int getVoto() {
+		return voto;
+	}
+	public void setVoto(int voto) {
+		this.voto = voto;
 	}
 	
 	

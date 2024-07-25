@@ -28,6 +28,8 @@ import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.model.UtenteCandidatura;
+import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.service.UtenteService;
 
 @RestController
@@ -35,15 +37,15 @@ import it.trefin.erecruitment.service.UtenteService;
 @CrossOrigin
 public class UtenteController {
 
-	@Autowired
-	private UtenteService uService;
+    @Autowired
+    private UtenteService uService;
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-	@GetMapping("/visualizza/{id}")
-	public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
-		return uService.visualizzaUtente(id);
-	}
+    @GetMapping("/visualizza/{id}")
+    public Response<UtenteDto, Status> visualizzaUtente(@PathVariable long id) {
+        return uService.visualizzaUtente(id);
+    }
 
 	@PutMapping("/aggiorna/{id}")
 	public Response<UtenteDto, Status> aggiornaUtente(@RequestBody Utente utente, @PathVariable Long id) {
@@ -55,79 +57,75 @@ public class UtenteController {
 		return uService.aggiornaDescrizioneUtente(utente, id);
 	}
 
-	@PutMapping("/modificaSkill/{id}")
-	public Response<UtenteDto, Status> modificaSkill(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
-		return uService.modificaSkill(listaSkill, id);
-	}
+    @PutMapping("/modificaSkill/{id}")
+    public Response<UtenteDto, Status> modificaSkill(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
+        return uService.modificaSkill(listaSkill, id);
+    }
 
-	@PutMapping("/aggiornaCV/{id}")
-	public Response<UtenteDto, Status> aggiornaCV(@PathVariable Long id, @RequestParam("cv") MultipartFile cv) {
-		return uService.aggiornaCV(id, cv);
-	}
+    @PutMapping("/aggiornaCV/{id}")
+    public Response<UtenteDto, Status> aggiornaCV(@PathVariable Long id, @RequestParam("cv") MultipartFile cv) {
+        return uService.aggiornaCV(id, cv);
+    }
 
-	@PutMapping("/aggiungiSkill/{id}")
-	public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id, @RequestBody Skill s) {
-		return uService.aggiungiSkill(id, s);
-	}
+    @PutMapping("/aggiungiSkill/{id}")
+    public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id, @RequestBody Skill s) {
+        return uService.aggiungiSkill(id, s);
+    }
 
-	@PutMapping("/aggiornaFoto/{id}")
-	public Response<UtenteDto, Status> aggiornaFoto(@PathVariable Long id, @RequestBody MultipartFile foto) {
-		return uService.aggiornaFoto(id, foto);
-	}
+    @PutMapping("/aggiornaFoto/{id}")
+    public Response<UtenteDto, Status> aggiornaFoto(@PathVariable Long id, @RequestParam("foto") MultipartFile foto) {
+        return uService.aggiornaFoto(id, foto);
+    }
 
-	@DeleteMapping("/elimina/{id}")
-	public Response<UtenteDto, Status> eliminaUtente(@PathVariable long id) {
-		return uService.eliminaUtente(id);
-	}
+    @DeleteMapping("/elimina/{id}")
+    public Response<UtenteDto, Status> eliminaUtente(@PathVariable long id) {
+        return uService.eliminaUtente(id);
+    }
 
-	@GetMapping("/all")
-	public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
-		return uService.visualizzaTuttiUtenti();
-	}
+    @GetMapping("/all")
+    public Response<List<UtenteDto>, Status> visualizzaTuttiUtenti() {
+        return uService.visualizzaTuttiUtenti();
+    }
 
-	@GetMapping("/skillUtente/{id}")
-	public Response<List<SkillDto>, Status> skillUtente(@PathVariable long id) {
-		return uService.skillUtente(id);
-	}
+    @GetMapping("/skillUtente/{id}")
+    public Response<List<SkillDto>, Status> skillUtente(@PathVariable long id) {
+        return uService.skillUtente(id);
+    }
 
-	@GetMapping("/titoliUtente/{id}")
-	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(@PathVariable long id) {
-		return uService.titoliUtente(id);
-	}
+    @GetMapping("/titoliUtente/{id}")
+    public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(@PathVariable long id) {
+        return uService.titoliUtente(id);
+    }
 
-	@GetMapping("/allNotUser")
-	public Response<List<UtenteDto>, Status> notUser() {
-		return uService.getAllNotUser();
-	}
+    @GetMapping("/allNotUser")
+    public Response<List<UtenteDto>, Status> notUser() {
+        return uService.getAllNotUser();
+    }
 
-	@PutMapping("/modificaColloquio/{idCandidato}")
-	public Response<Utente, Status> modificaColloquio(@PathVariable long idCandidato,
-			@RequestBody Map<Object, Object> c) {
-		// return uService.modificaColloquio(idCandidato,idColloquio);
-		Object colloquio = c.get("colloquio");
-		Object simpleMailMessage = c.get("simpleMailMessage");
+    @PutMapping("/modificaColloquio/{idCandidato}")
+    public Response<Utente, Status> modificaColloquio(@PathVariable long idCandidato,
+            @RequestBody Map<Object, Object> c) {
+        Object colloquio = c.get("colloquio");
+        Object simpleMailMessage = c.get("simpleMailMessage");
 
-		Colloquio coll = objectMapper.convertValue(c.get("colloquio"), Colloquio.class);
-		SimpleMailMessage simpleM = objectMapper.convertValue(c.get("simpleMailMessage"), SimpleMailMessage.class);
+        Colloquio coll = objectMapper.convertValue(colloquio, Colloquio.class);
+        SimpleMailMessage simpleM = objectMapper.convertValue(simpleMailMessage, SimpleMailMessage.class);
 
-		return uService.modificaColloquio(idCandidato, coll, simpleM);
+        return uService.modificaColloquio(idCandidato, coll, simpleM);
+    }
 
-	}
-	
-	@GetMapping("/getColloqui/{id}")
-	public Response<List<ColloquioDto>,Status> getColloqui(@PathVariable long id){
-		return uService.getColloqui(id);
-	}
-	
-	
-	@GetMapping("/getByEmail/{email}")
-	public Response<UtenteDto, Status> getByEmail(@PathVariable String email) {
-		return uService.byEmail(email);
-	}
-	
-	@PutMapping("/complete/{id}")
-	public Response<UtenteDto,Status> complete(@PathVariable Long id){
-		return uService.complete(id);
-	}
-	
+    @GetMapping("/getColloqui/{id}")
+    public Response<List<ColloquioDto>, Status> getColloqui(@PathVariable long id) {
+        return uService.getColloqui(id);
+    }
+
+    @GetMapping("/getByEmail/{email}")
+    public Response<UtenteDto, Status> getByEmail(@PathVariable String email) {
+        return uService.byEmail(email);
+    }
+
+    @PutMapping("/complete/{id}")
+    public Response<UtenteDto, Status> complete(@PathVariable Long id) {
+        return uService.complete(id);
+    }
 }

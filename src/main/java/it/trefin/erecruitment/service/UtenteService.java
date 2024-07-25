@@ -60,30 +60,39 @@ public class UtenteService {
 	}
 
 	public Response<UtenteDto, Status> aggiornaUtente(Utente utente, Long id) {
-		Response<UtenteDto, Status> response = new Response<>();
-		try {
-			Utente u = uRepository.findById(id).orElse(null);
-			if (u != null) {
-				u.setCellulare(utente.getCellulare());
-				u.setCitta(utente.getCitta());
-				u.setEmail(utente.getEmail());
-				u.setIndirizzo(utente.getIndirizzo());
-				u.setCategoriaProtetta(utente.isCategoriaProtetta());
-				u.setDataNascita(utente.getDataNascita());
-				uRepository.save(u);
-				response.setData(UtenteMapper.toDto(u));
-				response.setStatus(Status.OK);
-				response.setDescrizione("Utente modificato con successo.");
-			} else {
-				response.setStatus(Status.SYSTEM_ERROR);
-				response.setDescrizione("Utente non trovato.");
-			}
-		} catch (Exception e) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
-		}
-		return response;
+	    Response<UtenteDto, Status> response = new Response<>();
+	    try {
+	        Utente u = uRepository.findById(id).orElse(null);
+	        if (u != null) {
+	            u.setCellulare(utente.getCellulare());
+	            u.setCitta(utente.getCitta());
+	            u.setEmail(utente.getEmail());
+	            u.setIndirizzo(utente.getIndirizzo());
+	            u.setCategoriaProtetta(utente.isCategoriaProtetta());
+	            u.setDataNascita(utente.getDataNascita());
+
+
+	            if (utente.isCategoriaProtetta()) {
+	                u.setPercentualeInvalidita(utente.getPercentualeInvalidita());
+	            } else {
+	                u.setPercentualeInvalidita(null); 
+	            }
+
+	            uRepository.save(u);
+	            response.setData(UtenteMapper.toDto(u));
+	            response.setStatus(Status.OK);
+	            response.setDescrizione("Utente modificato con successo.");
+	        } else {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            response.setDescrizione("Utente non trovato.");
+	        }
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
+	    }
+	    return response;
 	}
+
 
 	public Response<UtenteDto, Status> aggiornaDescrizioneUtente(Utente utente, Long id) {
 		Response<UtenteDto, Status> response = new Response<>();

@@ -8,207 +8,215 @@ import it.trefin.erecruitment.model.Ruolo;
 
 public class UtenteDto {
 
-	private long id;
-	private long idAzienda;
-	private String nome;
-	private String cognome;
-	private String email;
-	private String password;
-	private String cellulare;
-	private String descrizione;
-	private String indirizzo;
-	private String citta;
-	private boolean verified;
-	private boolean completed;
-	private boolean categoriaProtetta;
-	
-	private List<Long> utenteTitoliStudio;
-	private List<Long> utentiCandidati;
-	private Set<Long> listaSkill;
-	private Set<Long> listaColloquii;
-	private List<Long>listaEsperienze;
+    private long id;
+    private long idAzienda;
+    private String nome;
+    private String cognome;
+    private String email;
+    private String password;
+    private String cellulare;
+    private String descrizione;
+    private String indirizzo;
+    private String citta;
+    private boolean verified;
+    private boolean completed;
+    private boolean categoriaProtetta;
+    private Integer percentualeInvalidita;  
+    
+    private List<Long> utenteTitoliStudio;
+    private List<Long> utentiCandidati;
+    private Set<Long> listaSkill;
+    private Set<Long> listaColloquii;
+    private List<Long> listaEsperienze;
 
-	private Ruolo ruolo;
+    private Ruolo ruolo;
 
-	private byte[] foto;
-	private byte[] cv;
-	
-	private Date dataNascita;
+    private byte[] foto;
+    private byte[] cv;
 
-	public long getId() {
-		return id;
-	}
+    private Date dataNascita;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getNome() {
-		return nome;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public long getIdAzienda() {
+        return idAzienda;
+    }
 
-	public String getCognome() {
-		return cognome;
-	}
+    public void setIdAzienda(long idAzienda) {
+        this.idAzienda = idAzienda;
+    }
 
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getCognome() {
+        return cognome;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getCellulare() {
-		return cellulare;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setCellulare(String cellulare) {
-		this.cellulare = cellulare;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getDescrizione() {
-		return descrizione;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
+    public String getCellulare() {
+        return cellulare;
+    }
 
-	public List<Long> getUtenteTitoliStudio() {
-		return utenteTitoliStudio;
-	}
+    public void setCellulare(String cellulare) {
+        this.cellulare = cellulare;
+    }
 
-	public void setUtenteTitoliStudio(List<Long> utenteTitoliStudio) {
-		this.utenteTitoliStudio = utenteTitoliStudio;
-	}
+    public String getDescrizione() {
+        return descrizione;
+    }
 
-	public List<Long> getUtentiCandidati() {
-		return utentiCandidati;
-	}
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
 
-	public void setUtentiCandidati(List<Long> utentiCandidati) {
-		this.utentiCandidati = utentiCandidati;
-	}
+    public String getIndirizzo() {
+        return indirizzo;
+    }
 
-	public byte[] getFoto() {
-		return foto;
-	}
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
 
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
+    public String getCitta() {
+        return citta;
+    }
 
-	public byte[] getCv() {
-		return cv;
-	}
+    public void setCitta(String citta) {
+        this.citta = citta;
+    }
 
-	public void setCv(byte[] cv) {
-		this.cv = cv;
-	}
+    public boolean isVerified() {
+        return verified;
+    }
 
-	public String getIndirizzo() {
-		return indirizzo;
-	}
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
 
-	public void setIndirizzo(String indirizzo) {
-		this.indirizzo = indirizzo;
-	}
+    public boolean isCompleted() {
+        return completed;
+    }
 
-	public String getCitta() {
-		return citta;
-	}
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 
-	public void setCitta(String citta) {
-		this.citta = citta;
-	}
+    public boolean isCategoriaProtetta() {
+        return categoriaProtetta;
+    }
 
-	public Set<Long> getListaColloquii() {
-		return listaColloquii;
-	}
+    public void setCategoriaProtetta(boolean categoriaProtetta) {
+        this.categoriaProtetta = categoriaProtetta;
+    }
 
-	public void setListaColloquii(Set<Long> listaColloquii) {
-		this.listaColloquii = listaColloquii;
-	}
+    public Integer getPercentualeInvalidita() {
+        return percentualeInvalidita;
+    }
 
-	public Ruolo getRuolo() {
-		return ruolo;
-	}
+    public void setPercentualeInvalidita(Integer percentualeInvalidita) {
+        this.percentualeInvalidita = percentualeInvalidita;
+    }
 
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
-	}
+    public List<Long> getUtenteTitoliStudio() {
+        return utenteTitoliStudio;
+    }
 
-	public long getIdAzienda() {
-		return idAzienda;
-	}
+    public void setUtenteTitoliStudio(List<Long> utenteTitoliStudio) {
+        this.utenteTitoliStudio = utenteTitoliStudio;
+    }
 
-	public void setIdAzienda(long idAzienda) {
-		this.idAzienda = idAzienda;
-	}
+    public List<Long> getUtentiCandidati() {
+        return utentiCandidati;
+    }
 
-	public Set<Long> getListaSkill() {
-		return listaSkill;
-	}
+    public void setUtentiCandidati(List<Long> utentiCandidati) {
+        this.utentiCandidati = utentiCandidati;
+    }
 
-	public void setListaSkill(Set<Long> listaSkill) {
-		this.listaSkill = listaSkill;
-	}
+    public Set<Long> getListaSkill() {
+        return listaSkill;
+    }
 
-	public boolean isVerified() {
-		return verified;
-	}
+    public void setListaSkill(Set<Long> listaSkill) {
+        this.listaSkill = listaSkill;
+    }
 
-	public void setVerified(boolean verified) {
-		this.verified = verified;
-	}
+    public Set<Long> getListaColloquii() {
+        return listaColloquii;
+    }
 
-	public boolean isCompleted() {
-		return completed;
-	}
+    public void setListaColloquii(Set<Long> listaColloquii) {
+        this.listaColloquii = listaColloquii;
+    }
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
+    public List<Long> getListaEsperienze() {
+        return listaEsperienze;
+    }
 
-	public Date getDataNascita() {
-		return dataNascita;
-	}
+    public void setListaEsperienze(List<Long> listaEsperienze) {
+        this.listaEsperienze = listaEsperienze;
+    }
 
-	public void setDataNascita(Date dataNascita) {
-		this.dataNascita = dataNascita;
-	}
+    public Ruolo getRuolo() {
+        return ruolo;
+    }
 
-	public List<Long> getListaEsperienze() {
-		return listaEsperienze;
-	}
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
+    }
 
-	public void setListaEsperienze(List<Long> listaEsperienze) {
-		this.listaEsperienze = listaEsperienze;
-	}
-	 public boolean isCategoriaProtetta() {
-	        return categoriaProtetta;
-	    }
+    public byte[] getFoto() {
+        return foto;
+    }
 
-	    public void setInCategoriaProtetta(boolean categoriaProtetta) {
-	        this.categoriaProtetta = categoriaProtetta;
-	    }
-	
-	
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public byte[] getCv() {
+        return cv;
+    }
+
+    public void setCv(byte[] cv) {
+        this.cv = cv;
+    }
+
+    public Date getDataNascita() {
+        return dataNascita;
+    }
+
+    public void setDataNascita(Date dataNascita) {
+        this.dataNascita = dataNascita;
+    }
 }

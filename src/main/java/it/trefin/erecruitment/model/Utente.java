@@ -27,6 +27,7 @@ public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     private String nome;
     private String cognome;
     private String password;
@@ -73,7 +74,11 @@ public class Utente {
     @Lob
     private byte[] cv;
 
-    private boolean categoriaProtetta; 
+    private boolean categoriaProtetta;
+
+    @Column(nullable = true)
+    private Integer percentualeInvalidita; 
+
     public Utente() {
         this.password = generateRandomPassword();
     }
@@ -263,5 +268,13 @@ public class Utente {
 
     public void setCategoriaProtetta(boolean categoriaProtetta) {
         this.categoriaProtetta = categoriaProtetta;
+    }
+
+    public Integer getPercentualeInvalidita() {
+        return percentualeInvalidita;
+    }
+
+    public void setPercentualeInvalidita(Integer percentualeInvalidita) {
+        this.percentualeInvalidita = percentualeInvalidita;
     }
 }

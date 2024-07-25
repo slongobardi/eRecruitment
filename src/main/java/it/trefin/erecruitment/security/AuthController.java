@@ -143,14 +143,32 @@ public class AuthController {
 
     private String generateRandomPassword() {
         int length = 12;
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String allCharacters = letters + numbers;
+
         SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            password.append(characters.charAt(random.nextInt(characters.length())));
+
+
+        password.append(numbers.charAt(random.nextInt(numbers.length())));
+
+
+        for (int i = 1; i < length; i++) {
+            password.append(allCharacters.charAt(random.nextInt(allCharacters.length())));
         }
-        return password.toString();
+
+
+        StringBuilder shuffledPassword = new StringBuilder(password.length());
+        while (password.length() > 0) {
+            int index = random.nextInt(password.length());
+            shuffledPassword.append(password.charAt(index));
+            password.deleteCharAt(index);
+        }
+
+        return shuffledPassword.toString();
     }
+
 
     public void sendPasswordResetEmail(Utente user, String newPassword) {
         String emailContent = "<html>" 

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Set;
 
 import it.trefin.erecruitment.model.Esito;
+import it.trefin.erecruitment.model.Feedback;
 
 public class ColloquioDto {
 
@@ -14,6 +15,7 @@ public class ColloquioDto {
 	private String cognomeEsaminatore;
 	private String descrizione;
 	private Esito esito;
+	private Feedback feedback;
 	private Set<Long> listaUtenti;
 	private long candidatura;
 	private String tipo;
@@ -97,5 +99,14 @@ public class ColloquioDto {
 	public Esito getEsito() {
 		return esito;
 	}
+
+	public Feedback getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(Feedback feedback) {
+		this.feedback = feedback;
+	}
+	
 	
 }

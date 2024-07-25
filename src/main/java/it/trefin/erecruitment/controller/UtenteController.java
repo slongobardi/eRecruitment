@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
@@ -112,7 +113,13 @@ public class UtenteController {
 		return uService.modificaColloquio(idCandidato, coll, simpleM);
 
 	}
-
+	
+	@GetMapping("/getColloqui/{id}")
+	public Response<List<ColloquioDto>,Status> getColloqui(@PathVariable long id){
+		return uService.getColloqui(id);
+	}
+	
+	
 	@GetMapping("/getByEmail/{email}")
 	public Response<UtenteDto, Status> getByEmail(@PathVariable String email) {
 		return uService.byEmail(email);

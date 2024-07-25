@@ -23,6 +23,7 @@ public class Colloquio {
 	private String cognomeEsaminatore;
 	private String tipo;
 	private Esito esito;
+	private Feedback feedback = Feedback.Nessuno;
 
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
@@ -116,6 +117,14 @@ public class Colloquio {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public Feedback getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(Feedback feedback) {
+		this.feedback = feedback;
 	}
 
 }

@@ -10,6 +10,7 @@ import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.mapper.ColloquioMapper;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Colloquio;
+import it.trefin.erecruitment.model.Feedback;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
@@ -170,6 +171,26 @@ public class ColloquioService {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiColloqui in errore " + e.getMessage());
 			return response;
+		}
+	}
+
+	public Response<ColloquioDto, Status> updateFeedback(Feedback f, long id) {
+		Response<ColloquioDto, Status> response = new Response<>();
+
+		try {
+			Colloquio c = cRepository.findById(id).get();
+			c.setFeedback(f);
+			response.setData(ColloquioMapper.toDto(c));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Colloquii ritornati con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("update feedback in errore " + e.getMessage());
+			return response;
+
 		}
 	}
 	

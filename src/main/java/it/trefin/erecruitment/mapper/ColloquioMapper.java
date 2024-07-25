@@ -21,6 +21,7 @@ public class ColloquioMapper {
 	    cDto.setUltimoColloquio(c.getUltimoColloquio());
 	    cDto.setTipo(c.getTipo());
 	    cDto.setCandidatura(c.getCandidatura().getId());
+	    cDto.setFeedback(c.getFeedback());
 	    
 	    cDto.setListaUtenti(
 	        c.getListaUtenti() != null ? 

@@ -67,6 +67,7 @@ public class EmailService {
             return response;
         }
     }
+    
 
     public Response<MimeMessageHelper, Status> confirmEmail(ConfirmToken token, String destinatario) {
         Response<MimeMessageHelper, Status> response = new Response<>();
@@ -117,7 +118,7 @@ public class EmailService {
     }
 
     private String generateConfirmationLink(String token) {
-        return "<a href=http://localhost:4200/conferma?token=" + token + " >Conferma account</a>";
+        return "<a href=http://localhost:4200/login?token=" + token + " >Conferma account</a>";
     }
 
     public boolean verifyUser(String token) {

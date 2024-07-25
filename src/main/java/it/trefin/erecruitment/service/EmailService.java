@@ -86,7 +86,7 @@ public class EmailService {
             helper.setSubject("Conferma account");
             helper.setText("<html>" 
                     + "<body>" 
-                    + "<h2>Benvenut* " + token.getUser().getNome() + ",</h2>"
+                    + "<h2>Ciao " + token.getUser().getNome() + ",</h2>"
                     + "Clicca sul link per verificare il tuo account." + "<br/> "
                     + generateConfirmationLink(token.getToken()) + "<br/>"
                     + "La sua prima password per accedere è la seguente: " + randomPassword + "<br/>"

@@ -2,6 +2,7 @@ package it.trefin.erecruitment.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,28 +26,39 @@ public class UtenteCandidaturaService {
 	private CandidaturaRepository cRepository;
 
 	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(UtenteCandidatura utenteCandidatura) {
+	    Response<UtenteCandidatura, Status> response = new Response<>();
 
-		Response<UtenteCandidatura, Status> response = new Response<>();
+	    try {
+	        Long utenteId = utenteCandidatura.getUtente().getId();
+	        Long candidaturaId = utenteCandidatura.getCandidatura().getId();
 
-		try {
-			Candidatura c = cRepository.findById(utenteCandidatura.getCandidatura().getId()).get();
-			c.setNumeroCandidati(c.getNumeroCandidati()+ 1);
-			cRepository.save(c);
-			ucRepository.save(utenteCandidatura);
-			response.setData(utenteCandidatura);
-			response.setStatus(Status.OK);
-			response.setDescrizione("utenteCandidatura salvato con successo.");
-			return response;
+	        Optional<UtenteCandidatura> existingCandidatura = ucRepository.findByUtenteIdAndCandidaturaId(utenteId, candidaturaId);
 
-		} catch (Exception e) {
+	        if (existingCandidatura.isPresent()) {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            response.setDescrizione("L'utente ha già effettuato una candidatura per questa posizione.");
+	        } else {
+				Candidatura c = cRepository.findById(utenteCandidatura.getCandidatura().getId()).get();
 
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("inserisciUtenteCandidatura in errore " + e.getMessage());
-			return response;
+	            c.setNumeroCandidati(c.getNumeroCandidati() + 1);
+	            cRepository.save(c);
 
-		}
+	            ucRepository.save(utenteCandidatura);
 
+	            response.setData(utenteCandidatura);
+	            response.setStatus(Status.OK);
+	            response.setDescrizione("UtenteCandidatura salvato con successo.");
+	        }
+
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("Errore durante l'inserimento dell'UtenteCandidatura: " + e.getMessage());
+	    }
+
+	    return response;
 	}
+
+
 
 	public Response<UtenteCandidaturaDto, Status> visualizzaUtenteCandidatura(long id) {
 
@@ -105,10 +117,12 @@ public class UtenteCandidaturaService {
 
 	}
 
-	public Response<List<UtenteCandidaturaDto>, Status> eliminaUtenteCandidatura(long id) {
+	public Response<List<UtenteCandidaturaDto>, Status> eliminaUtenteCandidatura(long id, long idCandidatura) {
 
 		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
 		try {
+			Candidatura c = cRepository.findById(idCandidatura).get();
+			c.setNumeroCandidati(c.getNumeroCandidati() - 1);
 			ucRepository.deleteById(id);
 			response.setData(
 					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));

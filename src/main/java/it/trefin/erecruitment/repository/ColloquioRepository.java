@@ -1,5 +1,7 @@
 package it.trefin.erecruitment.repository;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +16,8 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long>{
 	List<Colloquio> findByCandidaturaId(long idCandidatura);
 
 	List<ColloquioDto> findAllByCandidaturaId(long idCandidatura);
+
+	ArrayList<Colloquio> findByUltimoColloquioBetween(Date start, Date end);
 
 
 }

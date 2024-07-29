@@ -1,5 +1,7 @@
 package it.trefin.erecruitment.service;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.mapper.ColloquioMapper;
-import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Feedback;
 import it.trefin.erecruitment.model.Response;
@@ -180,9 +181,10 @@ public class ColloquioService {
 		try {
 			Colloquio c = cRepository.findById(id).get();
 			c.setFeedback(f);
+			cRepository.save(c);
 			response.setData(ColloquioMapper.toDto(c));
 			response.setStatus(Status.OK);
-			response.setDescrizione("Colloquii ritornati con successo.");
+			response.setDescrizione("Feedback aggiornato");
 			return response;
 
 		} catch (Exception e) {
@@ -192,6 +194,49 @@ public class ColloquioService {
 			return response;
 
 		}
+	}
+
+	public Response<ColloquioDto, Status> updateDescrizione(String descrizione, long id) {
+		Response<ColloquioDto, Status> response = new Response<>();
+
+		try {
+			Colloquio c = cRepository.findById(id).get();
+			c.setDescrizione(descrizione);
+			cRepository.save(c);
+			response.setData(ColloquioMapper.toDto(c));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Descrizione aggiornata");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("update descrizione in errore " + e.getMessage());
+			return response;
+
+		}
+	}
+
+	public Response<List<ColloquioDto>, Status> filterByDate(String start, String end) {
+		Response<List<ColloquioDto>, Status> response = new Response<>();
+		
+		try {
+			ArrayList<Colloquio> filtered = cRepository.findByUltimoColloquioBetween(Date.valueOf(start),Date.valueOf(end));
+			if(filtered.size() == 0) {
+				response.setData(new ArrayList<>());
+				response.setStatus(Status.OK);
+				response.setDescrizione("filter by date success");
+			}else {
+				response.setData(filtered.stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
+				response.setStatus(Status.OK);
+				response.setDescrizione("filter by date success");
+			}
+		}catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("filter by date in errore " + e.getMessage());
+		}
+		
+		return response;
 	}
 	
 	

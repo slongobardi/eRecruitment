@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.trefin.erecruitment.dto.ColloquioDto;
@@ -66,10 +68,20 @@ public class ColloquioController {
 	 * idCandidatura) { return cService.colloquioUtenteCand(idCandidatura); }
 	 */
 
-	@PutMapping("/updateFeedback/{feedback}/{id}")
+	@PatchMapping("/updateFeedback/{feedback}/{id}")
 	public Response<ColloquioDto, Status> updateFeedback(@PathVariable("feedback") Feedback f,
 			@PathVariable("id") long id) {
 		return cService.updateFeedback(f,id);
 	}
-
+	
+	@PatchMapping("/updateDescrizione/{id}")
+	public Response<ColloquioDto, Status> updateDescrizione(@RequestBody String descrizione,
+			@PathVariable("id") long id) {
+		return cService.updateDescrizione(descrizione,id);
+	}
+	
+	@GetMapping("/filterByDate")
+	public Response<List<ColloquioDto>,Status> filterByDate(@RequestParam("start") String start,@RequestParam("end") String end){
+		return cService.filterByDate(start,end);
+	}
 }

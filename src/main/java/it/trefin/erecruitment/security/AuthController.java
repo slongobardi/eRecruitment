@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,14 +98,12 @@ public class AuthController {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setData("Utente non trovato");
         } else {
-            // Generare una password casuale
-            String newPassword = generateRandomPassword();
-            u.setPassword(passwordEncoder.encode(newPassword));
+        	String randomPWd = RandomStringUtils.random(10, true, true);
+            u.setPassword(passwordEncoder.encode(randomPWd));
             utenteRepository.save(u);
             response.setStatus(Status.OK);
             response.setData("Password resettata con successo");
-            // Inviare email con la nuova password
-            sendPasswordResetEmail(u, newPassword);
+            sendPasswordResetEmail(u, randomPWd);
         }
         return response;
     }
@@ -140,35 +139,6 @@ public class AuthController {
 
         return r.toString();
     }
-
-    private String generateRandomPassword() {
-        int length = 12;
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
-        String allCharacters = letters + numbers;
-
-        SecureRandom random = new SecureRandom();
-        StringBuilder password = new StringBuilder(length);
-
-
-        password.append(numbers.charAt(random.nextInt(numbers.length())));
-
-
-        for (int i = 1; i < length; i++) {
-            password.append(allCharacters.charAt(random.nextInt(allCharacters.length())));
-        }
-
-
-        StringBuilder shuffledPassword = new StringBuilder(password.length());
-        while (password.length() > 0) {
-            int index = random.nextInt(password.length());
-            shuffledPassword.append(password.charAt(index));
-            password.deleteCharAt(index);
-        }
-
-        return shuffledPassword.toString();
-    }
-
 
     public void sendPasswordResetEmail(Utente user, String newPassword) {
         String emailContent = "<html>" 

@@ -36,7 +36,7 @@ public class UtenteCandidaturaService {
 
 	        if (existingCandidatura.isPresent()) {
 	            response.setStatus(Status.SYSTEM_ERROR);
-	            response.setDescrizione("L'utente ha già effettuato una candidatura per questa posizione.");
+	            response.setDescrizione("Hai già effettuato una candidatura per questa posizione.");
 	        } else {
 				Candidatura c = cRepository.findById(utenteCandidatura.getCandidatura().getId()).get();
 

@@ -71,8 +71,6 @@ public class CandidaturaMapper {
         c.setUtenteCandidature(utenteCandidature);
         c.setListaSkill(listaSkill);
         c.setListaTitoliStudio(listaTitoliStudio);
-
-        
         c.setRal(cDto.getRal());
 
         return c;

@@ -117,7 +117,7 @@ public class UtenteService {
 		return response;
 	}
 
-	public Response<UtenteDto, Status> modificaSkill(Set<Skill> listaSkill, Long id) {
+	public Response<UtenteDto, Status> eliminaSkill(Set<Skill> listaSkill, Long id) {
 		Response<UtenteDto, Status> response = new Response<>();
 		try {
 			Utente u = uRepository.findById(id).orElse(null);

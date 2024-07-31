@@ -57,9 +57,9 @@ public class UtenteController {
 		return uService.aggiornaDescrizioneUtente(utente, id);
 	}
 
-    @PutMapping("/modificaSkill/{id}")
-    public Response<UtenteDto, Status> modificaSkill(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
-        return uService.modificaSkill(listaSkill, id);
+    @PutMapping("/eliminaSkills/{id}")
+    public Response<UtenteDto, Status> eliminaSkills(@RequestBody Set<Skill> listaSkill, @PathVariable Long id) {
+        return uService.eliminaSkill(listaSkill, id);
     }
 
     @PutMapping("/aggiornaCV/{id}")

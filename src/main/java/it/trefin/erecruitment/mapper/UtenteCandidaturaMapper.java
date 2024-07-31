@@ -15,11 +15,9 @@ public class UtenteCandidaturaMapper {
 	    uDto.setNota(u.getNota() != null ? u.getNota() : "");
 	    uDto.setStato(u.getStato());
 
-	    uDto.setCandidatura(
-	        u.getCandidatura() != null ? 
-	        u.getCandidatura().getId() : 
-	        -1
-	    );
+	    uDto.setCandidatura(CandidaturaMapper.toDto( u.getCandidatura())  );
+	       
+	
 
 	    uDto.setUtente(
 	        u.getUtente() != null ? 

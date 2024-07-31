@@ -25,6 +25,7 @@ import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.repository.ColloquioRepository;
+import it.trefin.erecruitment.repository.SkillRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
@@ -35,7 +36,8 @@ public class UtenteService {
 
 	@Autowired
 	private ColloquioRepository cRepository;
-
+	@Autowired
+	private SkillRepository skillRepository;
 	@Autowired
 	private EmailService eService;
 
@@ -259,16 +261,17 @@ public class UtenteService {
 		return response;
 	}
 
-	public Response<UtenteDto, Status> aggiungiSkill(Long id, Skill s) {
+	public Response<UtenteDto, Status> aggiungiSkill(Long id, Long idSkill) {
 		Response<UtenteDto, Status> response = new Response<>();
 		try {
+			Skill skill=skillRepository.findById(idSkill).get();
 			Utente u = uRepository.findById(id).orElse(null);
 			if (u != null) {
-				if (u.getListaSkill().contains(s)) {
+				if (u.getListaSkill().contains(skill)) {
 					response.setStatus(Status.SYSTEM_ERROR);
 					response.setDescrizione("La skill è già presente nella lista.");
 				} else {
-					u.getListaSkill().add(s);
+					u.getListaSkill().add(skill);
 					uRepository.save(u);
 					response.setData(UtenteMapper.toDto(u));
 					response.setStatus(Status.OK);
@@ -364,5 +367,8 @@ public class UtenteService {
 		
 		return response;
 	}
+	
+	
+	
 
 }

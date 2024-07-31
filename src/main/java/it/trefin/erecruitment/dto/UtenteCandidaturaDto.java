@@ -18,7 +18,7 @@ private long id;
 
 	private long utente;
 	
-	private long candidatura;
+	private CandidaturaDto candidatura;
 
 	public long getId() {
 		return id;
@@ -60,11 +60,11 @@ private long id;
 		this.utente = utente;
 	}
 
-	public long getCandidatura() {
+	public CandidaturaDto getCandidatura() {
 		return candidatura;
 	}
 
-	public void setCandidatura(long candidatura) {
+	public void setCandidatura(CandidaturaDto candidatura) {
 		this.candidatura = candidatura;
 	}
 	

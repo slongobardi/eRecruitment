@@ -7,9 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.trefin.erecruitment.dto.TitoliStudioDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
-import it.trefin.erecruitment.mapper.TitoliStudioMapper;
 import it.trefin.erecruitment.mapper.UtenteTitoliStudioMapper;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -101,14 +99,12 @@ public class UtenteTitoliStudioService {
 
 	}
 
-	public Response<UtenteTitoliStudioDto, Status> eliminaUtenteTitoliStudio(long idU,long idT) {
+	public Response<UtenteTitoliStudioDto, Status> eliminaUtenteTitoliStudio(long idS) {
 
 		Response<UtenteTitoliStudioDto, Status> response = new Response<>();
 
 		try {
-			UtenteTitoliStudio uts = utsRepository.findByUtenteIdAndTitoliStudioId(idU, idT);
-			utsRepository.delete(uts);
-			response.setData(UtenteTitoliStudioMapper.toDto(uts));
+			utsRepository.deleteById(idS);
 			response.setStatus(Status.OK);
 			response.setDescrizione("eliminata");
 			return response;
@@ -145,14 +141,13 @@ public class UtenteTitoliStudioService {
 
 	}
 
-	public Response<List<TitoliStudioDto>, Status> titoliUtente(long id_utente) {
-		Response<List<TitoliStudioDto>, Status> response =new Response<>();
-		List<TitoliStudio> listaTitoli = new ArrayList<>();
+	public Response<List<UtenteTitoliStudioDto>, Status> titoliUtente(long id_utente) {
+		Response<List<UtenteTitoliStudioDto>, Status> response =new Response<>();
+;
 		try {
-			for (UtenteTitoliStudio utenteTitolo : this.utsRepository.findAllByUtenteId(id_utente)) {
-				listaTitoli.add(utenteTitolo.getTitoliStudio());
-			}
-			response.setData(listaTitoli.stream().map(TitoliStudioMapper::toDto).collect(Collectors.toList()));
+			List<UtenteTitoliStudio> listaTitoli = this.utsRepository.findAllByUtenteId(id_utente);
+
+			response.setData(listaTitoli.stream().map(UtenteTitoliStudioMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("TitoliStudio dell'utente ritornati con successo.");
 			return response;

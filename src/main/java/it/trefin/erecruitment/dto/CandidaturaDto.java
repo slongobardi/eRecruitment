@@ -18,6 +18,7 @@ public class CandidaturaDto {
     private Set<Long> listaSkill;
     private Set<Long> listaTitoliStudio;
     private List<Long> listaColloqui;
+    private String nomeAzienda;
 
     public long getId() {
         return id;
@@ -106,4 +107,13 @@ public class CandidaturaDto {
     public void setListaColloqui(List<Long> listaColloqui) {
         this.listaColloqui = listaColloqui;
     }
+
+	public String getNomeAzienda() {
+		return nomeAzienda;
+	}
+
+	public void setNomeAzienda(String nomeAzienda) {
+		this.nomeAzienda = nomeAzienda;
+	}
+    
 }

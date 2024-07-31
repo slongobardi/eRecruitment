@@ -12,11 +12,14 @@ public class UtenteTitoliStudioMapper {
 	    UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
 
 	    uDto.setData(u.getData());
+	    
+	    uDto.setNomeTitoliStudio(u.getTitoliStudio().getStudi().getTitolo());
 
 	    uDto.setDescrizione(u.getDescrizione());
-
+	    
 	    uDto.setVoto(u.getVoto());
 	    uDto.setId(u.getId());
+	    uDto.setLode(u.getLode());
 
 	    uDto.setTitoliStudio(
 	        u.getTitoliStudio() != null ? 
@@ -42,6 +45,7 @@ public class UtenteTitoliStudioMapper {
 		u.setId(uDto.getId());
 		u.setTitoliStudio(titoliStudio);
 		u.setUtente(utente);
+		u.setLode(uDto.getLode());
 		return u;
 
 	}

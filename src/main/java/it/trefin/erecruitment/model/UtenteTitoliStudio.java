@@ -30,6 +30,7 @@ public class UtenteTitoliStudio {
 	private String descrizione;
 	private Date data;
 	private int voto;
+	private boolean lode;
 	
 	
 	public UtenteTitoliStudio() {
@@ -95,6 +96,16 @@ public class UtenteTitoliStudio {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+
+	public boolean getLode() {
+		return lode;
+	}
+
+
+	public void setLode(boolean lode) {
+		this.lode = lode;
 	}
 
 	

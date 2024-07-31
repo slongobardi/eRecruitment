@@ -68,7 +68,7 @@ public class UtenteController {
     }
 
     @PutMapping("/aggiungiSkill/{id}")
-    public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id, @RequestBody Skill s) {
+    public Response<UtenteDto, Status> aggiungiSkill(@PathVariable Long id, @RequestBody Long s) {
         return uService.aggiungiSkill(id, s);
     }
 

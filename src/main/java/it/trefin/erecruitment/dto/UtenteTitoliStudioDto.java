@@ -11,9 +11,11 @@ public class UtenteTitoliStudioDto {
 	
 	private long titoliStudio;
 
+	private String nomeTitoliStudio;
 	private String descrizione;
 	private Date data;
 	private int voto;
+	private boolean lode;
 	
 	public long getId() {
 		return id;
@@ -50,6 +52,18 @@ public class UtenteTitoliStudioDto {
 	}
 	public void setVoto(int voto) {
 		this.voto = voto;
+	}
+	public boolean getLode() {
+		return lode;
+	}
+	public void setLode(boolean lode) {
+		this.lode = lode;
+	}
+	public String getNomeTitoliStudio() {
+		return nomeTitoliStudio;
+	}
+	public void setNomeTitoliStudio(String nomeTitoliStudio) {
+		this.nomeTitoliStudio = nomeTitoliStudio;
 	}
 	
 	

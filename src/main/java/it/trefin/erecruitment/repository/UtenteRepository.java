@@ -15,4 +15,5 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	@Query(value = "SELECT * FROM Utente u WHERE u.ruolo != 3",nativeQuery = true)
 	List<Utente> findAllNotUser();
 
+
 }

@@ -23,6 +23,7 @@ public class CandidaturaMapper {
         cDto.setDescrizione(c.getDescrizione());
         cDto.setId(c.getId());
         cDto.setNome(c.getNome());
+        cDto.setNomeAzienda(c.getAzienda().getNome());
         cDto.setNumeroCandidati(c.getNumeroCandidati());
         cDto.setPubblicazione(c.getPubblicazione());
         cDto.setRal(c.getRal());

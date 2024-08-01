@@ -6,11 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.EsperienzaDto;
-import it.trefin.erecruitment.mapper.ColloquioMapper;
 import it.trefin.erecruitment.mapper.EsperienzaMapper;
-import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Esperienza;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;

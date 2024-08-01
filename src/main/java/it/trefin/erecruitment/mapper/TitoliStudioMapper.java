@@ -18,7 +18,7 @@ public class TitoliStudioMapper {
 
 	    tDto.setId(t.getId());
 	    tDto.setStudi(t.getStudi());
-
+	    tDto.setCompleted(t.isCompleted());
 	    tDto.setTitoliStudio(
 	        t.getTitoliStudio() != null ? 
 	        t.getTitoliStudio().stream().map(UtenteTitoliStudio::getId).collect(Collectors.toList()) : 
@@ -40,7 +40,7 @@ public class TitoliStudioMapper {
 		t.setStudi(tDto.getStudi());
 		t.setTitoliStudio(listaTitoliStudio);
 		t.setListaCandidature(listaCandidature);
-		
+		t.setCompleted(tDto.isCompleted());
 		
 		return t;
 	}

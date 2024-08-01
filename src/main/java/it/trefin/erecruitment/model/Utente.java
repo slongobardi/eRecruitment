@@ -64,6 +64,9 @@ public class Utente {
     
     @ManyToOne
     private Azienda azienda;
+    
+    @OneToMany(mappedBy = "utente")
+    private List<Preferenza> preferenza;
 
     @OneToMany(mappedBy = "utente")
     private List<Esperienza> esperienze;
@@ -277,4 +280,12 @@ public class Utente {
     public void setPercentualeInvalidita(Integer percentualeInvalidita) {
         this.percentualeInvalidita = percentualeInvalidita;
     }
+
+	public List<Preferenza> getPreferenza() {
+		return preferenza;
+	}
+
+	public void setPreferenza(List<Preferenza> preferenza) {
+		this.preferenza = preferenza;
+	}
 }

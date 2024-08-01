@@ -33,6 +33,9 @@ public class Azienda {
 	@Column(unique = true)
 	private String nome;
 
+	@OneToMany(mappedBy = "azienda")
+	private List<Preferenza> preferenza;
+
 	public long getId() {
 		return id;
 	}
@@ -99,6 +102,14 @@ public class Azienda {
 
 	public void setListaUtenti(List<Utente> listaUtenti) {
 		this.listaUtenti = listaUtenti;
+	}
+
+	public List<Preferenza> getPreferenza() {
+		return preferenza;
+	}
+
+	public void setPreferenza(List<Preferenza> preferenza) {
+		this.preferenza = preferenza;
 	}
 
 }

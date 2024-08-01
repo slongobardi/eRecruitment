@@ -5,14 +5,12 @@ import java.util.Set;
 
 import it.trefin.erecruitment.model.Studi;
 
-
 public class TitoliStudioDto {
-
-	
 	private long id;
 	private Studi studi;
-	private List<Long>titoliStudio;
-	private Set<Long>listaCandidature;
+	private boolean completed;
+	private List<Long> titoliStudio;
+	private Set<Long> listaCandidature;
 
 	public long getId() {
 		return id;
@@ -45,7 +43,13 @@ public class TitoliStudioDto {
 	public void setListaCandidature(Set<Long> listaCandidature) {
 		this.listaCandidature = listaCandidature;
 	}
-	
-	
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 
 }

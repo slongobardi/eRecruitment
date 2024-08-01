@@ -13,7 +13,8 @@ public class AziendaDto {
 
 	private List<Long> listaCandidature;
 	private List<Long> utenti;
-
+	private List<Long> preferenze;
+	
 	public long getId() {
 		return id;
 	}
@@ -78,4 +79,11 @@ public class AziendaDto {
 		this.utenti = utenti;
 	}
 
+	public List<Long> getPreferenze() {
+		return preferenze;
+	}
+
+	public void setPreferenze(List<Long> preferenze) {
+		this.preferenze = preferenze;
+	}
 }

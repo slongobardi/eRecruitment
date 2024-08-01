@@ -10,7 +10,7 @@ public class UtenteTitoliStudioMapper {
 	public static UtenteTitoliStudioDto toDto(UtenteTitoliStudio u) {
 		UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
 
-		uDto.setDataInizio(u.getDataInizio());
+		uDto.setAnnoInizio(u.getAnnoInizio());
 		uDto.setDataConseguimento(u.getDataConseguimento());
 		uDto.setNomeTitoliStudio(u.getTitoliStudio().getStudi().getTitolo());
 		uDto.setDescrizione(u.getDescrizione());
@@ -25,7 +25,7 @@ public class UtenteTitoliStudioMapper {
 
 	public static UtenteTitoliStudio toEntity(UtenteTitoliStudioDto uDto, TitoliStudio titoliStudio, Utente utente) {
 		UtenteTitoliStudio u = new UtenteTitoliStudio();
-		u.setDataInizio(uDto.getDataInizio());
+		u.setAnnoInizio(uDto.getAnnoInizio());
 		u.setDataConseguimento(uDto.getDataConseguimento());
 		u.setVoto(uDto.getVoto());
 		u.setDescrizione(uDto.getDescrizione());

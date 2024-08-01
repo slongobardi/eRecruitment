@@ -9,7 +9,7 @@ public class UtenteTitoliStudioDto {
 	private long titoliStudio;
 	private String nomeTitoliStudio;
 	private String descrizione;
-	private Date dataInizio;
+	private String annoInizio;
 	private Date dataConseguimento;
 	private int voto;
 	private boolean lode;
@@ -47,12 +47,12 @@ public class UtenteTitoliStudioDto {
 		this.descrizione = descrizione;
 	}
 
-	public Date getDataInizio() {
-		return dataInizio;
+	public String getAnnoInizio() {
+		return annoInizio;
 	}
 
-	public void setDataInizio(Date dataInizio) {
-		this.dataInizio = dataInizio;
+	public void setAnnoInizio(String annoInizio) {
+		this.annoInizio = annoInizio;
 	}
 
 	public Date getDataConseguimento() {

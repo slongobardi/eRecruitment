@@ -27,8 +27,8 @@ public class UtenteTitoliStudio {
 
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
+	private String annoInizio;
 	private Date dataConseguimento;
-	private Date dataInizio;
 	public boolean completed;
 	private int voto;
 	private boolean lode;
@@ -85,12 +85,12 @@ public class UtenteTitoliStudio {
 		this.dataConseguimento = dataConseguimento;
 	}
 
-	public Date getDataInizio() {
-		return dataInizio;
+	public String getAnnoInizio() {
+		return annoInizio;
 	}
 
-	public void setDataInizio(Date dataInizio) {
-		this.dataInizio = dataInizio;
+	public void setAnnoInizio(String annoInizio) {
+		this.annoInizio = annoInizio;
 	}
 
 	public boolean getLode() {

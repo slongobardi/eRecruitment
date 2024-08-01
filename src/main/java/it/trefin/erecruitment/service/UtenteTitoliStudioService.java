@@ -78,7 +78,8 @@ public class UtenteTitoliStudioService {
 
 			UtenteTitoliStudio uts = utsRepository.findById(id).get();
 			
-			uts.setData(utenteTitoliStudio.getData());
+			uts.setDataInizio(utenteTitoliStudio.getDataInizio());
+			uts.setDataConseguimento(utenteTitoliStudio.getDataConseguimento());
 			uts.setDescrizione(utenteTitoliStudio.getDescrizione());
 			uts.setTitoliStudio(utenteTitoliStudio.getTitoliStudio());
 			uts.setUtente(utenteTitoliStudio.getUtente());

@@ -7,39 +7,26 @@ import it.trefin.erecruitment.model.UtenteTitoliStudio;
 
 public class UtenteTitoliStudioMapper {
 
-	
 	public static UtenteTitoliStudioDto toDto(UtenteTitoliStudio u) {
-	    UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
+		UtenteTitoliStudioDto uDto = new UtenteTitoliStudioDto();
 
-	    uDto.setData(u.getData());
-	    
-	    uDto.setNomeTitoliStudio(u.getTitoliStudio().getStudi().getTitolo());
-
-	    uDto.setDescrizione(u.getDescrizione());
-	    
-	    uDto.setVoto(u.getVoto());
-	    uDto.setId(u.getId());
-	    uDto.setLode(u.getLode());
-
-	    uDto.setTitoliStudio(
-	        u.getTitoliStudio() != null ? 
-	        u.getTitoliStudio().getId() : 
-	        -1
-	    );
-
-	    uDto.setUtente(
-	        u.getUtente() != null ? 
-	        u.getUtente().getId() : 
-	        -1
-	    );
-
-	    return uDto;
+		uDto.setDataInizio(u.getDataInizio());
+		uDto.setDataConseguimento(u.getDataConseguimento());
+		uDto.setNomeTitoliStudio(u.getTitoliStudio().getStudi().getTitolo());
+		uDto.setDescrizione(u.getDescrizione());
+		uDto.setVoto(u.getVoto());
+		uDto.setId(u.getId());
+		uDto.setLode(u.getLode());
+		uDto.setTitoliStudio(u.getTitoliStudio() != null ? u.getTitoliStudio().getId() : -1);
+		uDto.setUtente(u.getUtente() != null ? u.getUtente().getId() : -1);
+		uDto.setCompleted(u.isCompleted());
+		return uDto;
 	}
 
-	
-	public static UtenteTitoliStudio toEntity(UtenteTitoliStudioDto uDto,TitoliStudio titoliStudio,Utente utente) {
+	public static UtenteTitoliStudio toEntity(UtenteTitoliStudioDto uDto, TitoliStudio titoliStudio, Utente utente) {
 		UtenteTitoliStudio u = new UtenteTitoliStudio();
-		u.setData(uDto.getData());
+		u.setDataInizio(uDto.getDataInizio());
+		u.setDataConseguimento(uDto.getDataConseguimento());
 		u.setVoto(uDto.getVoto());
 		u.setDescrizione(uDto.getDescrizione());
 		u.setId(uDto.getId());

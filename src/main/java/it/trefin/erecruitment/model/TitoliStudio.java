@@ -17,7 +17,6 @@ public class TitoliStudio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private Studi studi;
-	private boolean completed;
 
 	@OneToMany(mappedBy = "titoliStudio")
 	private List<UtenteTitoliStudio> titoliStudio;
@@ -56,13 +55,4 @@ public class TitoliStudio {
 	public void setListaCandidature(Set<Candidatura> listaCandidature) {
 		this.listaCandidature = listaCandidature;
 	}
-
-	public boolean isCompleted() {
-		return completed;
-	}
-
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
-
 }

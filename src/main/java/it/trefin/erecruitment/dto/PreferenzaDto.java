@@ -1,11 +1,11 @@
 package it.trefin.erecruitment.dto;
 
-import java.util.List;
 
 public class PreferenzaDto {
 	private long id;
 	private long utente;
 	private long azienda;
+	private String nomeAzienda;
 
 	public long getId() {
 		return id;
@@ -31,4 +31,13 @@ public class PreferenzaDto {
 		this.azienda = azienda;
 	}
 
+	public String getNomeAzienda() {
+		return nomeAzienda;
+	}
+
+	public void setNomeAzienda(String nomeAzienda) {
+		this.nomeAzienda = nomeAzienda;
+	}
+
+	
 }

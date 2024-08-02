@@ -84,4 +84,9 @@ public class ColloquioController {
 	public Response<List<ColloquioDto>,Status> filterByDate(@RequestParam("start") String start,@RequestParam("end") String end){
 		return cService.filterByDate(start,end);
 	}
+	
+	@GetMapping("/totalFeedback/{id}/{startDate}/{endDate}")
+	public Response<Object[],Status> totalFeedback(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+		return cService.totalFeedback(id, startDate, endDate);
+	}
 }

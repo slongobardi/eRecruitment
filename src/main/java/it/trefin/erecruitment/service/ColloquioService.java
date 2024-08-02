@@ -239,6 +239,19 @@ public class ColloquioService {
 		return response;
 	}
 	
-	
+	public Response<Object[],Status> totalFeedback(int id,Date startDate,Date endDate){
+		Response<Object[],Status> response = new Response<>();
+		
+		try {
+			response.setData(cRepository.totalFeedback(id,startDate,endDate));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		}catch(Exception e) {
+			response.setDescrizione("errore query custom feedback " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+		
+		return response;
+	}
 
 }

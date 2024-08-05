@@ -49,12 +49,10 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
     
-    @Autowired
-    private SchedaCandidatoRepository schedaCandidatoRepository;
-
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         Utente user = utenteRepository.findByEmail(request.getEmail());
+        System.out.println(passwordEncoder.matches(request.getPassword(), user.getPassword()));
         if (user == null || !passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }

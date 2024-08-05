@@ -66,14 +66,20 @@ public class UtenteService {
 	    try {
 	        Utente u = uRepository.findById(id).orElse(null);
 	        if (u != null) {
-	            u.setCellulare(utente.getCellulare());
-	            u.setCitta(utente.getCitta());
-	            u.setEmail(utente.getEmail());
-	            u.setIndirizzo(utente.getIndirizzo());
-	            u.setCategoriaProtetta(utente.isCategoriaProtetta());
-	            u.setDataNascita(utente.getDataNascita());
+	        	u.setCellulare(utente.getCellulare());
+	        	u.setCitta(utente.getCitta());
+	        	u.setEmail(utente.getEmail());
+	        	u.setIndirizzo(utente.getIndirizzo());
+	        	u.setCategoriaProtetta(utente.isCategoriaProtetta());
+	        	u.setDataNascita(utente.getDataNascita());
+	        	u.setCodiceFiscale(utente.getCodiceFiscale());
+	        	u.setTelefono(utente.getTelefono());
+	        	u.setGenere(utente.getGenere());
+	        	u.setOrigine(utente.getOrigine());
+	        	u.setComuneNascita(utente.getComuneNascita());
+	        	u.setPercentualeInvalidita(utente.getPercentualeInvalidita());
 
-
+	            
 	            if (utente.isCategoriaProtetta()) {
 	                u.setPercentualeInvalidita(utente.getPercentualeInvalidita());
 	            } else {

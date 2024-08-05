@@ -1,4 +1,4 @@
-package it.trefin.erecruitment.model;
+	package it.trefin.erecruitment.model;
 
 import java.security.SecureRandom;
 import java.sql.Date;

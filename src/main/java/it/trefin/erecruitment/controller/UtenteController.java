@@ -101,6 +101,15 @@ public class UtenteController {
     public Response<List<UtenteDto>, Status> notUser() {
         return uService.getAllNotUser();
     }
+    
+    @GetMapping("/allNormalUser")
+    public Response<List<UtenteDto>, Status> normalUser() {
+        return uService.getAllNormalUser();
+    }
+    @GetMapping("/utentePerColloquioAzienda/{idAzienda}")
+    public Response<List<UtenteDto>, Status> findUtentePerColloquioAzienda(@PathVariable long idAzienda) {
+        return uService.findUtentePerColloquioAzienda(idAzienda);
+    }
 
     @PutMapping("/modificaColloquio/{idCandidato}")
     public Response<Utente, Status> modificaColloquio(@PathVariable long idCandidato,

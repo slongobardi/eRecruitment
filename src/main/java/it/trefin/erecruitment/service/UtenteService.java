@@ -214,6 +214,36 @@ public class UtenteService {
 		}
 		return response;
 	}
+	
+	public Response<List<UtenteDto>, Status> getAllNormalUser() {
+		Response<List<UtenteDto>, Status> response = new Response<>();
+		try {
+			List<Utente> responseQuery = uRepository.findAllNormalUser();
+			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("getAllNotUser in errore " + e.getMessage());
+		}
+		return response;
+	}
+	
+	public Response<List<UtenteDto>, Status> findUtentePerColloquioAzienda(long idAzienda) {
+		Response<List<UtenteDto>, Status> response = new Response<>();
+		try {
+			List<Utente> responseQuery = uRepository.findUtentePerAzienda(idAzienda);
+			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("ok");
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("findUtentePerColloquioAzienda in errore " + e.getMessage());
+		}
+		return response;
+	}
+	
+	
 
 	public Response<Utente, Status> modificaColloquio(Long idCandidato, Colloquio c, SimpleMailMessage s) {
 		Response<Utente, Status> response = new Response<>();

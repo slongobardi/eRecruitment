@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 
 @Entity
@@ -35,6 +37,12 @@ public class Utente {
     private String indirizzo;
     private String citta;
     private Date dataNascita;
+    private String codiceFiscale;
+    private String telefono;
+    @Column(nullable = true)
+    private String genere;
+    private String origine;
+    private String comuneNascita;
     private boolean verified;
     private boolean completed;
     
@@ -70,6 +78,10 @@ public class Utente {
 
     @OneToMany(mappedBy = "utente")
     private List<Esperienza> esperienze;
+    
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_schedaCandidato", referencedColumnName = "id")
+	private SchedaCandidato schedaCandidato;
     
     @Lob
     private byte[] foto;
@@ -141,7 +153,47 @@ public class Utente {
         return cellulare;
     }
 
-    public void setCellulare(String cellulare) {
+    public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getGenere() {
+		return genere;
+	}
+
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+
+	public String getOrigine() {
+		return origine;
+	}
+
+	public void setOrigine(String origine) {
+		this.origine = origine;
+	}
+
+	public String getComuneNascita() {
+		return comuneNascita;
+	}
+
+	public void setComuneNascita(String comuneNascita) {
+		this.comuneNascita = comuneNascita;
+	}
+
+	public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
     }
 
@@ -287,5 +339,13 @@ public class Utente {
 
 	public void setPreferenza(List<Preferenza> preferenza) {
 		this.preferenza = preferenza;
+	}
+
+	public SchedaCandidato getSchedaCandidato() {
+		return schedaCandidato;
+	}
+
+	public void setSchedaCandidato(SchedaCandidato schedaCandidato) {
+		this.schedaCandidato = schedaCandidato;
 	}
 }

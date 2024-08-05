@@ -18,6 +18,11 @@ public class UtenteDto {
 	private String descrizione;
 	private String indirizzo;
 	private String citta;
+    private String codiceFiscale;
+    private String telefono;
+    private String genere;
+    private String origine;
+    private String comuneNascita;
 	private boolean verified;
 	private boolean completed;
 	private boolean categoriaProtetta;
@@ -32,6 +37,47 @@ public class UtenteDto {
 	private byte[] cv;
 	private Date dataNascita;
 	private List<Long> preferenze;
+	private Long schedaCanddiato;
+
+	public String getCodiceFiscale() {
+		return codiceFiscale;
+	}
+
+	public void setCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getGenere() {
+		return genere;
+	}
+
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+
+	public String getOrigine() {
+		return origine;
+	}
+
+	public void setOrigine(String origine) {
+		this.origine = origine;
+	}
+
+	public String getComuneNascita() {
+		return comuneNascita;
+	}
+
+	public void setComuneNascita(String comuneNascita) {
+		this.comuneNascita = comuneNascita;
+	}
 
 	public long getId() {
 		return id;
@@ -223,6 +269,14 @@ public class UtenteDto {
 
 	public void setPreferenze(List<Long> preferenze) {
 		this.preferenze = preferenze;
+	}
+
+	public Long getSchedaCanddiato() {
+		return schedaCanddiato;
+	}
+
+	public void setSchedaCanddiato(Long schedaCanddiato) {
+		this.schedaCanddiato = schedaCanddiato;
 	}
 
 }

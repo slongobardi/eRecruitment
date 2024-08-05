@@ -21,6 +21,8 @@ public class UtenteMapper {
 	public static UtenteDto toDto(Utente u) {
 		UtenteDto uDto = new UtenteDto();
 
+
+		
 		uDto.setId(u.getId());
 		uDto.setNome(u.getNome());
 		uDto.setCognome(u.getCognome());
@@ -32,12 +34,17 @@ public class UtenteMapper {
 		uDto.setCitta(u.getCitta());
 		uDto.setVerified(u.isVerified());
 		uDto.setCompleted(u.isCompleted());
+		uDto.setCodiceFiscale(u.getCodiceFiscale());
+		uDto.setTelefono(u.getTelefono());
+		uDto.setGenere(u.getGenere());
+		uDto.setOrigine(u.getOrigine());
+		uDto.setComuneNascita(u.getComuneNascita());
 		uDto.setCategoriaProtetta(u.isCategoriaProtetta());
 		uDto.setPercentualeInvalidita(u.getPercentualeInvalidita());
-
 		uDto.setFoto(u.getFoto());
 		uDto.setCv(u.getCv());
 		uDto.setDataNascita(u.getDataNascita());
+		uDto.setSchedaCanddiato(u.getSchedaCandidato().getId());
 
 		uDto.setListaSkill(
 				u.getListaSkill() != null ? u.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet())

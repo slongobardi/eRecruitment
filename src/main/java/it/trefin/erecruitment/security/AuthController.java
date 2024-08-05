@@ -1,7 +1,6 @@
 package it.trefin.erecruitment.security;
 
 import java.nio.charset.Charset;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -23,8 +22,10 @@ import it.trefin.erecruitment.model.LoginResponse;
 import it.trefin.erecruitment.model.PasswordChangeRequest;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.model.SchedaCandidato;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
+import it.trefin.erecruitment.repository.SchedaCandidatoRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 import it.trefin.erecruitment.service.EmailService;
 
@@ -47,6 +48,9 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+    
+    @Autowired
+    private SchedaCandidatoRepository schedaCandidatoRepository;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
@@ -63,6 +67,7 @@ public class AuthController {
     @PostMapping("/register")
     public long register(@RequestBody Utente user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setSchedaCandidato(new SchedaCandidato());
         utenteRepository.save(user);
 
         if (utenteRepository.existsById(user.getId())) {

@@ -44,7 +44,7 @@ public class UtenteMapper {
 		uDto.setFoto(u.getFoto());
 		uDto.setCv(u.getCv());
 		uDto.setDataNascita(u.getDataNascita());
-		uDto.setSchedaCanddiato(u.getSchedaCandidato().getId());
+		uDto.setSchedaCandidato(u.getSchedaCandidato());
 
 		uDto.setListaSkill(
 				u.getListaSkill() != null ? u.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet())

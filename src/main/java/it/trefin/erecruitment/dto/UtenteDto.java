@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.trefin.erecruitment.model.Ruolo;
+import it.trefin.erecruitment.model.SchedaCandidato;
 
 public class UtenteDto {
 
@@ -37,7 +38,7 @@ public class UtenteDto {
 	private byte[] cv;
 	private Date dataNascita;
 	private List<Long> preferenze;
-	private Long schedaCanddiato;
+	private SchedaCandidato schedaCandidato;
 
 	public String getCodiceFiscale() {
 		return codiceFiscale;
@@ -271,12 +272,12 @@ public class UtenteDto {
 		this.preferenze = preferenze;
 	}
 
-	public Long getSchedaCanddiato() {
-		return schedaCanddiato;
+	public SchedaCandidato getSchedaCandiato() {
+		return schedaCandidato;
 	}
 
-	public void setSchedaCanddiato(Long schedaCanddiato) {
-		this.schedaCanddiato = schedaCanddiato;
+	public void setSchedaCandidato(SchedaCandidato schedaCandidato) {
+		this.schedaCandidato = schedaCandidato;
 	}
 
 }

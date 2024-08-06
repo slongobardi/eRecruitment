@@ -19,6 +19,7 @@ public class CandidaturaDto {
     private Set<Long> listaTitoliStudio;
     private List<Long> listaColloqui;
     private String nomeAzienda;
+    private String settore;
 
     public long getId() {
         return id;
@@ -114,6 +115,14 @@ public class CandidaturaDto {
 
 	public void setNomeAzienda(String nomeAzienda) {
 		this.nomeAzienda = nomeAzienda;
+	}
+
+	public String getSettore() {
+		return settore;
+	}
+
+	public void setSettore(String settore) {
+		this.settore = settore;
 	}
     
 }

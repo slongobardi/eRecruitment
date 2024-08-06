@@ -27,6 +27,7 @@ public class CandidaturaMapper {
         cDto.setNumeroCandidati(c.getNumeroCandidati());
         cDto.setPubblicazione(c.getPubblicazione());
         cDto.setRal(c.getRal());
+        cDto.setSettore(c.getSettore());
 
         cDto.setListaColloqui(
             c.getListaColloqui() != null ? 
@@ -72,6 +73,7 @@ public class CandidaturaMapper {
         c.setListaSkill(listaSkill);
         c.setListaTitoliStudio(listaTitoliStudio);
         c.setRal(cDto.getRal());
+        c.setSettore(cDto.getSettore());
 
         return c;
     }

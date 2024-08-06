@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +31,9 @@ public class Candidatura {
     private String descrizione;
     
     private BigDecimal ral; 
+    
+    @Column(name = "settore")
+    private String settore;
 
     @OneToMany(mappedBy="candidatura")
     private List<UtenteCandidatura> utenteCandidature;
@@ -146,7 +148,15 @@ public class Candidatura {
         this.listaTitoliStudio = listaTitoliStudio;
     }
 
-    public Candidatura() {
+    public String getSettore() {
+		return settore;
+	}
+
+	public void setSettore(String settore) {
+		this.settore = settore;
+	}
+
+	public Candidatura() {
     }
 
 }

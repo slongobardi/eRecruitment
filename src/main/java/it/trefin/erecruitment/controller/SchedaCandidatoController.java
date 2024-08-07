@@ -21,11 +21,6 @@ public class SchedaCandidatoController {
 	@Autowired
 	private SchedaCandidatoService schedaCandidatoService;
 
-	@GetMapping("/picking")
-	public Response<List<SchedaCandidatoDto>, Status> getCandidatiByPicking() {
-		return schedaCandidatoService.getSchedaCandidatiByPicking();
-	}
-
 	@GetMapping("/perso")
 	public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByPerso() {
 		return schedaCandidatoService.getSchedaCandidatiByPerso();

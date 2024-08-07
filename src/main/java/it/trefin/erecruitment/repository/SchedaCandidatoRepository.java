@@ -10,11 +10,7 @@ import it.trefin.erecruitment.model.SchedaCandidato;
 @Repository
 public interface SchedaCandidatoRepository extends JpaRepository<SchedaCandidato, Long> {
 	
-	List<SchedaCandidato> findByPickingTrue();
 	List<SchedaCandidato> findByPersoTrue();
 	List<SchedaCandidato> findByIngaggiatoTrue();
-
-
-
 
 }

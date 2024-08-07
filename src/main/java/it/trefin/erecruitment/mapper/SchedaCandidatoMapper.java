@@ -11,7 +11,6 @@ public class SchedaCandidatoMapper {
 		scDto.setNota(sc.getNota());
 		scDto.setIngaggiato(sc.getIngaggiato());
 		scDto.setPerso(sc.getPerso());
-		scDto.setPicking(sc.getPicking());
 		
 		return scDto;
 	}
@@ -22,11 +21,9 @@ public class SchedaCandidatoMapper {
 		sc.setNota(scDto.getNota());
 		sc.setIngaggiato(scDto.getIngaggiato());
 		sc.setPerso(scDto.getPerso());
-		sc.setPicking(scDto.getPicking());
 		sc.setNota(scDto.getNota());
 		sc.setIngaggiato(scDto.getIngaggiato());
 		sc.setPerso(scDto.getPerso());
-		sc.setPicking(scDto.getPicking());
 		
 		return sc;
 	}

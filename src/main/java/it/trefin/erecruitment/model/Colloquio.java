@@ -23,7 +23,7 @@ public class Colloquio {
 	private String cognomeEsaminatore;
 	private String tipo;
 	private Esito esito;
-	private Feedback feedback = Feedback.Nessuno;
+	private Feedback feedback = Feedback.Negativo;
 
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;

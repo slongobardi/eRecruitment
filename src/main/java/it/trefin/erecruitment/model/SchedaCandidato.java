@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +15,14 @@ public class SchedaCandidato {
 	private long id;
 
 	private String nota;
-	private Boolean picking = false;
 	private Boolean perso = false;
 	private Boolean ingaggiato = false;
+
+	@ManyToOne()
+	private Utente utente;
+
+	@ManyToOne()
+	private Azienda azienda;
 
 	public long getId() {
 		return id;
@@ -33,14 +38,6 @@ public class SchedaCandidato {
 
 	public void setNota(String nota) {
 		this.nota = nota;
-	}
-
-	public Boolean getPicking() {
-		return picking;
-	}
-
-	public void setPicking(Boolean picking) {
-		this.picking = picking;
 	}
 
 	public Boolean getPerso() {
@@ -59,4 +56,19 @@ public class SchedaCandidato {
 		this.ingaggiato = ingaggiato;
 	}
 
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	public Azienda getAzienda() {
+		return azienda;
+	}
+
+	public void setAzienda(Azienda azienda) {
+		this.azienda = azienda;
+	}
 }

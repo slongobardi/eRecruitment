@@ -79,9 +79,8 @@ public class Utente {
     @OneToMany(mappedBy = "utente")
     private List<Esperienza> esperienze;
     
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_schedaCandidato", referencedColumnName = "id")
-	private SchedaCandidato schedaCandidato;
+	@OneToMany(mappedBy = "utente")
+	private List<SchedaCandidato> schedaCandidato;
     
     @Lob
     private byte[] foto;
@@ -341,11 +340,11 @@ public class Utente {
 		this.preferenza = preferenza;
 	}
 
-	public SchedaCandidato getSchedaCandidato() {
+	public List<SchedaCandidato> getSchedaCandidato() {
 		return schedaCandidato;
 	}
 
-	public void setSchedaCandidato(SchedaCandidato schedaCandidato) {
+	public void setSchedaCandidato(List<SchedaCandidato> schedaCandidato) {
 		this.schedaCandidato = schedaCandidato;
 	}
 }

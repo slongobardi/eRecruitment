@@ -34,6 +34,9 @@ public class Candidatura {
     
     @Column(name = "settore")
     private String settore;
+    
+    @Column(name = "sede")
+    private String sede;
 
     @OneToMany(mappedBy="candidatura")
     private List<UtenteCandidatura> utenteCandidature;
@@ -154,6 +157,14 @@ public class Candidatura {
 
 	public void setSettore(String settore) {
 		this.settore = settore;
+	}
+
+	public String getSede() {
+		return sede;
+	}
+
+	public void setSede(String sede) {
+		this.sede = sede;
 	}
 
 	public Candidatura() {

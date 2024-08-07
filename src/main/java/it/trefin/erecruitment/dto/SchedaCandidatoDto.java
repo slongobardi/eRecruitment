@@ -3,7 +3,6 @@ package it.trefin.erecruitment.dto;
 public class SchedaCandidatoDto {
 	private long id;
 	private String nota;
-	private Boolean picking;
 	private Boolean perso;
 	private Boolean ingaggiato;
 
@@ -21,14 +20,6 @@ public class SchedaCandidatoDto {
 
 	public void setNota(String nota) {
 		this.nota = nota;
-	}
-
-	public Boolean getPicking() {
-		return picking;
-	}
-
-	public void setPicking(Boolean picking) {
-		this.picking = picking;
 	}
 
 	public Boolean getPerso() {

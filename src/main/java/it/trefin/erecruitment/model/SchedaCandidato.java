@@ -15,7 +15,6 @@ public class SchedaCandidato {
 	private long id;
 
 	private String nota;
-	private Boolean picking = false;
 	private Boolean perso = false;
 	private Boolean ingaggiato = false;
 
@@ -33,14 +32,6 @@ public class SchedaCandidato {
 
 	public void setNota(String nota) {
 		this.nota = nota;
-	}
-
-	public Boolean getPicking() {
-		return picking;
-	}
-
-	public void setPicking(Boolean picking) {
-		this.picking = picking;
 	}
 
 	public Boolean getPerso() {

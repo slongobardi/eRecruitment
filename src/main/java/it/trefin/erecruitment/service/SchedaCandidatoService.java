@@ -19,25 +19,6 @@ public class SchedaCandidatoService {
     @Autowired
     private SchedaCandidatoRepository scCandidatoRepository;
 
-
-
-    public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByPicking() {
-        Response<List<SchedaCandidatoDto>, Status> response = new Response<>();
-        try {
-            List<SchedaCandidato> candidati = scCandidatoRepository.findByPickingTrue();
-            List<SchedaCandidatoDto> candidatiDto = candidati.stream()
-                    .map(SchedaCandidatoMapper::toDto) 
-                    .collect(Collectors.toList());
-            response.setData(candidatiDto);
-            response.setStatus(Status.OK);
-            response.setDescrizione("Candidati picking recuperati con successo.");
-        } catch (Exception e) {
-            response.setStatus(Status.SYSTEM_ERROR);
-            response.setDescrizione("Errore nel recupero dei candidati picking: " + e.getMessage());
-        }
-        return response;
-    }
-
     public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByPerso() {
         Response<List<SchedaCandidatoDto>, Status> response = new Response<>();
         try {

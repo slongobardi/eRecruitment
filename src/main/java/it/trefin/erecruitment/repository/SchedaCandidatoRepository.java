@@ -12,5 +12,6 @@ public interface SchedaCandidatoRepository extends JpaRepository<SchedaCandidato
 	
 	List<SchedaCandidato> findByPersoTrue();
 	List<SchedaCandidato> findByIngaggiatoTrue();
-
+	List<SchedaCandidato> findAllByAziendaId(long id);
+	List<SchedaCandidato> findAllByUtenteId(long id);
 }

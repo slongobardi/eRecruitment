@@ -28,10 +28,10 @@ public class UtenteCandidaturaController {
 	@Autowired
 	private UtenteCandidaturaService ucService;
 
-	@PostMapping("/add")
+	@PostMapping("/add/{idAzienda}/{idUtente}")
 	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(
-			@RequestBody UtenteCandidatura utenteCandidatura) {
-		return ucService.inserisciUtenteCandidatura(utenteCandidatura);
+			@RequestBody UtenteCandidatura utenteCandidatura,@PathVariable("idAzienda") long idAzienda,@PathVariable("idUtente") long idUtente) {
+		return ucService.inserisciUtenteCandidatura(utenteCandidatura,idAzienda,idUtente);
 	}
 
 	@GetMapping("/visualizza/{id}")

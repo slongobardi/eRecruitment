@@ -24,7 +24,7 @@ public class ColloquioService {
 	private ColloquioRepository cRepository;
 
 	@Autowired
-    private CandidaturaRepository candidaturaRepository;
+	private CandidaturaRepository candidaturaRepository;
 
 	public Response<Colloquio, Status> inserisciColloquio(Colloquio colloquio) {
 
@@ -148,20 +148,18 @@ public class ColloquioService {
 
 	}
 
-	public Response<List<ColloquioDto>, Status> colloquiCandidatura(long idCandidatura,long idUtente) {
+	public Response<List<ColloquioDto>, Status> colloquiCandidatura(long idCandidatura, long idUtente) {
 
 		Response<List<ColloquioDto>, Status> response = new Response<>();
 
 		try {
 
 			List<Colloquio> colloquiList = cRepository.findByCandidaturaId(idCandidatura);
-			
 
 			List<ColloquioDto> colloquiDtoList = colloquiList.stream().map(ColloquioMapper::toDto)
 					.collect(Collectors.toList());
-			
-			colloquiDtoList.stream().filter(c-> c.getListaUtenti().contains(idUtente)).collect(Collectors.toList()); 
 
+			colloquiDtoList.stream().filter(c -> c.getListaUtenti().contains(idUtente)).collect(Collectors.toList());
 
 			response.setData(colloquiDtoList);
 			response.setStatus(Status.OK);
@@ -219,38 +217,54 @@ public class ColloquioService {
 
 	public Response<List<ColloquioDto>, Status> filterByDate(String start, String end) {
 		Response<List<ColloquioDto>, Status> response = new Response<>();
-		
+
 		try {
-			ArrayList<Colloquio> filtered = cRepository.findByUltimoColloquioBetween(Date.valueOf(start),Date.valueOf(end));
-			if(filtered.size() == 0) {
+			ArrayList<Colloquio> filtered = cRepository.findByUltimoColloquioBetween(Date.valueOf(start),
+					Date.valueOf(end));
+			if (filtered.size() == 0) {
 				response.setData(new ArrayList<>());
 				response.setStatus(Status.OK);
 				response.setDescrizione("filter by date success");
-			}else {
+			} else {
 				response.setData(filtered.stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
 				response.setStatus(Status.OK);
 				response.setDescrizione("filter by date success");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("filter by date in errore " + e.getMessage());
 		}
-		
+
 		return response;
 	}
-	
-	public Response<Object[],Status> totalFeedback(int id,Date startDate,Date endDate){
-		Response<Object[],Status> response = new Response<>();
-		
+
+	public Response<Object[], Status> totalFeedback(int id, Date startDate, Date endDate) {
+		Response<Object[], Status> response = new Response<>();
+
 		try {
-			response.setData(cRepository.totalFeedback(id,startDate,endDate));
+			response.setData(cRepository.totalFeedback(id, startDate, endDate));
 			response.setDescrizione("query custom feedback ok");
 			response.setStatus(Status.OK);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			response.setDescrizione("errore query custom feedback " + e.getMessage());
 			response.setStatus(Status.KO);
 		}
-		
+
+		return response;
+	}
+	
+	public Response<Object[], Status> report(int id, Date startDate, Date endDate) {
+		Response<Object[], Status> response = new Response<>();
+
+		try {
+			response.setData(cRepository.reportCandidati(id, startDate, endDate));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDescrizione("errore query custom feedback " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+
 		return response;
 	}
 

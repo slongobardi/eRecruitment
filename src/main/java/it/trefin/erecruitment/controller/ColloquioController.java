@@ -89,4 +89,9 @@ public class ColloquioController {
 	public Response<Object[],Status> totalFeedback(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
 		return cService.totalFeedback(id, startDate, endDate);
 	}
+	
+	@GetMapping("/report/{id}/{startDate}/{endDate}")
+	public Response<Object[],Status> report(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+		return cService.report(id, startDate, endDate);
+	}
 }

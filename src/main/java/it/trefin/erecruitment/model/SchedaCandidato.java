@@ -24,6 +24,16 @@ public class SchedaCandidato {
 	@ManyToOne()
 	private Azienda azienda;
 
+	public static SchedaCandidato defaultScheda(Azienda a,Utente u) {
+		SchedaCandidato sc = new SchedaCandidato();
+		sc.setIngaggiato(false);
+		sc.setPerso(false);
+		sc.setNota("");
+		sc.setAzienda(a);
+		sc.setUtente(u);
+		return sc;
+	}
+	
 	public long getId() {
 		return id;
 	}

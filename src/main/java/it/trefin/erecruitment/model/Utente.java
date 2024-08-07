@@ -56,7 +56,7 @@ public class Utente {
     @Column(columnDefinition = "TEXT")
     private String descrizione;
     
-    @OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "utente")
     private List<UtenteTitoliStudio> utenteTitoliStudio;
     
     @OneToMany(mappedBy = "utente")

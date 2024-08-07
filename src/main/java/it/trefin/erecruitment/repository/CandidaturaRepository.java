@@ -14,7 +14,7 @@ public interface CandidaturaRepository extends JpaRepository<Candidatura, Long>{
 
 	List<Candidatura> findAllByAziendaId(long id_azienda);
 
-	@Query(value="SELECT \r\n"
+	@Query(value="SELECT DISTINCT \r\n"
 			+ "    candidatura.descrizione, \r\n"
 			+ "    candidatura.nome, \r\n"
 			+ "    candidatura.numero_candidati, \r\n"

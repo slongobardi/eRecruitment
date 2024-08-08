@@ -3,6 +3,7 @@ package it.trefin.erecruitment.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -253,8 +254,8 @@ public class ColloquioService {
 		return response;
 	}
 	
-	public Response<Object[], Status> report(int id, Date startDate, Date endDate) {
-		Response<Object[], Status> response = new Response<>();
+	public Response<Set<Object>, Status> report(long id, Date startDate, Date endDate) {
+		Response<Set<Object>, Status> response = new Response<>();
 
 		try {
 			response.setData(cRepository.reportCandidati(id, startDate, endDate));

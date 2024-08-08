@@ -2,6 +2,7 @@ package it.trefin.erecruitment.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -91,7 +92,7 @@ public class ColloquioController {
 	}
 	
 	@GetMapping("/report/{id}/{startDate}/{endDate}")
-	public Response<Object[],Status> report(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+	public Response<Set<Object>,Status> report(@PathVariable("id") long id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
 		return cService.report(id, startDate, endDate);
 	}
 	

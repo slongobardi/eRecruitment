@@ -52,4 +52,15 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
 			+ "    candidatura.id_azienda = :id AND colloquio.ultimo_colloquio BETWEEN :start AND :end ;\r\n"
 			+ "", nativeQuery = true)
 	Object[] reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
+	
+	@Query(value="SELECT DISTINCT\r\n"
+			+ "    *\r\n"
+			+ "FROM\r\n"
+			+ "    colloquio c\r\n"
+			+ "JOIN\r\n"
+			+ "    utente_colloquio uc ON uc.id_utente = :idU \r\n"
+			+ "WHERE\r\n"
+			+ "    c.id_candidatura = :idC ;\r\n"
+			,nativeQuery = true)
+	List<Colloquio> findAllColloquiUtenteByCandidatura(@Param("idC") long idC,@Param("idU") long idU);
 }

@@ -267,5 +267,20 @@ public class ColloquioService {
 
 		return response;
 	}
+	
+	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(long idC,long idU){
+		Response<List<ColloquioDto>,Status> response  = new Response<>();
+		
+		try {
+			response.setData(cRepository.findAllColloquiUtenteByCandidatura(idC,idU).stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		}catch(Exception e){
+			response.setDescrizione("errore query custom findAllColloquiUtenteByCandidatura " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+		
+		return response;
+	}
 
 }

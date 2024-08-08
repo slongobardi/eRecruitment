@@ -52,4 +52,22 @@ public class SchedaCandidatoService {
         }
         return response;
     }
+    
+    public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByAziendaAndUtente(long idU,long idA) {
+        Response<List<SchedaCandidatoDto>, Status> response = new Response<>();
+        try {
+            List<SchedaCandidato> candidati = scCandidatoRepository.findByUtenteIdAndAziendaId(idU,idA);
+            List<SchedaCandidatoDto> candidatiDto = candidati.stream()
+                    .map(SchedaCandidatoMapper::toDto)
+                    .collect(Collectors.toList());
+            response.setData(candidatiDto);
+            response.setStatus(Status.OK);
+            response.setDescrizione("Candidati ingaggiato recuperati con successo.");
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("Errore nel recupero dei candidati ingaggiato: " + e.getMessage());
+        }
+        return response;
+    }
+
 }

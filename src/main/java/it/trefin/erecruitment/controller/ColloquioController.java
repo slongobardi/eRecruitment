@@ -94,4 +94,9 @@ public class ColloquioController {
 	public Response<Object[],Status> report(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
 		return cService.report(id, startDate, endDate);
 	}
+	
+	@GetMapping("/findAllColloquiUtenteByCandidatura/{idC}/{idU}")
+	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(@PathVariable("idC") long idC,@PathVariable("idU") long idU){
+		return cService.findAllColloquiUtenteByCandidatura(idC,idU);
+	}
 }

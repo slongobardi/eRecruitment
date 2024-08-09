@@ -24,10 +24,10 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
 
 	@Query(value = "SELECT\r\n" 
 			+ "    COUNT(DISTINCT colloquio.id), \r\n" 
-			+ "    SUM(DISTINCT colloquio.feedback = 1), \r\n"
 			+ "    SUM(DISTINCT colloquio.feedback = 0), \r\n" 
-			+ "    SUM(DISTINCT schedacandidato.perso = 1), \r\n"
-			+ "    SUM(DISTINCT schedacandidato.ingaggiato = 1) \r\n" 
+			+ "    SUM(DISTINCT colloquio.feedback = 1 ) , \r\n"
+			+ "    SUM(schedacandidato.perso = 1), \r\n"
+			+ "    SUM(schedacandidato.ingaggiato = 1) \r\n" 
 			+ "FROM colloquio \r\n"
 			+ "JOIN candidatura ON colloquio.id_candidatura = candidatura.id \r\n"
 			+ "JOIN utente_colloquio ON utente_colloquio.id_colloquio = colloquio.id \r\n"

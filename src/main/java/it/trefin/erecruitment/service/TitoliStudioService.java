@@ -3,6 +3,8 @@ package it.trefin.erecruitment.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import it.trefin.erecruitment.repository.TitoliStudioRepository;
 
 @Service
 public class TitoliStudioService {
-
+	private Logger logger = LoggerFactory.getLogger(TitoliStudioService.class);
 	@Autowired
 	private TitoliStudioRepository tsRepository;
 	
@@ -36,6 +38,7 @@ public class TitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("inserisciTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -63,6 +66,7 @@ public class TitoliStudioService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTitoloStudio in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -89,6 +93,7 @@ public class TitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaTitoloStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -111,6 +116,7 @@ public class TitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaTitoloStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -133,6 +139,7 @@ public class TitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}

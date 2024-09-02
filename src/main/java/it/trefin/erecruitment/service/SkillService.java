@@ -3,6 +3,8 @@ package it.trefin.erecruitment.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import it.trefin.erecruitment.repository.SkillRepository;
 
 @Service
 public class SkillService {
-
+	private Logger logger = LoggerFactory.getLogger(SkillService.class);
     @Autowired
     private SkillRepository sRepository;
 
@@ -30,6 +32,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("inserisciSkill in errore " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;
@@ -54,6 +57,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("visualizzaSkill in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;
@@ -79,6 +83,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("aggiornaSkill in errore " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;
@@ -103,6 +108,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("eliminaSkill in errore " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;
@@ -121,6 +127,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("visualizzaTutteSkills in errore " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;
@@ -139,6 +146,7 @@ public class SkillService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("visualizzaSkillUtente in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
         }
 
         return response;

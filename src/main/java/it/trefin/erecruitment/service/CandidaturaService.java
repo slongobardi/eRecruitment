@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,7 @@ import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 
 @Service
 public class CandidaturaService {
-
+	private Logger logger = LoggerFactory.getLogger(CandidaturaService.class);
 	@Autowired
 	private CandidaturaRepository cRepository;
 	@Autowired
@@ -58,6 +60,7 @@ public class CandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("inserisciCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -85,6 +88,7 @@ public class CandidaturaService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaCandidatura in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -117,6 +121,7 @@ public class CandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -139,6 +144,7 @@ public class CandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -161,6 +167,7 @@ public class CandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -179,6 +186,7 @@ public class CandidaturaService {
 		}catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaCandidatureAziendali in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 		}
 		
@@ -196,6 +204,7 @@ public class CandidaturaService {
 		}catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaCandidatureAziendali in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 		}
 	}

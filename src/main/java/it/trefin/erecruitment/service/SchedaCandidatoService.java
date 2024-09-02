@@ -3,6 +3,8 @@ package it.trefin.erecruitment.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import it.trefin.erecruitment.repository.SchedaCandidatoRepository;
 
 @Service
 public class SchedaCandidatoService {
-	
+	private Logger logger = LoggerFactory.getLogger(SchedaCandidatoService.class);
     @Autowired
     private SchedaCandidatoRepository scCandidatoRepository;
 
@@ -32,6 +34,7 @@ public class SchedaCandidatoService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("Errore nel recupero dei candidati perso: " + e.getMessage());
+			logger.warn(e.getMessage());
         }
         return response;
     }
@@ -49,6 +52,7 @@ public class SchedaCandidatoService {
         } catch (Exception e) {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("Errore nel recupero dei candidati ingaggiato: " + e.getMessage());
+			logger.warn(e.getMessage());
         }
         return response;
     }

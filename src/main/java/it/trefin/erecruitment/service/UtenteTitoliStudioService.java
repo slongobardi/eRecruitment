@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ import it.trefin.erecruitment.repository.UtenteTitoliStudioRepository;
 
 @Service
 public class UtenteTitoliStudioService {
-
+	private Logger logger = LoggerFactory.getLogger(UtenteTitoliStudioService.class);
 	@Autowired
 	private UtenteTitoliStudioRepository utsRepository;
 	
@@ -38,6 +40,7 @@ public class UtenteTitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("inserisciUtenteTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -65,6 +68,7 @@ public class UtenteTitoliStudioService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaUtenteTitoliStudio in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -94,6 +98,7 @@ public class UtenteTitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaUtenteTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -114,6 +119,7 @@ public class UtenteTitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaUtenteTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -136,6 +142,7 @@ public class UtenteTitoliStudioService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenteTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -157,6 +164,7 @@ public class UtenteTitoliStudioService {
 			
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenteTitoliStudio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 		}
 	}

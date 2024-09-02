@@ -3,6 +3,8 @@ package it.trefin.erecruitment.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import it.trefin.erecruitment.repository.EsperienzaRepository;
 
 @Service
 public class EsperienzaService {
-
+	private Logger logger = LoggerFactory.getLogger(EsperienzaService.class);
 	@Autowired
 	private EsperienzaRepository eRepository;
 	
@@ -36,6 +38,7 @@ public class EsperienzaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("inserisciEsperienza in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -63,6 +66,7 @@ public class EsperienzaService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaEsperienza in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -91,6 +95,7 @@ public class EsperienzaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaEsperienza in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -113,6 +118,7 @@ public class EsperienzaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaEsperienza in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -134,6 +140,7 @@ public class EsperienzaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTutteEsperienze in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}

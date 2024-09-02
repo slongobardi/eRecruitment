@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 
 @Service
 public class UtenteCandidaturaService {
-
+	private Logger logger = LoggerFactory.getLogger(UtenteCandidaturaService.class);
 	@Autowired
 	private UtenteCandidaturaRepository ucRepository;
 
@@ -53,6 +55,7 @@ public class UtenteCandidaturaService {
 	    } catch (Exception e) {
 	        response.setStatus(Status.SYSTEM_ERROR);
 	        response.setDescrizione("Errore durante l'inserimento dell'UtenteCandidatura: " + e.getMessage());
+			logger.warn(e.getMessage());
 	    }
 
 	    return response;
@@ -81,6 +84,7 @@ public class UtenteCandidaturaService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaUtenteCandidatura in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -111,6 +115,7 @@ public class UtenteCandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaUtenteCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -134,6 +139,7 @@ public class UtenteCandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaUtenteCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -156,6 +162,7 @@ public class UtenteCandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -178,6 +185,7 @@ public class UtenteCandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -198,6 +206,7 @@ public class UtenteCandidaturaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenteCandidatura in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}

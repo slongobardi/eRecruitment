@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
 public class PreferenzaService {
+	private Logger logger = LoggerFactory.getLogger(PreferenzaService.class);
 	@Autowired
 	private PreferenzaRepository repository;
 	@Autowired
@@ -45,6 +48,7 @@ public class PreferenzaService {
 		} catch (Exception e) {
 			response.setDescrizione(e.getMessage());
 			response.setStatus(Status.KO);
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -68,6 +72,7 @@ public class PreferenzaService {
 		} catch (Exception e) {
 			response.setDescrizione(e.getMessage());
 			response.setStatus(Status.KO);
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -85,6 +90,7 @@ public class PreferenzaService {
 		}catch(Exception e){
 			response.setDescrizione(e.getMessage());
 			response.setStatus(Status.KO);
+			logger.warn(e.getMessage());
 			return response;
 		}
 

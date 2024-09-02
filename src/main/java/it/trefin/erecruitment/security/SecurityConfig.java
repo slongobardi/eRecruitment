@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests(requests -> requests
 						.antMatchers("/auth/login", "/auth/register", "/auth/cambiaPassword","/auth/resetPassword/**",
 								"/api/sendEmail/inviaEmail", "/api/candidatura/all", "/api/candidatura/visualizza/","/api/azienda/visualizza/**","/api/skill/visualizza/**",
-								"/api/sendEmail/inviaEmail/**", "/api/sendEmail/confirmEmail/**")
+								"/api/sendEmail/inviaEmail/**", "/api/sendEmail/confirmEmail/**","/log")
 						.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
 				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

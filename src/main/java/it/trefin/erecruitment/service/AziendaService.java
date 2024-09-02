@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
 public class AziendaService {
+	private Logger logger = LoggerFactory.getLogger(AziendaService.class);
 
 	@Autowired
 	private AziendaRepository aRepository;
@@ -27,6 +30,7 @@ public class AziendaService {
 	private UtenteRepository uRepository;
 	@Autowired
 	private CandidaturaRepository cRepository;
+
 	public Response<Azienda, Status> inserisciAzienda(Azienda azienda) {
 
 		Response<Azienda, Status> response = new Response<>();
@@ -43,6 +47,7 @@ public class AziendaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("inserisciAzienda in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -70,6 +75,7 @@ public class AziendaService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaAzienda in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 
 		return response;
@@ -91,6 +97,7 @@ public class AziendaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaAzienda in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
@@ -112,44 +119,45 @@ public class AziendaService {
 
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTutteAzienda in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 
 		}
 
 	}
-	
-	public Response<AziendaDto,Status> getByNome(String nome){
-		Response<AziendaDto,Status> response = new Response<>();
-		
+
+	public Response<AziendaDto, Status> getByNome(String nome) {
+		Response<AziendaDto, Status> response = new Response<>();
+
 		try {
 			Azienda a = aRepository.findByNome(nome);
-			
+
 			response.setData(AziendaMapper.toDto(a));
 			response.setStatus(Status.OK);
 			response.setDescrizione("Azienda ritornata con successo.");
-			
+
 			return response;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("getByNome in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 			return response;
 		}
-		
-		
+
 	}
 
 	public void aggiornaAzienda(AziendaDto azienda) {
 		List<Utente> listaUtenti = new ArrayList<>();
 		List<Candidatura> listaCandidature = new ArrayList<>();
-			for(long idUtente :	azienda.getUtenti()) {
-				listaUtenti.add(this.uRepository.getReferenceById(idUtente));
-			}
-			for(long idCandidatura : azienda.getListaCandidature()) {
-				listaCandidature.add(this.cRepository.getReferenceById(idCandidatura));
-			}
-			Azienda aziendaAggiornata=AziendaMapper.toEntity(azienda, listaUtenti, listaCandidature);
-			this.aRepository.save(aziendaAggiornata);
-		
+		for (long idUtente : azienda.getUtenti()) {
+			listaUtenti.add(this.uRepository.getReferenceById(idUtente));
+		}
+		for (long idCandidatura : azienda.getListaCandidature()) {
+			listaCandidature.add(this.cRepository.getReferenceById(idCandidatura));
+		}
+		Azienda aziendaAggiornata = AziendaMapper.toEntity(azienda, listaUtenti, listaCandidature);
+		this.aRepository.save(aziendaAggiornata);
+
 	}
-	
+
 }

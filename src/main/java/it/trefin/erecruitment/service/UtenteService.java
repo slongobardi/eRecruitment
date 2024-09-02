@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
 public class UtenteService {
-
+	private Logger logger = LoggerFactory.getLogger(UtenteService.class);
 	@Autowired
 	private UtenteRepository uRepository;
 
@@ -57,6 +59,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaUtente in errore: " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -97,6 +100,7 @@ public class UtenteService {
 	    } catch (Exception e) {
 	        response.setStatus(Status.SYSTEM_ERROR);
 	        response.setDescrizione("aggiornaUtente in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 	    }
 	    return response;
 	}
@@ -119,6 +123,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaDescrizioneUtente in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -140,6 +145,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("modificaSkill in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -160,6 +166,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("eliminaUtente in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -173,6 +180,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiUtenti in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -187,6 +195,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("skillUtente in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -203,6 +212,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("titoliUtente in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -217,6 +227,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("getAllNotUser in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -231,6 +242,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("getAllNotUser in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -245,6 +257,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("findUtentePerColloquioAzienda in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -271,6 +284,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -293,6 +307,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaCV in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -320,6 +335,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiungiSkill in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -342,6 +358,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("aggiornaFoto in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -361,6 +378,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("byEmail in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -382,6 +400,7 @@ public class UtenteService {
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("complete in errore " + e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		return response;
 	}
@@ -399,6 +418,7 @@ public class UtenteService {
 		}catch(Exception e) {
 			response.setStatus(Status.KO);
 			response.setDescrizione(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 		
 		return response;

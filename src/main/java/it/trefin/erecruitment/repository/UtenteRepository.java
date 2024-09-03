@@ -21,7 +21,7 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	@Query(value = "SELECT * FROM Utente u WHERE u.ruolo = 3",nativeQuery = true)
 	List<Utente> findAllNormalUser();
 	
-	@Query(value = "SELECT * FROM utente,candidatura,utente_colloquio,colloquio WHERE candidatura.id_azienda = :idAzienda AND colloquio.id_candidatura = candidatura.id AND utente_colloquio.id_colloquio = colloquio.id AND utente.id = utente_colloquio.id_utente;\r\n"
+	@Query(value = "SELECT DISTINCT * FROM utente,candidatura,utente_colloquio,colloquio WHERE candidatura.id_azienda = :idAzienda AND colloquio.id_candidatura = candidatura.id AND utente_colloquio.id_colloquio = colloquio.id AND utente.id = utente_colloquio.id_utente;\r\n"
 			,nativeQuery = true)
 	List<Utente>findUtentePerAzienda(@Param("idAzienda") long idAzienda);
 

@@ -3,6 +3,7 @@ package it.trefin.erecruitment.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -259,9 +260,39 @@ public class ColloquioService {
 		} catch (Exception e) {
 			response.setDescrizione("errore query custom feedback " + e.getMessage());
 			response.setStatus(Status.KO);
+		}
+
+		return response;
+	}
+	
+	public Response<Set<Object>, Status> report(long id, Date startDate, Date endDate) {
+		Response<Set<Object>, Status> response = new Response<>();
+
+		try {
+			response.setData(cRepository.reportCandidati(id, startDate, endDate));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDescrizione("errore query custom feedback " + e.getMessage());
+			response.setStatus(Status.KO);
 			logger.warn(e.getMessage());
 		}
 
+		return response;
+	}
+	
+	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(long idC,long idU){
+		Response<List<ColloquioDto>,Status> response  = new Response<>();
+		
+		try {
+			response.setData(cRepository.findAllColloquiUtenteByCandidatura(idC,idU).stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		}catch(Exception e){
+			response.setDescrizione("errore query custom findAllColloquiUtenteByCandidatura " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+		
 		return response;
 	}
 

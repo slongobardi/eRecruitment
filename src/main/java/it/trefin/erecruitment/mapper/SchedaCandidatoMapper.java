@@ -24,6 +24,7 @@ public class SchedaCandidatoMapper {
 		sc.setNota(scDto.getNota());
 		sc.setIngaggiato(scDto.getIngaggiato());
 		sc.setPerso(scDto.getPerso());
+		
 		return sc;
 	}
 

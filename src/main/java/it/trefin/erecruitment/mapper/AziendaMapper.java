@@ -8,6 +8,7 @@ import it.trefin.erecruitment.dto.AziendaDto;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Preferenza;
+import it.trefin.erecruitment.model.SchedaCandidato;
 import it.trefin.erecruitment.model.Utente;
 
 public class AziendaMapper {
@@ -21,6 +22,10 @@ public class AziendaMapper {
 		aDto.setLinkAzienda(a.getLinkAzienda());
 		aDto.setLuogo(a.getLuogo());
 		aDto.setNome(a.getNome());
+		
+		aDto.setSchedaCandidato(a.getSchedaCandidato() != null
+				? a.getSchedaCandidato().stream().map(SchedaCandidato::getId).collect(Collectors.toList())
+				: new ArrayList<>());
 
 		aDto.setListaCandidature(a.getListaCandidature() != null
 				? a.getListaCandidature().stream().map(Candidatura::getId).collect(Collectors.toList())

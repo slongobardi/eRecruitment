@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +18,22 @@ public class SchedaCandidato {
 	private Boolean perso = false;
 	private Boolean ingaggiato = false;
 
+	@ManyToOne()
+	private Utente utente;
+
+	@ManyToOne()
+	private Azienda azienda;
+
+	public static SchedaCandidato defaultScheda(Azienda a,Utente u) {
+		SchedaCandidato sc = new SchedaCandidato();
+		sc.setIngaggiato(false);
+		sc.setPerso(false);
+		sc.setNota("");
+		sc.setAzienda(a);
+		sc.setUtente(u);
+		return sc;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -50,4 +66,19 @@ public class SchedaCandidato {
 		this.ingaggiato = ingaggiato;
 	}
 
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+
+	public Azienda getAzienda() {
+		return azienda;
+	}
+
+	public void setAzienda(Azienda azienda) {
+		this.azienda = azienda;
+	}
 }

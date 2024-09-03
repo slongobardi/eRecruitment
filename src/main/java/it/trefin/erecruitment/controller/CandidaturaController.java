@@ -63,4 +63,9 @@
 		public Response<List<SkillDto>,Status> skillDellaCandidatura(@PathVariable long id_candidatura){
 			return cService.skillDellaCandidatura(id_candidatura);
 		}
+		
+		@GetMapping("/findCandidatureUtenteAzienda/{idU}/{idA}")
+		public Response<Object[],Status> findByUtente(@PathVariable("idU") long idU,@PathVariable("idA") long idA){
+			return cService.findByUtente(idU,idA);
+		}
 	}

@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -35,6 +33,17 @@ public class Azienda {
 
 	@OneToMany(mappedBy = "azienda")
 	private List<Preferenza> preferenza;
+
+	@OneToMany(mappedBy = "azienda")
+	private List<SchedaCandidato> schedaCandidato;
+	
+	public List<SchedaCandidato> getSchedaCandidato() {
+		return schedaCandidato;
+	}
+
+	public void setSchedaCandidato(List<SchedaCandidato> schedaCandidato) {
+		this.schedaCandidato = schedaCandidato;
+	}
 
 	public long getId() {
 		return id;

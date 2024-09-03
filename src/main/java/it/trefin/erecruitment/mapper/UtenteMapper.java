@@ -11,6 +11,7 @@ import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Colloquio;
 import it.trefin.erecruitment.model.Esperienza;
 import it.trefin.erecruitment.model.Preferenza;
+import it.trefin.erecruitment.model.SchedaCandidato;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
@@ -21,8 +22,6 @@ public class UtenteMapper {
 	public static UtenteDto toDto(Utente u) {
 		UtenteDto uDto = new UtenteDto();
 
-
-		
 		uDto.setId(u.getId());
 		uDto.setNome(u.getNome());
 		uDto.setCognome(u.getCognome());
@@ -44,7 +43,9 @@ public class UtenteMapper {
 		uDto.setFoto(u.getFoto());
 		uDto.setCv(u.getCv());
 		uDto.setDataNascita(u.getDataNascita());
-		uDto.setSchedaCandidato(u.getSchedaCandidato());
+		uDto.setSchedaCandidato(u.getSchedaCandidato() != null
+				? u.getSchedaCandidato().stream().map(SchedaCandidato::getId).collect(Collectors.toList())
+				: new ArrayList<>());
 
 		uDto.setListaSkill(
 				u.getListaSkill() != null ? u.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet())

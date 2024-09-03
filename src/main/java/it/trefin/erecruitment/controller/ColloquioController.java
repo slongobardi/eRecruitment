@@ -2,6 +2,7 @@ package it.trefin.erecruitment.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -88,5 +89,15 @@ public class ColloquioController {
 	@GetMapping("/totalFeedback/{id}/{startDate}/{endDate}")
 	public Response<Object[],Status> totalFeedback(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
 		return cService.totalFeedback(id, startDate, endDate);
+	}
+	
+	@GetMapping("/report/{id}/{startDate}/{endDate}")
+	public Response<Set<Object>,Status> report(@PathVariable("id") long id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+		return cService.report(id, startDate, endDate);
+	}
+	
+	@GetMapping("/findAllColloquiUtenteByCandidatura/{idC}/{idU}")
+	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(@PathVariable("idC") long idC,@PathVariable("idU") long idU){
+		return cService.findAllColloquiUtenteByCandidatura(idC,idU);
 	}
 }

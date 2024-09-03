@@ -11,57 +11,74 @@ import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
 import it.trefin.erecruitment.mapper.UtenteCandidaturaMapper;
+import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
+import it.trefin.erecruitment.model.SchedaCandidato;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.UtenteCandidatura;
+import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
+import it.trefin.erecruitment.repository.SchedaCandidatoRepository;
 import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
+import it.trefin.erecruitment.repository.UtenteRepository;
 
 @Service
 public class UtenteCandidaturaService {
 	private Logger logger = LoggerFactory.getLogger(UtenteCandidaturaService.class);
 	@Autowired
 	private UtenteCandidaturaRepository ucRepository;
-
 	@Autowired
 	private CandidaturaRepository cRepository;
+	@Autowired
+	private SchedaCandidatoRepository scRepository;
+	@Autowired
+	private UtenteRepository utenteRepository;
+	@Autowired
+	private AziendaRepository aRepository;
 
-	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(UtenteCandidatura utenteCandidatura) {
-	    Response<UtenteCandidatura, Status> response = new Response<>();
+	public Response<UtenteCandidatura, Status> inserisciUtenteCandidatura(UtenteCandidatura utenteCandidatura,
+			long idAzienda, long idUtente) {
+		Response<UtenteCandidatura, Status> response = new Response<>();
 
-	    try {
-	        Long utenteId = utenteCandidatura.getUtente().getId();
-	        Long candidaturaId = utenteCandidatura.getCandidatura().getId();
+		try {
+			Long utenteId = utenteCandidatura.getUtente().getId();
+			Long candidaturaId = utenteCandidatura.getCandidatura().getId();
+			Azienda azienda = this.aRepository.getReferenceById(idAzienda);
+			List<SchedaCandidato> schede = scRepository.findAllByUtenteId(idUtente);
+			Optional<UtenteCandidatura> existingCandidatura = ucRepository.findByUtenteIdAndCandidaturaId(utenteId,
+					candidaturaId);
 
-	        Optional<UtenteCandidatura> existingCandidatura = ucRepository.findByUtenteIdAndCandidaturaId(utenteId, candidaturaId);
-
-	        if (existingCandidatura.isPresent()) {
-	            response.setStatus(Status.SYSTEM_ERROR);
-	            response.setDescrizione("Hai già effettuato una candidatura per questa posizione.");
-	        } else {
+			if (existingCandidatura.isPresent()) {
+				response.setStatus(Status.SYSTEM_ERROR);
+				response.setDescrizione("Hai già effettuato una candidatura per questa posizione.");
+			} else {
 				Candidatura c = cRepository.findById(utenteCandidatura.getCandidatura().getId()).get();
+				if (schede != null && findScheda(schede, azienda.getId()) == -1) {
+					scRepository
+							.save(SchedaCandidato.defaultScheda(azienda, utenteRepository.findById(idUtente).get()));
+				}
+				if (schede == null) {
+					scRepository
+							.save(SchedaCandidato.defaultScheda(azienda, utenteRepository.findById(idUtente).get()));
+				}
+				c.setNumeroCandidati(c.getNumeroCandidati() + 1);
+				cRepository.save(c);
 
-	            c.setNumeroCandidati(c.getNumeroCandidati() + 1);
-	            cRepository.save(c);
+				ucRepository.save(utenteCandidatura);
 
-	            ucRepository.save(utenteCandidatura);
+				response.setData(utenteCandidatura);
+				response.setStatus(Status.OK);
+				response.setDescrizione("UtenteCandidatura salvato con successo.");
+			}
 
-	            response.setData(utenteCandidatura);
-	            response.setStatus(Status.OK);
-	            response.setDescrizione("UtenteCandidatura salvato con successo.");
-	        }
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("Errore durante l'inserimento dell'UtenteCandidatura: " + e.getMessage());
+		}
 
-	    } catch (Exception e) {
-	        response.setStatus(Status.SYSTEM_ERROR);
-	        response.setDescrizione("Errore durante l'inserimento dell'UtenteCandidatura: " + e.getMessage());
-			logger.warn(e.getMessage());
-	    }
-
-	    return response;
+		return response;
 	}
-
-
 
 	public Response<UtenteCandidaturaDto, Status> visualizzaUtenteCandidatura(long id) {
 
@@ -210,6 +227,15 @@ public class UtenteCandidaturaService {
 			return response;
 
 		}
+	}
+
+	private int findScheda(List<SchedaCandidato> schede, long idAzienda) {
+		for (SchedaCandidato sc : schede) {
+			if (sc.getAzienda().getId() == idAzienda) {
+				return 0;
+			}
+		}
+		return -1;
 	}
 
 }

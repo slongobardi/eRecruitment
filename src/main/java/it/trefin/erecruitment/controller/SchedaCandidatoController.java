@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,10 @@ public class SchedaCandidatoController {
 	@GetMapping("/ingaggiato")
 	public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByIngaggiato() {
 		return schedaCandidatoService.getSchedaCandidatiByIngaggiato();
+	}
+	
+	@GetMapping("/byUtenteAndAzienda/{idU}/{idA}")
+	public Response<List<SchedaCandidatoDto>, Status> getSchedeByUtenteAndAzienda(@PathVariable("idU") long idU,@PathVariable("idA") long idA) {
+		return schedaCandidatoService.getSchedaCandidatiByAziendaAndUtente(idU,idA);
 	}
 }

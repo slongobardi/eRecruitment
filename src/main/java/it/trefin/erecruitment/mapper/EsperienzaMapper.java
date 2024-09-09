@@ -14,7 +14,11 @@ public class EsperienzaMapper {
 		eDto.setId(e.getId());
 		eDto.setNome(e.getNome());
 		eDto.setUtente(e.getUtente().getId());
+		eDto.setAttuale(e.getAttuale());
+		eDto.setDataFine(e.getDataFine());
+		eDto.setDataInizio(e.getDataInizio());
 		return eDto;
+		
 		
 		
 	}

@@ -1,16 +1,19 @@
 package it.trefin.erecruitment.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.trefin.erecruitment.dto.EsperienzaDto;
@@ -28,9 +31,9 @@ public class EsperienzaController {
 	private EsperienzaService eService;
 	
 	
-	@PostMapping("/add")
-	public Response<Esperienza, Status> inserisciColloquio(@RequestBody Esperienza esperienza) {
-		return eService.inserisciEsperienza(esperienza);
+	@PostMapping("/add/{id}")
+	public Response<Esperienza, Status> inserisciEsperienza(@PathVariable long id, @RequestBody Esperienza esperienza) {
+		return eService.inserisciEsperienza(id,esperienza);
 	}
 
 	@GetMapping("/visualizza/{id}")
@@ -51,5 +54,13 @@ public class EsperienzaController {
 	@GetMapping("/all")
 	public Response<List<EsperienzaDto>, Status> visualizzaTutteEsperienze() {
 		return eService.visualizzaTutteEsperienze();
+	}
+	@GetMapping("/visualizzaByUtente/{id}")
+	public Response<List<EsperienzaDto>, Status> visualizzaByUtente(@PathVariable long id) {
+		return eService.visualizzaByUtente(id);
+	}
+	@PatchMapping("/passaEsperienza/{id}")
+	public Response<List<EsperienzaDto>, Status> passaEsperienza(@PathVariable long id,@RequestParam Date dataFine) {
+	return eService.passaEsperienza(id, dataFine);
 	}
 }

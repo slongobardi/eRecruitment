@@ -2,6 +2,8 @@ package it.trefin.erecruitment.dto;
 
 
 
+import java.sql.Date;
+
 import it.trefin.erecruitment.model.Contratto;
 
 public class EsperienzaDto {
@@ -12,8 +14,19 @@ public class EsperienzaDto {
 	private Contratto contratto;
 	private String descrizione;
 	private long utente;
+	private boolean attuale;
+	private Date dataInizio;
+	private Date dataFine;
 	
 	
+	
+	
+	public boolean getAttuale() {
+		return attuale;
+	}
+	public void setAttuale(boolean attuale) {
+		this.attuale = attuale;
+	}
 	public long getId() {
 		return id;
 	}
@@ -28,6 +41,19 @@ public class EsperienzaDto {
 	}
 	public String getAzienda() {
 		return azienda;
+	}
+	
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+	public Date getDataFine() {
+		return dataFine;
+	}
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
 	}
 	public void setAzienda(String azienda) {
 		this.azienda = azienda;

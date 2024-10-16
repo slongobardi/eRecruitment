@@ -232,11 +232,12 @@ public class UtenteService {
 		return response;
 	}
 	
-	public Response<List<UtenteDto>, Status> getAllNormalUser() {
+	public Response<List<UtenteDto>, Status> getAllNormalUser(long idAzienda ) {
 		Response<List<UtenteDto>, Status> response = new Response<>();
 		try {
 			List<Utente> responseQuery = uRepository.findAllNormalUser();
-			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			List<Utente> filtraXazienda = responseQuery.stream().filter(u ->u.getAzienda() != null).filter(u -> u.getAzienda().getId()==idAzienda).collect(Collectors.toList());
+			response.setData(filtraXazienda.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");
 		} catch (Exception e) {

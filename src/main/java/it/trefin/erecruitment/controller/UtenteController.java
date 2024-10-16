@@ -103,9 +103,10 @@ public class UtenteController {
     }
     
     @GetMapping("/allNormalUser")
-    public Response<List<UtenteDto>, Status> normalUser() {
-        return uService.getAllNormalUser();
+    public Response<List<UtenteDto>, Status> normalUser(@RequestParam long idAzienda) {
+        return uService.getAllNormalUser(idAzienda);
     }
+    
     @GetMapping("/utentePerColloquioAzienda/{idAzienda}")
     public Response<List<UtenteDto>, Status> findUtentePerColloquioAzienda(@PathVariable long idAzienda) {
         return uService.findUtentePerColloquioAzienda(idAzienda);

@@ -188,6 +188,10 @@ public class ColloquioService {
 		try {
 			Colloquio c = cRepository.findById(id).get();
 			c.setFeedback(f);
+			c.setUltimoColloquio(c.getProssimoColloquio());
+			if(f==Feedback.Negativo) {
+			c.setProssimoColloquio(null);
+			}
 			cRepository.save(c);
 			response.setData(ColloquioMapper.toDto(c));
 			response.setStatus(Status.OK);

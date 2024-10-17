@@ -69,7 +69,7 @@ public class ColloquioController {
 	 * idCandidatura) { return cService.colloquioUtenteCand(idCandidatura); }
 	 */
 
-	@PatchMapping("/updateFeedback/{feedback}/{id}")
+	@PutMapping("/updateFeedback/{feedback}/{id}")
 	public Response<ColloquioDto, Status> updateFeedback(@PathVariable("feedback") Feedback f,
 			@PathVariable("id") long id) {
 		return cService.updateFeedback(f,id);

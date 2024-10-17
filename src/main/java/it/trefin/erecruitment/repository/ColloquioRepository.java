@@ -24,8 +24,8 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
 
 	@Query(value = "SELECT\r\n" 
 			+ "    COUNT(DISTINCT colloquio.id), \r\n" 
-			+ "    SUM(DISTINCT colloquio.feedback = 0), \r\n" 
-			+ "    SUM(DISTINCT colloquio.feedback = 1 ) , \r\n"
+			+ "    SUM( colloquio.feedback = 0), \r\n" 
+			+ "    SUM( colloquio.feedback = 1 ) , \r\n"
 			+ "    SUM(schedacandidato.perso = 1), \r\n"
 			+ "    SUM(schedacandidato.ingaggiato = 1) \r\n" 
 			+ "FROM colloquio \r\n"

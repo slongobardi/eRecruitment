@@ -32,7 +32,7 @@ public class UtenteDto {
 	private List<Long> utentiCandidati;
 	private List<Long> listaEsperienze;
 	private Set<Long> listaSkill;
-	private Set<Long> listaColloquii;
+	private List<ColloquioDto> listaColloquii;
 	private Ruolo ruolo;
 	private byte[] foto;
 	private byte[] cv;
@@ -216,12 +216,18 @@ public class UtenteDto {
 		this.listaSkill = listaSkill;
 	}
 
-	public Set<Long> getListaColloquii() {
+	
+
+	public List<ColloquioDto> getListaColloquii() {
 		return listaColloquii;
 	}
 
-	public void setListaColloquii(Set<Long> listaColloquii) {
+	public void setListaColloquii(List<ColloquioDto> listaColloquii) {
 		this.listaColloquii = listaColloquii;
+	}
+
+	public List<Long> getSchedaCandidato() {
+		return schedaCandidato;
 	}
 
 	public List<Long> getListaEsperienze() {

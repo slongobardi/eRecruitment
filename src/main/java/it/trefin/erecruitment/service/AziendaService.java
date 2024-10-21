@@ -126,13 +126,13 @@ public class AziendaService {
 
 	}
 
-	public Response<AziendaDto, Status> getByNome(String nome) {
-		Response<AziendaDto, Status> response = new Response<>();
+	public Response<Long, Status> getByNome(String nome) {
+		Response<Long, Status> response = new Response<>();
 
 		try {
 			Azienda a = aRepository.findByNome(nome);
 
-			response.setData(AziendaMapper.toDto(a));
+			response.setData(a.getId());
 			response.setStatus(Status.OK);
 			response.setDescrizione("Azienda ritornata con successo.");
 

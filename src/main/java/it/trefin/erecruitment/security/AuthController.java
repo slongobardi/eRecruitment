@@ -75,6 +75,10 @@ public class AuthController {
 	        user.setVerified(true);
 	        
 	    } else {
+	    	if(idAzienda!=0) {
+	    	Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
+	    	user.setAzienda(azienda);
+	    	}
 	    	String lettersAndNumbers = RandomStringUtils.random(10, true, true);
 	        String specialCharacter = RandomStringUtils.random(1, 33, 48, false, false);
 	        String randomPwd = lettersAndNumbers + specialCharacter;
@@ -82,6 +86,8 @@ public class AuthController {
 	    }
 	    utenteRepository.save(user);
 	    if (sendEmail == 1) {
+	    	
+	    	
 	        sendRegistrationConfirmationEmail(user);
 	    }
 	    return user.getId();

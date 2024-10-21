@@ -48,7 +48,7 @@ public class AziendaController {
 	}
 	
 	@GetMapping("/byNome/{nome}")
-	public Response<AziendaDto,Status> byNome(@PathVariable String nome){
+	public Response<Long,Status> byNome(@PathVariable String nome){
 		return aService.getByNome(nome);
 	}
 	

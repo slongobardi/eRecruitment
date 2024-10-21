@@ -5,6 +5,7 @@ import java.util.Set;
 
 import it.trefin.erecruitment.model.Esito;
 import it.trefin.erecruitment.model.Feedback;
+import it.trefin.erecruitment.model.Utente;
 
 public class ColloquioDto {
 
@@ -16,7 +17,7 @@ public class ColloquioDto {
 	private String descrizione;
 	private Esito esito;
 	private Feedback feedback;
-	private Set<Long> listaUtenti;
+	private UtenteDto utente;
 	private long candidatura;
 	private String tipo;
 
@@ -76,12 +77,13 @@ public class ColloquioDto {
 		this.cognomeEsaminatore = cognomeEsaminatore;
 	}
 
-	public Set<Long> getListaUtenti() {
-		return listaUtenti;
+	
+	public UtenteDto getUtente() {
+		return utente;
 	}
 
-	public void setListaUtenti(Set<Long> listaUtenti) {
-		this.listaUtenti = listaUtenti;
+	public void setUtente(UtenteDto utenteDto) {
+		this.utente = utenteDto;
 	}
 
 	public String getDescrizione() {

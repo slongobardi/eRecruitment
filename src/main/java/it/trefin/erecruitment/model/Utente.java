@@ -62,15 +62,15 @@ public class Utente {
     @OneToMany(mappedBy = "utente")
     private List<UtenteCandidatura> utentiCandidati;
     
-    @ManyToMany
-    @JoinTable(name = "utenteColloquio", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_colloquio"))
-    private Set<Colloquio> listaColloquii;
+    @OneToMany(mappedBy = "utente")
+    private List<Colloquio> listaColloquii;
     
     @ManyToMany
     @JoinTable(name = "utenteSkill", joinColumns = @JoinColumn(name = "id_utente"), inverseJoinColumns = @JoinColumn(name = "id_skill"))
     private Set<Skill> listaSkill;
     
     @ManyToOne
+    @JoinColumn(name = "azienda_id")
     private Azienda azienda;
     
     @OneToMany(mappedBy = "utente")
@@ -152,6 +152,7 @@ public class Utente {
         return cellulare;
     }
 
+    
     public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -252,15 +253,17 @@ public class Utente {
         this.citta = citta;
     }
 
-    public Set<Colloquio> getListaColloquii() {
-        return listaColloquii;
-    }
+    
 
-    public void setListaColloquii(Set<Colloquio> listaColloquii) {
-        this.listaColloquii = listaColloquii;
-    }
+    public List<Colloquio> getListaColloquii() {
+		return listaColloquii;
+	}
 
-    public Ruolo getRuolo() {
+	public void setListaColloquii(List<Colloquio> listaColloquii) {
+		this.listaColloquii = listaColloquii;
+	}
+
+	public Ruolo getRuolo() {
         return ruolo;
     }
 

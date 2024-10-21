@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import it.trefin.erecruitment.dto.UtenteDto;
+
 @Entity
 public class Colloquio {
 	@Id
@@ -28,8 +30,9 @@ public class Colloquio {
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
 
-	@ManyToMany(mappedBy = "listaColloquii")
-	private Set<Utente> listaUtenti;
+	@ManyToOne
+	@JoinColumn(name="id_utente")
+	private Utente utente;
 
 	@ManyToOne()
 	@JoinColumn(name = "id_candidatura")
@@ -91,12 +94,14 @@ public class Colloquio {
 		this.cognomeEsaminatore = cognomeEsaminatore;
 	}
 
-	public Set<Utente> getListaUtenti() {
-		return listaUtenti;
+	
+
+	public Utente getUtente() {
+		return utente;
 	}
 
-	public void setListaUtenti(Set<Utente> listaUtenti) {
-		this.listaUtenti = listaUtenti;
+	public void setUtente(Utente utente) {
+		this.utente = utente;
 	}
 
 	public Colloquio() {

@@ -24,18 +24,13 @@ public class ColloquioMapper {
 	    cDto.setFeedback(c.getFeedback());
 	    cDto.setDescrizione(c.getDescrizione());
 	    
-	    cDto.setListaUtenti(
-	        c.getListaUtenti() != null ? 
-	        c.getListaUtenti().stream().map(Utente::getId).collect(Collectors.toSet()) : 
-	        new HashSet<>()
-	    );
 
 	    return cDto;
 	}
 
 	
 	
-	public static Colloquio toEntity(ColloquioDto cDto,Set<Utente>listaUtenti) {
+	public static Colloquio toEntity(ColloquioDto cDto,Utente utente) {
 		Colloquio c = new Colloquio();
 		c.setCognomeEsaminatore(cDto.getCognomeEsaminatore());
 		c.setEsito(cDto.getEsito());
@@ -44,7 +39,7 @@ public class ColloquioMapper {
 		c.setNomeEsaminatore(cDto.getNomeEsaminatore());
 		c.setProssimoColloquio(cDto.getProssimoColloquio());
 		c.setUltimoColloquio(cDto.getUltimoColloquio());
-		c.setListaUtenti(listaUtenti);
+		c.setUtente(utente);
 		return  c;
 	}
 

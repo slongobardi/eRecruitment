@@ -162,14 +162,11 @@ public class ColloquioService {
 
 		try {
 
-			List<Colloquio> colloquiList = cRepository.findByCandidaturaId(idCandidatura);
+			List<Colloquio> colloquiList = cRepository.findByUtenteId(idUtente);
 
-			List<ColloquioDto> colloquiDtoList = colloquiList.stream().map(ColloquioMapper::toDto)
-					.collect(Collectors.toList());
+			List<ColloquioDto> colloquioList=colloquiList.stream().map(ColloquioMapper::toDto).collect(Collectors.toList());
 
-			colloquiDtoList.stream().filter(c -> c.getListaUtenti().contains(idUtente)).collect(Collectors.toList());
-
-			response.setData(colloquiDtoList);
+			response.setData(colloquioList);
 			response.setStatus(Status.OK);
 			response.setDescrizione("Colloqui ritornati con successo.");
 			return response;
@@ -289,7 +286,7 @@ public class ColloquioService {
 		Response<List<ColloquioDto>,Status> response  = new Response<>();
 		
 		try {
-			response.setData(cRepository.findAllColloquiUtenteByCandidatura(idC,idU).stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
+			response.setData(cRepository.findAllByUtenteIdAndCandidaturaId(idU,idC).stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
 			response.setDescrizione("query custom feedback ok");
 			response.setStatus(Status.OK);
 		}catch(Exception e){

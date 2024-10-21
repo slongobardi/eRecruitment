@@ -3,6 +3,7 @@ package it.trefin.erecruitment.repository;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,54 +21,51 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
 
 	List<ColloquioDto> findAllByCandidaturaId(long idCandidatura);
 
-	ArrayList<Colloquio> findByUltimoColloquioBetween(Date start, Date end);
+    ArrayList<Colloquio> findByUltimoColloquioBetween(Date start, Date end);
 
-	@Query(value = "SELECT\r\n" 
-			+ "    COUNT(DISTINCT colloquio.id), \r\n" 
-			+ "    SUM( colloquio.feedback = 0), \r\n" 
-			+ "    SUM( colloquio.feedback = 1 ) , \r\n"
-			+ "    SUM(schedacandidato.perso = 1), \r\n"
-			+ "    SUM(schedacandidato.ingaggiato = 1) \r\n" 
-			+ "FROM colloquio \r\n"
-			+ "JOIN candidatura ON colloquio.id_candidatura = candidatura.id \r\n"
-			+ "JOIN utente_colloquio ON utente_colloquio.id_colloquio = colloquio.id \r\n"
-			+ "JOIN utente ON utente.id = utente_colloquio.id_utente \r\n"
-			+ "JOIN schedacandidato ON schedacandidato.azienda_id = :id \r\n" 
-			+ "WHERE \r\n"
-			+ "    candidatura.id_azienda = :id AND colloquio.ultimo_colloquio IS NOT NULL AND colloquio.ultimo_colloquio BETWEEN :start AND :end ;", nativeQuery = true)
-	Object[] totalFeedback(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
+    @Query(value = "SELECT " + 
+                   "    COUNT(colloquio.id) AS numeroColloqui, " + 
+                   "    SUM(colloquio.feedback = 0) AS positivi, " + 
+                   "    SUM(colloquio.feedback = 1) AS negativi, " + 
+                   "    sc.perso, " + 
+                   "    sc.ingaggiato " + 
+                   "FROM colloquio " + 
+                   "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " + 
+                   "LEFT JOIN ( " + 
+                   "    SELECT " + 
+                   "        azienda_id, " + 
+                   "        MAX(ingaggiato = 1) AS ingaggiato, " + 
+                   "        MAX(perso = 1) AS perso " + 
+                   "    FROM schedacandidato " + 
+                   "    GROUP BY azienda_id " + 
+                   ") AS sc ON sc.azienda_id = candidatura.id_azienda " + 
+                   "WHERE candidatura.id_azienda = :id " + 
+                   "AND colloquio.ultimo_colloquio IS NOT NULL " + 
+                   "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
+           nativeQuery = true)
+    Object[] totalFeedback(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
 
-	@Query(value = "SELECT DISTINCT\r\n"
-			+ "    utente.id,\r\n"
-			+ "    utente.nome,\r\n"
-			+ "    utente.cognome,\r\n"
-			+ "    colloquio.feedback,\r\n"
-			+ "    colloquio.descrizione,\r\n"
-			+ "    colloquio.tipo,\r\n"
-			+ "    schedacandidato.ingaggiato\r\n"
-			+ "FROM \r\n"
-			+ "    utente\r\n"
-			+ "JOIN \r\n"
-			+ "    utente_colloquio ON utente.id = utente_colloquio.id_utente\r\n"
-			+ "JOIN \r\n"
-			+ "    colloquio ON utente_colloquio.id_colloquio = colloquio.id\r\n"
-			+ "JOIN \r\n"
-			+ "    candidatura ON colloquio.id_candidatura = candidatura.id\r\n"
-			+ "JOIN \r\n"
-			+ "    schedacandidato ON schedacandidato.utente_id = utente.id\r\n"
-			+ "WHERE \r\n"
-			+ "    candidatura.id_azienda = :id AND colloquio.ultimo_colloquio BETWEEN :start AND :end ;\r\n"
-			+ "", nativeQuery = true)
-	Set<Object> reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
+
+    @Query(value = "SELECT DISTINCT " +
+            "    utente.id, " +
+            "    utente.nome, " +
+            "    utente.cognome, " +
+            "    colloquio.feedback, " +
+            "    colloquio.descrizione, " +
+            "    colloquio.tipo, " +
+            "    schedacandidato.ingaggiato " +
+            "FROM utente " +
+            "JOIN colloquio ON utente.id = colloquio.id_utente " +
+            "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " +
+            "JOIN schedacandidato ON schedacandidato.utente_id = utente.id " +
+            "WHERE candidatura.id_azienda = :id " +
+            "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
+    nativeQuery = true)
+Set<Object> reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
 	
-	@Query(value="SELECT DISTINCT\r\n"
-			+ "    *\r\n"
-			+ "FROM\r\n"
-			+ "    colloquio c\r\n"
-			+ "JOIN\r\n"
-			+ "    utente_colloquio uc ON uc.id_utente = :idU \r\n"
-			+ "WHERE\r\n"
-			+ "    c.id_candidatura = :idC ;\r\n"
-			,nativeQuery = true)
-	List<Colloquio> findAllColloquiUtenteByCandidatura(@Param("idC") long idC,@Param("idU") long idU);
+	
+
+	List<Colloquio> findByUtenteId(long idUtente);
+
+	List<Colloquio> findAllByUtenteIdAndCandidaturaId(long idU, long idC);
 }

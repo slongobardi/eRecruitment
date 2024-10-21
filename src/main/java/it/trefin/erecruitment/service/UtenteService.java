@@ -270,9 +270,9 @@ public class UtenteService {
 		try {
 			Utente u = uRepository.findById(idCandidato).orElse(null);
 			if (u != null) {
-				Colloquio col = cRepository.save(c);
-				u.getListaColloquii().add(col);
-				uRepository.save(u);
+				c.setUtente(u);
+				cRepository.save(c);
+				
 
 				eService.inviaEmail(s.getTo(), s.getSubject(), s.getText());
 
@@ -412,7 +412,7 @@ public class UtenteService {
 		try {
 			Utente u = uRepository.findById(id).get();
 			
-			response.setData(u.getListaColloquii() != null? u.getListaColloquii().stream().map(ColloquioMapper::toDto).collect(Collectors.toList()):new ArrayList<>());
+			response.setData(u.getListaColloquii().stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("fatto");
 			

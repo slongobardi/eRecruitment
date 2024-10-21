@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -235,9 +236,8 @@ public class UtenteService {
 	public Response<List<UtenteDto>, Status> getAllNormalUser(long idAzienda ) {
 		Response<List<UtenteDto>, Status> response = new Response<>();
 		try {
-			List<Utente> responseQuery = uRepository.findAllNormalUser();
-			List<Utente> filtraXazienda = responseQuery.stream().filter(u ->u.getAzienda() != null).filter(u -> u.getAzienda().getId()==idAzienda).collect(Collectors.toList());
-			response.setData(filtraXazienda.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
+			List<Utente> responseQuery = uRepository.findAllNormalUser(idAzienda);
+			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");
 		} catch (Exception e) {
@@ -295,6 +295,8 @@ public class UtenteService {
 		try {
 			Utente u = uRepository.findById(id).orElse(null);
 			if (u != null && !cv.isEmpty()) {
+				Date date = new Date(System.currentTimeMillis());
+				u.setDataModificaCv(date);
 				u.setCv(cv.getBytes());
 				uRepository.save(u);
 				UtenteDto dto = UtenteMapper.toDto(u);

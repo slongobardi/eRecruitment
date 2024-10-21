@@ -39,7 +39,7 @@ public class UtenteDto {
 	private Date dataNascita;
 	private List<Long> preferenze;
 	private List<Long> schedaCandidato;
-
+	private Date dataModificaCv;
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -66,6 +66,14 @@ public class UtenteDto {
 
 	public String getOrigine() {
 		return origine;
+	}
+
+	public Date getDataModificaCv() {
+		return dataModificaCv;
+	}
+
+	public void setDataModificaCv(Date dataModificaCv) {
+		this.dataModificaCv = dataModificaCv;
 	}
 
 	public void setOrigine(String origine) {

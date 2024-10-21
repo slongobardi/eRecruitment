@@ -45,6 +45,8 @@ public class Utente {
     private String comuneNascita;
     private boolean verified;
     private boolean completed;
+    private Date dataModificaCv;
+    
     
     @Enumerated(EnumType.ORDINAL)
     private Ruolo ruolo;
@@ -148,7 +150,16 @@ public class Utente {
         this.password = password;
     }
 
-    public String getCellulare() {
+    
+    public Date getDataModificaCv() {
+		return dataModificaCv;
+	}
+
+	public void setDataModificaCv(Date dataModificaCv) {
+		this.dataModificaCv = dataModificaCv;
+	}
+
+	public String getCellulare() {
         return cellulare;
     }
 

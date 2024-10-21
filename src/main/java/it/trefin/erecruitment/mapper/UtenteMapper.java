@@ -42,6 +42,7 @@ public class UtenteMapper {
 		uDto.setPercentualeInvalidita(u.getPercentualeInvalidita());
 		uDto.setFoto(u.getFoto());
 		uDto.setCv(u.getCv());
+		uDto.setDataModificaCv(u.getDataModificaCv());
 		uDto.setDataNascita(u.getDataNascita());
 		uDto.setSchedaCandidato(u.getSchedaCandidato() != null
 				? u.getSchedaCandidato().stream().map(SchedaCandidato::getId).collect(Collectors.toList())

@@ -58,13 +58,13 @@ public class Utente {
     @Column(columnDefinition = "TEXT")
     private String descrizione;
     
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<UtenteTitoliStudio> utenteTitoliStudio;
     
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<UtenteCandidatura> utentiCandidati;
     
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Colloquio> listaColloquii;
     
     @ManyToMany
@@ -75,13 +75,13 @@ public class Utente {
     @JoinColumn(name = "azienda_id")
     private Azienda azienda;
     
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Preferenza> preferenza;
 
-    @OneToMany(mappedBy = "utente")
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Esperienza> esperienze;
     
-	@OneToMany(mappedBy = "utente")
+	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<SchedaCandidato> schedaCandidato;
     
     @Lob

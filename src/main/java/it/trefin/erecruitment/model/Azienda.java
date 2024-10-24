@@ -2,6 +2,7 @@ package it.trefin.erecruitment.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,19 +23,19 @@ public class Azienda {
 	private String luogo;
 	private String linkAzienda;
 
-	@OneToMany(mappedBy = "azienda")
+	@OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
 	private List<Candidatura> listaCandidature;
 
-	@OneToMany(mappedBy = "azienda")
+	@OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
 	private List<Utente> listaUtenti;
 
 	@Column(unique = true)
 	private String nome;
 
-	@OneToMany(mappedBy = "azienda")
+	@OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
 	private List<Preferenza> preferenza;
 
-	@OneToMany(mappedBy = "azienda")
+	@OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
 	private List<SchedaCandidato> schedaCandidato;
 	
 	public List<SchedaCandidato> getSchedaCandidato() {

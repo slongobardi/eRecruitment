@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,10 +39,10 @@ public class Candidatura {
     @Column(name = "sede")
     private String sede;
 
-    @OneToMany(mappedBy="candidatura")
+    @OneToMany(mappedBy="candidatura", cascade = CascadeType.ALL)
     private List<UtenteCandidatura> utenteCandidature;
 
-    @OneToMany(mappedBy="candidatura")
+    @OneToMany(mappedBy="candidatura", cascade = CascadeType.ALL)
     private List<Colloquio> listaColloqui;
 
     @ManyToOne()

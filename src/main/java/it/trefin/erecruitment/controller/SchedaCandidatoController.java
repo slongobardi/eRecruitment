@@ -35,17 +35,17 @@ public class SchedaCandidatoController {
 	}
 	
 	@PatchMapping("/ingaggia")
-	public Response<String, Status> ingaggiaUtente(@RequestParam long id){
-		return schedaCandidatoService.ingaggiaUtente(id);
+	public Response<String, Status> ingaggiaUtente(@RequestParam long id, @RequestParam long idAzienda){
+		return schedaCandidatoService.ingaggiaUtente(id, idAzienda);
 	}
 	
 	@PatchMapping("/perso")
-	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota){
-		return schedaCandidatoService.persoUtente(id, nota);
+	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota, @RequestParam long idAzienda){
+		return schedaCandidatoService.persoUtente(id, nota,idAzienda);
 	}
 	
 	@GetMapping("/byUtenteAndAzienda/{idU}/{idA}")
-	public Response<List<SchedaCandidatoDto>, Status> getSchedeByUtenteAndAzienda(@PathVariable("idU") long idU,@PathVariable("idA") long idA) {
+	public Response<SchedaCandidatoDto, Status> getSchedeByUtenteAndAzienda(@PathVariable("idU") long idU,@PathVariable("idA") long idA) {
 		return schedaCandidatoService.getSchedaCandidatiByAziendaAndUtente(idU,idA);
 	}
 }

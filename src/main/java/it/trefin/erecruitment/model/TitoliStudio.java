@@ -3,6 +3,7 @@ package it.trefin.erecruitment.model;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class TitoliStudio {
 	private long id;
 	private Studi studi;
 
-	@OneToMany(mappedBy = "titoliStudio")
+	@OneToMany(mappedBy = "titoliStudio", cascade = CascadeType.ALL)
 	private List<UtenteTitoliStudio> titoliStudio;
 
 	@ManyToMany(mappedBy = "listaTitoliStudio")

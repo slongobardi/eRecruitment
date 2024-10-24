@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.SchedaCandidatoDto;
+import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SchedaCandidatoMapper;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
@@ -57,13 +58,12 @@ public class SchedaCandidatoService {
         return response;
     }
     
-    public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByAziendaAndUtente(long idU,long idA) {
-        Response<List<SchedaCandidatoDto>, Status> response = new Response<>();
+    public Response<SchedaCandidatoDto, Status> getSchedaCandidatiByAziendaAndUtente(long idU,long idA) {
+        Response<SchedaCandidatoDto, Status> response = new Response<>();
         try {
-            List<SchedaCandidato> candidati = scCandidatoRepository.findByUtenteIdAndAziendaId(idU,idA);
-            List<SchedaCandidatoDto> candidatiDto = candidati.stream()
-                    .map(SchedaCandidatoMapper::toDto)
-                    .collect(Collectors.toList());
+            SchedaCandidato candidati = scCandidatoRepository.findByUtenteIdAndAziendaId(idU,idA);
+            SchedaCandidatoDto candidatiDto = SchedaCandidatoMapper.toDto(candidati);
+                    
             response.setData(candidatiDto);
             response.setStatus(Status.OK);
             response.setDescrizione("Candidati ingaggiato recuperati con successo.");
@@ -74,10 +74,10 @@ public class SchedaCandidatoService {
         return response;
     }
 
-	public Response<String, Status> ingaggiaUtente(long id) {
+	public Response<String, Status> ingaggiaUtente(long id, long idAzienda) {
 		Response<String, Status> response = new Response<>();
 try {
-	SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteId(id);
+	SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
 	candidatoIng.setIngaggiato(true);
 	candidatoIng.setPerso(false);
 	candidatoIng.setNota("");
@@ -93,10 +93,10 @@ return response;
 		
 	}
 
-	public Response<String, Status> persoUtente(long id, String nota) {
+	public Response<String, Status> persoUtente(long id, String nota,long idAzienda) {
 		Response<String, Status> response = new Response<>();
 		try {
-			SchedaCandidato candidatoPerso = scCandidatoRepository.findByUtenteId(id);
+			SchedaCandidato candidatoPerso =scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
 			candidatoPerso.setPerso(true);
 			candidatoPerso.setIngaggiato(false);
 			candidatoPerso.setNota(nota);

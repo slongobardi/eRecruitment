@@ -24,24 +24,24 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
     ArrayList<Colloquio> findByUltimoColloquioBetween(Date start, Date end);
 
     @Query(value = "SELECT " + 
-                   "    COUNT(colloquio.id) AS numeroColloqui, " + 
-                   "    SUM(colloquio.feedback = 0) AS positivi, " + 
-                   "    SUM(colloquio.feedback = 1) AS negativi, " + 
-                   "    sc.perso, " + 
-                   "    sc.ingaggiato " + 
-                   "FROM colloquio " + 
-                   "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " + 
-                   "LEFT JOIN ( " + 
-                   "    SELECT " + 
-                   "        azienda_id, " + 
-                   "        MAX(ingaggiato = 1) AS ingaggiato, " + 
-                   "        MAX(perso = 1) AS perso " + 
-                   "    FROM schedacandidato " + 
-                   "    GROUP BY azienda_id " + 
-                   ") AS sc ON sc.azienda_id = candidatura.id_azienda " + 
-                   "WHERE candidatura.id_azienda = :id " + 
-                   "AND colloquio.ultimo_colloquio IS NOT NULL " + 
-                   "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
+            "    COUNT(colloquio.id) AS numeroColloqui, " + 
+            "    SUM(colloquio.feedback = 0) AS positivi, " + 
+            "    SUM(colloquio.feedback = 1) AS negativi, " + 
+            "    sc.perso, " + 
+            "    sc.ingaggiato " + 
+            "FROM colloquio " + 
+            "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " + 
+            "LEFT JOIN ( " + 
+            "    SELECT " + 
+            "        azienda_id, " + 
+            "        SUM(ingaggiato = 1) AS ingaggiato, " + 
+            "        SUM(perso = 1) AS perso " + 
+            "    FROM schedacandidato " + 
+            "    GROUP BY azienda_id " + 
+            ") AS sc ON sc.azienda_id = candidatura.id_azienda " + 
+            "WHERE candidatura.id_azienda = :id " + 
+            "AND colloquio.ultimo_colloquio IS NOT NULL " + 
+            "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
            nativeQuery = true)
     Object[] totalFeedback(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
 

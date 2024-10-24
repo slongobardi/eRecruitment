@@ -38,7 +38,7 @@ public class UtenteDto {
 	private byte[] cv;
 	private Date dataNascita;
 	private List<Long> preferenze;
-	private List<Long> schedaCandidato;
+	private List<SchedaCandidatoDto> schedaCandidato;
 	private Date dataModificaCv;
 	public String getCodiceFiscale() {
 		return codiceFiscale;
@@ -234,9 +234,7 @@ public class UtenteDto {
 		this.listaColloquii = listaColloquii;
 	}
 
-	public List<Long> getSchedaCandidato() {
-		return schedaCandidato;
-	}
+
 
 	public List<Long> getListaEsperienze() {
 		return listaEsperienze;
@@ -286,12 +284,16 @@ public class UtenteDto {
 		this.preferenze = preferenze;
 	}
 
-	public List<Long> getSchedaCandiato() {
+	public List<SchedaCandidatoDto> getSchedaCandidato() {
 		return schedaCandidato;
 	}
 
-	public void setSchedaCandidato(List<Long> schedaCandidato) {
+	public void setSchedaCandidato(List<SchedaCandidatoDto> schedaCandidato) {
 		this.schedaCandidato = schedaCandidato;
 	}
+
+
+
+	
 
 }

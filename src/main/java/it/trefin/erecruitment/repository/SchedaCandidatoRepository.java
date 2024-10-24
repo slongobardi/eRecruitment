@@ -16,4 +16,6 @@ public interface SchedaCandidatoRepository extends JpaRepository<SchedaCandidato
 	List<SchedaCandidato> findAllByAziendaId(long id);
 	List<SchedaCandidato> findAllByUtenteId(long id);
 	List<SchedaCandidato> findByUtenteIdAndAziendaId(long idU,long idA);
+
+	SchedaCandidato findByUtenteId(long id);
 }

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.trefin.erecruitment.dto.SchedaCandidatoDto;
@@ -30,6 +32,16 @@ public class SchedaCandidatoController {
 	@GetMapping("/ingaggiato")
 	public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByIngaggiato() {
 		return schedaCandidatoService.getSchedaCandidatiByIngaggiato();
+	}
+	
+	@PatchMapping("/ingaggia")
+	public Response<String, Status> ingaggiaUtente(@RequestParam long id){
+		return schedaCandidatoService.ingaggiaUtente(id);
+	}
+	
+	@PatchMapping("/perso")
+	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota){
+		return schedaCandidatoService.persoUtente(id, nota);
 	}
 	
 	@GetMapping("/byUtenteAndAzienda/{idU}/{idA}")

@@ -237,6 +237,8 @@ public class UtenteService {
 		Response<List<UtenteDto>, Status> response = new Response<>();
 		try {
 			List<Utente> responseQuery = uRepository.findAllNormalUser(idAzienda);
+	
+
 			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);
 			response.setDescrizione("ok");

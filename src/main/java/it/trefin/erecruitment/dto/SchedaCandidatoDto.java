@@ -7,7 +7,7 @@ public class SchedaCandidatoDto {
 	private String nota;
 	private Boolean perso;
 	private Boolean ingaggiato;
-
+	
 	public long getId() {
 		return id;
 	}

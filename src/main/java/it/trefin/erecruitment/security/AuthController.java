@@ -68,25 +68,20 @@ public class AuthController {
 
 	@PostMapping("/register")
 	public long register(@RequestBody Utente user, @RequestParam int sendEmail, @RequestParam long idAzienda) {
-	    if (sendEmail ==  0) {
-	    	Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
-	    	user.setAzienda(azienda);
+	    if (sendEmail == 0) {
+	        Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
+	        user.setAzienda(azienda);
 	        user.setPassword(passwordEncoder.encode("Erecruitment2024!"));
 	        user.setVerified(true);
-	        
 	    } else {
-	    	if(idAzienda!=0) {
-	    	Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
-	    	user.setAzienda(azienda);
-	    	}
-	    	String lettersAndNumbers = RandomStringUtils.random(10, true, true);
-	        String specialCharacter = RandomStringUtils.random(1, 33, 48, false, false);
-	        String randomPwd = lettersAndNumbers + specialCharacter;
-	        user.setPassword(passwordEncoder.encode(randomPwd + 2024));
+	        if (idAzienda != 0) {
+	            Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
+	            user.setAzienda(azienda);
+	        }
+	       
 	    }
 	    utenteRepository.save(user);
 	    if (sendEmail == 1) {
-	    	
 	    	
 	        sendRegistrationConfirmationEmail(user);
 	    }
@@ -149,9 +144,7 @@ public class AuthController {
 	        response.setStatus(Status.SYSTEM_ERROR);
 	        response.setData("Utente non trovato");
 	    } else {
-	        String lettersAndNumbers = RandomStringUtils.random(10, true, true);
-	        String specialCharacter = RandomStringUtils.random(1, 33, 48, false, false);
-	        String randomPwd = lettersAndNumbers + specialCharacter;
+	        String randomPwd = generateSecurePassword();
 	        u.setPassword(passwordEncoder.encode(randomPwd));
 	        utenteRepository.save(u);
 	        response.setStatus(Status.OK);
@@ -201,4 +194,25 @@ public class AuthController {
 				+ "Cordiali saluti,<br/>" + "3F & Edin S.P.A." + "</body>" + "</html>";
 		emailService.inviaEmail(new String[] { user.getEmail() }, "Reset della password", emailContent);
 	}
+	
+	private String generateSecurePassword() {
+		
+	    String upperCaseLetters = RandomStringUtils.random(3, 65, 90, true, true); 
+	    String lowerCaseLetters = RandomStringUtils.random(3, 97, 122, true, true); 
+	    String numbers = RandomStringUtils.randomNumeric(3);
+	    String specialChar = RandomStringUtils.random(3, 33, 47, false, false);
+
+
+	    String password = upperCaseLetters + lowerCaseLetters + numbers + specialChar;
+
+	    password = RandomStringUtils.random(12, password.toCharArray());
+	    password = password + "E-re24";
+	    return password;
+	}
+
+
+
+
+
+
 }

@@ -74,4 +74,42 @@ public class SchedaCandidatoService {
         return response;
     }
 
+	public Response<String, Status> ingaggiaUtente(long id) {
+		Response<String, Status> response = new Response<>();
+try {
+	SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteId(id);
+	candidatoIng.setIngaggiato(true);
+	candidatoIng.setPerso(false);
+	candidatoIng.setNota("");
+	response.setStatus(Status.OK);
+    response.setDescrizione("Candidato ingaggiato");
+     scCandidatoRepository.save(candidatoIng);
+} catch (Exception e) {
+	response.setStatus(Status.SYSTEM_ERROR);
+    response.setDescrizione("Errore nell' ingaggio dei candidati " + e.getMessage());
+}
+return response;
+
+		
+	}
+
+	public Response<String, Status> persoUtente(long id, String nota) {
+		Response<String, Status> response = new Response<>();
+		try {
+			SchedaCandidato candidatoPerso = scCandidatoRepository.findByUtenteId(id);
+			candidatoPerso.setPerso(true);
+			candidatoPerso.setIngaggiato(false);
+			candidatoPerso.setNota(nota);
+			response.setStatus(Status.OK);
+		    response.setDescrizione("Candidato perso");
+		     scCandidatoRepository.save(candidatoPerso);
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+		    response.setDescrizione("Errore" + e.getMessage());
+		}
+		return response;
+
+				
+			}
+
 }

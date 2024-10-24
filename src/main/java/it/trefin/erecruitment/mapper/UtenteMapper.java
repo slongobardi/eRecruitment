@@ -45,9 +45,9 @@ public class UtenteMapper {
 		uDto.setDataModificaCv(u.getDataModificaCv());
 		uDto.setDataNascita(u.getDataNascita());
 		uDto.setSchedaCandidato(u.getSchedaCandidato() != null
-				? u.getSchedaCandidato().stream().map(SchedaCandidato::getId).collect(Collectors.toList())
+				? u.getSchedaCandidato().stream().map(SchedaCandidatoMapper::toDto).collect(Collectors.toList())
 				: new ArrayList<>());
-
+		
 		uDto.setListaSkill(
 				u.getListaSkill() != null ? u.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet())
 						: new HashSet<>());

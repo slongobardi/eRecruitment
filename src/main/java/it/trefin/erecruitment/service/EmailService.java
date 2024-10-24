@@ -54,7 +54,7 @@ public class EmailService {
             helper.setFrom(from);
             helper.setSubject(oggetto);
             helper.setText(testo, true);
-
+            
             javaMailSender.send(message);
             response.setData(helper);
             response.setStatus(Status.OK);
@@ -74,7 +74,7 @@ public class EmailService {
 
         try {
             // Generare una password casuale
-            String randomPassword = generateRandomPassword();
+            String randomPassword = generateRandomPassword()+"E-re24";
             Utente user = token.getUser();
             String encryptedPassword = passwordEncoder.encode(randomPassword); // Cifrare la password
             user.setPassword(encryptedPassword);
@@ -114,6 +114,7 @@ public class EmailService {
         for (int i = 0; i < PASSWORD_LENGTH; i++) {
             password.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
         }
+        
         return password.toString();
     }
 

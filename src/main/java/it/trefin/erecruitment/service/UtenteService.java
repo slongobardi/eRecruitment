@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
 import it.trefin.erecruitment.repository.ColloquioRepository;
+import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.SkillRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 
@@ -43,6 +46,8 @@ public class UtenteService {
 	private SkillRepository skillRepository;
 	@Autowired
 	private EmailService eService;
+	@Autowired
+	private ConfirmTokenRepository confirmTokenRepository;
 
 	public Response<UtenteDto, Status> visualizzaUtente(long id) {
 		Response<UtenteDto, Status> response = new Response<>();
@@ -150,12 +155,14 @@ public class UtenteService {
 		}
 		return response;
 	}
-
+	
+	@Transactional
 	public Response<UtenteDto, Status> eliminaUtente(long id) {
 		Response<UtenteDto, Status> response = new Response<>();
 		try {
 			Utente u = uRepository.findById(id).orElse(null);
 			if (u != null) {
+				confirmTokenRepository.deleteByUserId(u.getId());
 				response.setData(UtenteMapper.toDto(u));
 				uRepository.delete(u);
 				response.setStatus(Status.OK);

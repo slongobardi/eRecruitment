@@ -119,7 +119,7 @@ public class EmailService {
     }
 
     private String generateConfirmationLink(String token) {
-        return "<a href=http://localhost:4200/login?token=" + token + " >Conferma account</a>";
+        return "<a href=http://192.168.200.248:8080/e-recruitment/#/login?token=" + token + " >Conferma account</a>";
     }
 
     public boolean verifyUser(String token) {

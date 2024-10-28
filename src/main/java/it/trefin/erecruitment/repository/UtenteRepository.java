@@ -14,12 +14,12 @@ import it.trefin.erecruitment.model.Utente;
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	Utente findByEmail(String email);
 
-	@Query(value = "SELECT * FROM Utente u WHERE u.ruolo != 3",nativeQuery = true)
+	@Query(value = "SELECT * FROM utente u WHERE u.ruolo != 3",nativeQuery = true)
 	List<Utente> findAllNotUser();
 
 	
 	@Query(value = "SELECT DISTINCT u.*\r\n"
-			+ "FROM Utente u\r\n"
+			+ "FROM utente u\r\n"
 			+ "LEFT JOIN utente_candidatura uc ON uc.id_utente = u.id\r\n"
 			+ "LEFT JOIN candidatura c ON uc.id_candidatura = c.id\r\n"
 			+ "WHERE u.ruolo = 3\r\n"

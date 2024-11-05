@@ -123,6 +123,14 @@ public class UtenteController {
 
         return uService.modificaColloquio(idCandidato, coll, simpleM);
     }
+    
+    @PutMapping("/modificaColloquioPhone/{idCandidato}")
+    public Response<Utente, Status> modificaColloquioPhone(@PathVariable long idCandidato,
+            @RequestBody Map<Object, Object> c) {
+        Object colloquio = c.get("colloquio");
+        Colloquio coll = objectMapper.convertValue(colloquio, Colloquio.class);
+        return uService.modificaColloquioPhone(idCandidato, coll);
+    }
 
     @GetMapping("/getColloqui/{id}")
     public Response<List<ColloquioDto>, Status> getColloqui(@PathVariable long id) {

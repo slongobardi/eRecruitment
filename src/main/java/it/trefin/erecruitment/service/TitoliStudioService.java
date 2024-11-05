@@ -134,14 +134,14 @@ public class TitoliStudioService {
 			response.setStatus(Status.OK);
 			response.setDescrizione("titoliStudio ritornati con successo.");
 			return response;
-
+			
 		} catch (Exception e) {
-
+			
 			response.setStatus(Status.SYSTEM_ERROR);
 			response.setDescrizione("visualizzaTuttiTitoliStudio in errore " + e.getMessage());
 			logger.warn(e.getMessage());
 			return response;
-
+			
 		}
 
 	}

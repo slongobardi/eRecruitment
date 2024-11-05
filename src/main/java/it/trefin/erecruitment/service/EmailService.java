@@ -87,11 +87,12 @@ public class EmailService {
             helper.setSubject("Conferma account");
             helper.setText("<html>" 
                     + "<body>" 
-                    + "<h2>Ciao " + token.getUser().getNome() + ",</h2>"
-                    + "Clicca sul link per verificare il tuo account." + "<br/> "
+                    + "<h2>Gentile " + token.getUser().getNome() + ",</h2>"
+                    + "Con questo messaggio, ti confermiamo la creazione del tuo account sul nostro portale." + "<br/> "
+                    + "Per favore, fai click sul link qua sotto per attivare l'account e ricorda di cambiare la password al primo accesso " + "<br/> "
                     + generateConfirmationLink(token.getToken()) + "<br/>"
                     + "La sua prima password per accedere è la seguente: " + randomPassword + "<br/>"
-                    + "Cordiali saluti,<br/>" + "3F & Edin S.P.A."
+                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "3F & Edin S.P.A."
                     + "</body>" + "</html>", true);
 
             javaMailSender.send(message);

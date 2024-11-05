@@ -298,6 +298,29 @@ public class UtenteService {
 		}
 		return response;
 	}
+	
+	public Response<Utente, Status> modificaColloquioPhone(Long idCandidato, Colloquio c) {
+		Response<Utente, Status> response = new Response<>();
+		try {
+			Utente u = uRepository.findById(idCandidato).orElse(null);
+			if (u != null) {
+				c.setUtente(u);
+
+				cRepository.save(c);
+
+				response.setStatus(Status.OK);
+				response.setDescrizione("Colloquio modificato con successo.");
+			} else {
+				response.setStatus(Status.SYSTEM_ERROR);
+				response.setDescrizione("Utente non trovato.");
+			}
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("modificaColloquio in errore " + e.getMessage());
+			logger.warn(e.getMessage());
+		}
+		return response; 
+	}
 
 	public Response<UtenteDto, Status> aggiornaCV(long id, MultipartFile cv) {
 		Response<UtenteDto, Status> response = new Response<>();

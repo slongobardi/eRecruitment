@@ -188,10 +188,10 @@ public class AuthController {
 	}
 
 	public void sendPasswordResetEmail(Utente user, String newPassword) {
-		String emailContent = "<html>" + "<body>" + "<h2>Ciao " + user.getNome() + ",</h2>"
+		String emailContent = "<html>" + "<body>" + "<h2>Gentile " + user.getNome() + ",</h2>"
 				+ "La tua password è stata resettata. La nuova password è: <strong>" + newPassword + "</strong><br/>"
 				+ "Per favore, accedi al tuo account e cambia la password appena possibile.<br/>"
-				+ "Cordiali saluti,<br/>" + "3F & Edin S.P.A." + "</body>" + "</html>";
+				+ "Cordiali saluti,<br/>" + "Talent Acquisition <br/>" + "3F & Edin S.P.A." + "</body>" + "</html>";
 		emailService.inviaEmail(new String[] { user.getEmail() }, "Reset della password", emailContent);
 	}
 	

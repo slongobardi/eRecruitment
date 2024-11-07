@@ -19,6 +19,20 @@ private long id;
 	private long utente;
 	
 	private CandidaturaDto candidatura;
+	
+	private Boolean disabilitato;
+	
+	
+
+	
+
+	public Boolean getDisabilitato() {
+		return disabilitato;
+	}
+
+	public void setDisabilitato(Boolean disabilitato) {
+		this.disabilitato = disabilitato;
+	}
 
 	public long getId() {
 		return id;

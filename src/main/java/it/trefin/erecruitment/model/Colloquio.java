@@ -19,13 +19,12 @@ public class Colloquio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private Date ultimoColloquio;
-	private Date prossimoColloquio;
+	private Date dataColloquio;
 	private String nomeEsaminatore;
 	private String cognomeEsaminatore;
 	private String tipo;
 	private Esito esito;
-	private Feedback feedback = Feedback.Negativo;
+	private Feedback feedback;
 
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
@@ -62,20 +61,14 @@ public class Colloquio {
 		this.tipo = tipo;
 	}
 
-	public Date getUltimoColloquio() {
-		return ultimoColloquio;
+	
+
+	public Date getDataColloquio() {
+		return dataColloquio;
 	}
 
-	public void setUltimoColloquio(Date ultimoColloquio) {
-		this.ultimoColloquio = ultimoColloquio;
-	}
-
-	public Date getProssimoColloquio() {
-		return prossimoColloquio;
-	}
-
-	public void setProssimoColloquio(Date prossimoColloquio) {
-		this.prossimoColloquio = prossimoColloquio;
+	public void setDataColloquio(Date dataColloquio) {
+		this.dataColloquio = dataColloquio;
 	}
 
 	public String getNomeEsaminatore() {

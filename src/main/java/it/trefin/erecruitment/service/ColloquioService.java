@@ -91,8 +91,7 @@ public class ColloquioService {
 			c.setDescrizione(colloquio.getDescrizione());
 			c.setEsito(colloquio.getEsito());
 			c.setNomeEsaminatore(colloquio.getNomeEsaminatore());
-			c.setProssimoColloquio(colloquio.getProssimoColloquio());
-			c.setUltimoColloquio(colloquio.getUltimoColloquio());
+			c.setDataColloquio(colloquio.getDataColloquio());
 
 			cRepository.save(c);
 			response.setData(ColloquioMapper.toDto(c));
@@ -185,10 +184,6 @@ public class ColloquioService {
 		try {
 			Colloquio c = cRepository.findById(id).get();
 			c.setFeedback(f);
-			c.setUltimoColloquio(c.getProssimoColloquio());
-			if(f==Feedback.Negativo) {
-			c.setProssimoColloquio(null);
-			}
 			cRepository.save(c);
 			response.setData(ColloquioMapper.toDto(c));
 			response.setStatus(Status.OK);
@@ -231,7 +226,7 @@ public class ColloquioService {
 		Response<List<ColloquioDto>, Status> response = new Response<>();
 
 		try {
-			ArrayList<Colloquio> filtered = cRepository.findByUltimoColloquioBetween(Date.valueOf(start),
+			ArrayList<Colloquio> filtered = cRepository.findByDataColloquioBetween(Date.valueOf(start),
 					Date.valueOf(end));
 			if (filtered.size() == 0) {
 				response.setData(new ArrayList<>());

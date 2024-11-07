@@ -16,7 +16,7 @@ public class UtenteCandidaturaMapper {
 	    uDto.setStato(u.getStato());
 
 	    uDto.setCandidatura(CandidaturaMapper.toDto( u.getCandidatura())  );
-	       
+	       uDto.setDisabilitato(u.getDisabilitato());
 	
 
 	    uDto.setUtente(
@@ -37,7 +37,7 @@ public class UtenteCandidaturaMapper {
 		u.setStato(uDto.getStato());
 		u.setCandidatura(candidatura);
 		u.setUtente(utente);
-		
+		u.setDisabilitato(uDto.getDisabilitato());
 		return u;
 	}
 

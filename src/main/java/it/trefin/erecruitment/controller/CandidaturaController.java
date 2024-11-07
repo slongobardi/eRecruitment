@@ -1,24 +1,26 @@
 	package it.trefin.erecruitment.controller;
 	
-	import java.util.List;
-	
-	import org.springframework.beans.factory.annotation.Autowired;
-	import org.springframework.web.bind.annotation.CrossOrigin;
-	import org.springframework.web.bind.annotation.DeleteMapping;
-	import org.springframework.web.bind.annotation.GetMapping;
-	import org.springframework.web.bind.annotation.PathVariable;
-	import org.springframework.web.bind.annotation.PostMapping;
-	import org.springframework.web.bind.annotation.PutMapping;
-	import org.springframework.web.bind.annotation.RequestBody;
-	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.RestController;
-	
-	import it.trefin.erecruitment.dto.CandidaturaDto;
-	import it.trefin.erecruitment.dto.SkillDto;
-	import it.trefin.erecruitment.model.Candidatura;
-	import it.trefin.erecruitment.model.Response;
-	import it.trefin.erecruitment.model.Response.Status;
-	import it.trefin.erecruitment.service.CandidaturaService;
+	import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import it.trefin.erecruitment.dto.CandidaturaDto;
+import it.trefin.erecruitment.dto.ColloquioDto;
+import it.trefin.erecruitment.dto.SkillDto;
+import it.trefin.erecruitment.model.Response;
+import it.trefin.erecruitment.model.Response.Status;
+import it.trefin.erecruitment.service.CandidaturaService;
 	
 	@RestController
 	@RequestMapping("api/candidatura")
@@ -68,4 +70,11 @@
 		public Response<Object[],Status> findByUtente(@PathVariable("idU") long idU,@PathVariable("idA") long idA){
 			return cService.findByUtente(idU,idA);
 		}
+		
+	
+		@PatchMapping("/setDisabilitato/{id_candidatura}")
+		public Response<CandidaturaDto, Status> updateDisable(@PathVariable long id_candidatura){
+			return cService.updateDescrizione(id_candidatura);
+		}
+		
 	}

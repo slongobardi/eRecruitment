@@ -228,4 +228,28 @@ public class CandidaturaService {
 		return response;
 	}
 
+	public Response<CandidaturaDto, Status> updateDescrizione(long id_candidatura) {
+		Response<CandidaturaDto, Status> response = new Response<>();
+		
+		try {
+			Candidatura candDisable = cRepository.getReferenceById(id_candidatura);
+			candDisable.setDisabilitato(!candDisable.getDisabilitato());
+			cRepository.save(candDisable);
+			if(candDisable.getDisabilitato()== true) {
+				ArrayList<UtenteCandidatura> listaCandidaturaUtenti = uRepository.getFindByCandidaturaId(id_candidatura);
+				for (UtenteCandidatura utenteCandidatura : listaCandidaturaUtenti) {
+					utenteCandidatura.setDisabilitato(true);
+					uRepository.save(utenteCandidatura);
+				}
+			}
+			response.setData(CandidaturaMapper.toDto(candDisable));
+			response.setDescrizione("Disabilitati ok");
+			response.setStatus(Status.OK);
+		}catch (Exception e) {
+			response.setDescrizione("Disabilitati errore " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+		return response;
+	}
+
 }

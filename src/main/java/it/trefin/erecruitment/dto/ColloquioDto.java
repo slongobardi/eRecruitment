@@ -10,8 +10,8 @@ import it.trefin.erecruitment.model.Utente;
 public class ColloquioDto {
 
 	private long id;
-	private Date ultimoColloquio;
-	private Date prossimoColloquio;
+	private Date dataColloquio;
+
 	private String nomeEsaminatore;
 	private String cognomeEsaminatore;
 	private String descrizione;
@@ -45,20 +45,13 @@ public class ColloquioDto {
 		this.id = id;
 	}
 
-	public Date getUltimoColloquio() {
-		return ultimoColloquio;
+
+	public Date getDataColloquio() {
+		return dataColloquio;
 	}
 
-	public void setUltimoColloquio(Date ultimoColloquio) {
-		this.ultimoColloquio = ultimoColloquio;
-	}
-
-	public Date getProssimoColloquio() {
-		return prossimoColloquio;
-	}
-
-	public void setProssimoColloquio(Date prossimoColloquio) {
-		this.prossimoColloquio = prossimoColloquio;
+	public void setDataColloquio(Date dataColloquio) {
+		this.dataColloquio = dataColloquio;
 	}
 
 	public String getNomeEsaminatore() {

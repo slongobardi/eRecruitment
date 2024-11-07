@@ -31,7 +31,15 @@ public class UtenteCandidatura {
 	@JoinColumn(name ="id_Candidatura")
 	private Candidatura candidatura;
 	
-	
+	private Boolean disabilitato;
+
+	public Boolean getDisabilitato() {
+		return disabilitato;
+	}
+
+	public void setDisabilitato(Boolean disabilitato) {
+		this.disabilitato = disabilitato;
+	}
 
 	public long getId() {
 		return id;

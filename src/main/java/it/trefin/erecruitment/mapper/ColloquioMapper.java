@@ -17,12 +17,12 @@ public class ColloquioMapper {
 	    cDto.setEsito(c.getEsito());
 	    cDto.setId(c.getId());
 	    cDto.setNomeEsaminatore(c.getNomeEsaminatore());
-	    cDto.setProssimoColloquio(c.getProssimoColloquio());
-	    cDto.setUltimoColloquio(c.getUltimoColloquio());
+	    cDto.setDataColloquio(c.getDataColloquio());
 	    cDto.setTipo(c.getTipo());
 	    cDto.setCandidatura(c.getCandidatura().getId());
 	    cDto.setFeedback(c.getFeedback());
 	    cDto.setDescrizione(c.getDescrizione());
+	    
 	    
 
 	    return cDto;
@@ -37,8 +37,7 @@ public class ColloquioMapper {
 		c.setDescrizione(cDto.getDescrizione());
 		c.setId(cDto.getId());
 		c.setNomeEsaminatore(cDto.getNomeEsaminatore());
-		c.setProssimoColloquio(cDto.getProssimoColloquio());
-		c.setUltimoColloquio(cDto.getUltimoColloquio());
+		c.setDataColloquio(cDto.getDataColloquio());
 		c.setUtente(utente);
 		return  c;
 	}

@@ -63,5 +63,5 @@ public class UtenteCandidaturaController {
 	public Response<List<UtenteCandidaturaDto>, Status> visualizzaByCandidatura(@PathVariable long id){
 		return ucService.visualizzaByCandidatura(id);
 	}
-
+	
 }

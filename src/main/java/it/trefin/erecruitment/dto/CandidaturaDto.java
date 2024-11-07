@@ -21,8 +21,21 @@ public class CandidaturaDto {
     private String nomeAzienda;
     private String settore;
     private String sede;
+    private Boolean disabilitato;
     
-    public long getId() {
+    
+    
+    
+
+	public Boolean getDisabilitato() {
+		return disabilitato;
+	}
+
+	public void setDisabilitato(Boolean disabilitato) {
+		this.disabilitato = disabilitato;
+	}
+
+	public long getId() {
         return id;
     }
 

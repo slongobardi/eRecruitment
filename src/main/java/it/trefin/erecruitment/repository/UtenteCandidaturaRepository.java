@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,6 @@ public interface UtenteCandidaturaRepository extends JpaRepository<UtenteCandida
 	List<UtenteCandidatura> findAllByUtenteId(long id);
 	List<UtenteCandidatura> findAllByCandidaturaId(long id);
 	Optional<UtenteCandidatura> findByUtenteIdAndCandidaturaId(Long utenteId, Long candidaturaId);
+	ArrayList<UtenteCandidatura> getFindByCandidaturaId(long id_candidatura);
 
 }

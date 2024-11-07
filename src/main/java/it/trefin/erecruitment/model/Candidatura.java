@@ -62,13 +62,33 @@ public class Candidatura {
           joinColumns = @JoinColumn(name = "id_candidatura"), 
           inverseJoinColumns = @JoinColumn(name = "id_titoliStudio"))
     private Set<TitoliStudio> listaTitoliStudio;
+    
+    private Boolean disabilitato;
 
+    
     // Getters and setters
+    
+    
+    
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+   
+
+	public Boolean getDisabilitato() {
+		return disabilitato;
+	}
+
+
+
+	public void setDisabilitato(Boolean disabilitato) {
+		this.disabilitato = disabilitato;
+	}
+
+
+
+	public void setId(long id) {
         this.id = id;
     }
 

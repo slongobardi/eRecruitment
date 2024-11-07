@@ -21,7 +21,7 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
 
 	List<ColloquioDto> findAllByCandidaturaId(long idCandidatura);
 
-    ArrayList<Colloquio> findByUltimoColloquioBetween(Date start, Date end);
+    ArrayList<Colloquio> findByDataColloquioBetween(Date start, Date end);
 
     @Query(value = "SELECT " + 
             "    COUNT(colloquio.id) AS numeroColloqui, " + 
@@ -40,8 +40,7 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
             "    GROUP BY azienda_id " + 
             ") AS sc ON sc.azienda_id = candidatura.id_azienda " + 
             "WHERE candidatura.id_azienda = :id " + 
-            "AND colloquio.ultimo_colloquio IS NOT NULL " + 
-            "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
+            "AND colloquio.data_colloquio BETWEEN :start AND :end", 
            nativeQuery = true)
     Object[] totalFeedback(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
 
@@ -53,13 +52,14 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
             "    colloquio.feedback, " +
             "    colloquio.descrizione, " +
             "    colloquio.tipo, " +
-            "    schedacandidato.ingaggiato " +
+            "    schedacandidato.ingaggiato, " +
+            "    colloquio.data_colloquio " +
             "FROM utente " +
             "JOIN colloquio ON utente.id = colloquio.id_utente " +
             "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " +
             "JOIN schedacandidato ON schedacandidato.utente_id = utente.id " +
             "WHERE candidatura.id_azienda = :id " +
-            "AND colloquio.ultimo_colloquio BETWEEN :start AND :end", 
+            "AND colloquio.data_colloquio BETWEEN :start AND :end", 
     nativeQuery = true)
 Set<Object> reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
 	

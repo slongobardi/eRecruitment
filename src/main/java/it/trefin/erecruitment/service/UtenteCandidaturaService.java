@@ -64,7 +64,7 @@ public class UtenteCandidaturaService {
 				}
 				c.setNumeroCandidati(c.getNumeroCandidati() + 1);
 				cRepository.save(c);
-
+				utenteCandidatura.setDisabilitato(false);
 				ucRepository.save(utenteCandidatura);
 
 				response.setData(utenteCandidatura);

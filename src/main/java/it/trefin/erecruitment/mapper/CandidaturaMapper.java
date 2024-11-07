@@ -29,6 +29,7 @@ public class CandidaturaMapper {
         cDto.setRal(c.getRal());
         cDto.setSettore(c.getSettore());
         cDto.setSede(c.getSede());
+        cDto.setDisabilitato(c.getDisabilitato());
 
         cDto.setListaColloqui(
             c.getListaColloqui() != null ? 
@@ -76,7 +77,7 @@ public class CandidaturaMapper {
         c.setRal(cDto.getRal());
         c.setSettore(cDto.getSettore());
         c.setSede(cDto.getSede());
-
+        c.setDisabilitato(cDto.getDisabilitato());
         return c;
     }
 }

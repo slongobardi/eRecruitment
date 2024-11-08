@@ -234,6 +234,7 @@ public class CandidaturaService {
 		try {
 			Candidatura candDisable = cRepository.getReferenceById(id_candidatura);
 			candDisable.setDisabilitato(!candDisable.getDisabilitato());
+			candDisable.setNumeroCandidati(0);
 			cRepository.save(candDisable);
 			if(candDisable.getDisabilitato()== true) {
 				ArrayList<UtenteCandidatura> listaCandidaturaUtenti = uRepository.getFindByCandidaturaId(id_candidatura);

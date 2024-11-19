@@ -45,8 +45,8 @@ public class EmailService {
     private SecureRandom random = new SecureRandom();
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Aggiunto il password encoder
 
-    public Response<MimeMessageHelper, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
-        Response<MimeMessageHelper, Status> response = new Response<>();
+    public Response<String, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
+        Response<String, Status> response = new Response<>();
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -56,10 +56,10 @@ public class EmailService {
             helper.setText(testo, true);
             
             javaMailSender.send(message);
-            response.setData(helper);
+            response.setData("Email inviata con successo");
             response.setStatus(Status.OK);
             response.setDescrizione("Email inviata con successo ");
-            return response;
+            return null;
         } catch (Exception e) {
             logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
             response.setStatus(Status.SYSTEM_ERROR);

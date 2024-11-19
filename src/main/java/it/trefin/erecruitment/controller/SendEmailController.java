@@ -6,6 +6,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +23,9 @@ public class SendEmailController {
 	@Autowired
 	private EmailService emailService;
 
-	@GetMapping("/inviaEmail")
-	public Response<MimeMessageHelper, Status> inviaEmail(@RequestParam String [] destinatario,
-			@RequestParam String oggetto, @RequestParam String testo) {
+	@PostMapping("/inviaEmail")
+	public Response<String, Status> inviaEmail(@RequestParam String [] destinatario,
+			@RequestParam String oggetto, @RequestBody String testo) {
 
 		return emailService.inviaEmail(destinatario, oggetto, testo);
 

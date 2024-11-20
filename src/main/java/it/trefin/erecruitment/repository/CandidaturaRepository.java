@@ -26,8 +26,9 @@ public interface CandidaturaRepository extends JpaRepository<Candidatura, Long>{
 			+ "FROM \r\n"
 			+ "    candidatura\r\n"
 			+ "JOIN \r\n"
-			+ "    utente_candidatura ON candidatura.id_azienda = :idAzienda \r\n"
+			+ "    utente_candidatura ON candidatura.id=utente_candidatura.id_candidatura  \r\n"
 			+ "WHERE \r\n"
-			+ "    utente_candidatura.id_utente = :idUtente ;",nativeQuery=true)
+			+ " utente_candidatura.id_utente = :idUtente AND "
+			+" 	candidatura.id_azienda=:idAzienda ;",nativeQuery=true)
 	Object[] findByUtente(@Param("idUtente") long idUtente,@Param("idAzienda") long idAzienda);
 }

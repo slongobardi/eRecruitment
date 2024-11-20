@@ -36,7 +36,9 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
             "        azienda_id, " + 
             "        SUM(ingaggiato = 1) AS ingaggiato, " + 
             "        SUM(perso = 1) AS perso " + 
-            "    FROM schedacandidato " + 
+            "    FROM schedacandidato "+
+            "JOIN colloquio ON colloquio.id_utente = schedacandidato.utente_id"+
+            "WHERE colloquio.data_colloquio BETWEEN :start AND :end " + 
             "    GROUP BY azienda_id " + 
             ") AS sc ON sc.azienda_id = candidatura.id_azienda " + 
             "WHERE candidatura.id_azienda = :id " + 

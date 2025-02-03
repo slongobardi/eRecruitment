@@ -11,17 +11,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.SkillDto;
+import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SkillMapper;
+import it.trefin.erecruitment.mapper.UtenteMapper;
 import it.trefin.erecruitment.model.Azienda;
 import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.SchedaCandidato;
 import it.trefin.erecruitment.model.Skill;
+import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
@@ -271,6 +275,29 @@ public class CandidaturaService {
 			return response;
 
 		}
+	}
+
+	public Response<CandidaturaDto, Status> aggiornaLogo(Long id, MultipartFile foto) {
+		Response<CandidaturaDto, Status> response = new Response<>();
+		try {
+			Candidatura c = cRepository.findById(id).orElse(null);
+			if (c != null && !foto.isEmpty()) {
+				c.setLogoEvento(foto.getBytes());
+				cRepository.save(c);
+				CandidaturaDto dto = CandidaturaMapper.toDto(c);
+				response.setData(dto);
+				response.setStatus(Status.OK);
+				response.setDescrizione("Foto Utente salvata con successo.");
+			} else {
+				response.setStatus(Status.SYSTEM_ERROR);
+				response.setDescrizione("Foto è null o Utente non trovato.");
+			}
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("aggiornaFoto in errore " + e.getMessage());
+			logger.warn(e.getMessage());
+		}
+		return response;
 	}
 
 }

@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.SkillDto;
+import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.service.CandidaturaService;
@@ -34,12 +37,16 @@ import it.trefin.erecruitment.service.CandidaturaService;
 		public Response<CandidaturaDto, Status> inserisciCandidatura(@RequestBody CandidaturaDto candidaturaDto) {
 			return cService.inserisciCandidatura(candidaturaDto);
 		}
-	
+		  @PutMapping("/aggiornaLogo/{id}")
+		    public Response<CandidaturaDto, Status> aggiornaLogo(@PathVariable Long id, @RequestParam("foto") MultipartFile foto) {
+		        return cService.aggiornaLogo(id, foto);
+		    }
 	
 		@GetMapping("/visualizza/{id}")
 		public Response<CandidaturaDto, Status> visualizzaCandidatura(@PathVariable long id) {
 			return cService.visualizzaCandidatura(id);
 		}
+		
 	
 		@PutMapping("/aggiorna")
 		public Response<CandidaturaDto, Status> aggiornaCandidatura(@RequestBody CandidaturaDto candidatura) {

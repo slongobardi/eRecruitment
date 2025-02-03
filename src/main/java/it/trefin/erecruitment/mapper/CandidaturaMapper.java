@@ -31,6 +31,12 @@ public class CandidaturaMapper {
         cDto.setSede(c.getSede());
         cDto.setDisabilitato(c.getDisabilitato());
         cDto.setIsEvento(c.getIsEvento());
+        if(c.getLogoEvento()!=null) {
+        if(c.getIsEvento() && c.getLogoEvento()!=null) {
+        cDto.setLogoEvento(c.getLogoEvento());}
+        else {
+        	cDto.setLogoEvento(null);
+        }}
         cDto.setListaColloqui(
             c.getListaColloqui() != null ? 
             c.getListaColloqui().stream().map(Colloquio::getId).collect(Collectors.toList()) : 
@@ -79,6 +85,7 @@ public class CandidaturaMapper {
         c.setSede(cDto.getSede());
         c.setDisabilitato(cDto.getDisabilitato());
         c.setIsEvento(cDto.getIsEvento());
+        c.setLogoEvento(cDto.getLogoEvento());
         return c;
     }
 }

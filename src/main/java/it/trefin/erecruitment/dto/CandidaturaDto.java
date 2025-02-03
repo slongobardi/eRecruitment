@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Lob;
+
 public class CandidaturaDto {
 
     private long id;
@@ -23,11 +25,12 @@ public class CandidaturaDto {
     private String sede;
     private Boolean disabilitato;
     private Boolean isEvento;
-
+    private byte[] logoEvento;
     
     
     
 
+    
 	public Boolean getDisabilitato() {
 		return disabilitato;
 	}
@@ -155,5 +158,15 @@ public class CandidaturaDto {
 	public void setIsEvento(Boolean isEvento) {
 		this.isEvento = isEvento;
 	}
+
+	public byte[] getLogoEvento() {
+		return logoEvento;
+	}
+
+	public void setLogoEvento(byte[] logoEvento) {
+		this.logoEvento = logoEvento;
+	}
+
+	
     
 }

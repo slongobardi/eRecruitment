@@ -65,6 +65,7 @@ public class Candidatura {
     
     private Boolean disabilitato;
 
+    private Boolean isEvento;
     
     // Getters and setters
     
@@ -191,4 +192,16 @@ public class Candidatura {
 	public Candidatura() {
     }
 
+
+
+	public Boolean getIsEvento() {
+		return isEvento;
+	}
+
+
+
+	public void setIsEvento(Boolean isEvento) {
+		this.isEvento = isEvento;
+	}
+	
 }

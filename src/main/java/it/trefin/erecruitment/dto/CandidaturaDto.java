@@ -22,7 +22,8 @@ public class CandidaturaDto {
     private String settore;
     private String sede;
     private Boolean disabilitato;
-    
+    private Boolean isEvento;
+
     
     
     
@@ -145,6 +146,14 @@ public class CandidaturaDto {
 
 	public void setSede(String sede) {
 		this.sede = sede;
+	}
+
+	public Boolean getIsEvento() {
+		return isEvento;
+	}
+
+	public void setIsEvento(Boolean isEvento) {
+		this.isEvento = isEvento;
 	}
     
 }

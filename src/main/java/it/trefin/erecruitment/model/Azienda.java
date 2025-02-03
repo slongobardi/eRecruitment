@@ -28,7 +28,8 @@ public class Azienda {
 
 	@OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
 	private List<Utente> listaUtenti;
-
+	
+	
 	@Column(unique = true)
 	private String nome;
 
@@ -121,5 +122,8 @@ public class Azienda {
 	public void setPreferenza(List<Preferenza> preferenza) {
 		this.preferenza = preferenza;
 	}
+
+
+	
 
 }

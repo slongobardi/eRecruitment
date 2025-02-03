@@ -253,4 +253,24 @@ public class CandidaturaService {
 		return response;
 	}
 
+	public Response<List<CandidaturaDto>, Status> getEventi(long id_azienda) {
+		Response<List<CandidaturaDto>, Status> response = new Response<>();
+
+		try {
+					
+			response.setData(cRepository.findByIsEventoTrueAndAziendaId(id_azienda).stream().map(CandidaturaMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+			response.setDescrizione("Candidature ritornate con successo.");
+			return response;
+
+		} catch (Exception e) {
+
+			response.setStatus(Status.SYSTEM_ERROR);
+			response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
+			logger.warn(e.getMessage());
+			return response;
+
+		}
+	}
+
 }

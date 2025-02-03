@@ -91,13 +91,28 @@ public class ColloquioController {
 		return cService.totalFeedback(id, startDate, endDate);
 	}
 	
+	@GetMapping("/totalFeedbackEvento/{id}/{startDate}/{endDate}")
+	public Response<Object[],Status> totalFeedbackEvento(@PathVariable("id") int id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+		return cService.totalFeedbackEvento(id, startDate, endDate);
+	}
+	
 	@GetMapping("/report/{id}/{startDate}/{endDate}")
 	public Response<Set<Object>,Status> report(@PathVariable("id") long id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
 		return cService.report(id, startDate, endDate);
 	}
 	
+	@GetMapping("/reportEvento/{id}/{startDate}/{endDate}")
+	public Response<Set<Object>,Status> reportEvento(@PathVariable("id") long id,@PathVariable("startDate") Date startDate,@PathVariable("endDate") Date endDate){
+		return cService.reportEvento(id, startDate, endDate);
+	}
+	
 	@GetMapping("/findAllColloquiUtenteByCandidatura/{idC}/{idU}")
 	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(@PathVariable("idC") long idC,@PathVariable("idU") long idU){
 		return cService.findAllColloquiUtenteByCandidatura(idC,idU);
+	}
+	
+	@GetMapping("/findAllColloquiByCandidatura/{idC}")
+	public Response<List<ColloquioDto>,Status> findAllColloquiUtenteByCandidatura(@PathVariable("idC") long idC){
+		return cService.findAllColloquiByCandidatura(idC);
 	}
 }

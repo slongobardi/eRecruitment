@@ -64,7 +64,6 @@ public class UtenteMapper {
 				? u.getUtentiCandidati().stream().map(UtenteCandidatura::getId).collect(Collectors.toList())
 				: new ArrayList<>());
 
-		uDto.setListaColloquii(u.getListaColloquii()!=null ? u.getListaColloquii().stream().map(ColloquioMapper::toDto).collect(Collectors.toList()): new ArrayList<>());
 
 		uDto.setIdAzienda(u.getAzienda() != null ? u.getAzienda().getId() : -1);
 

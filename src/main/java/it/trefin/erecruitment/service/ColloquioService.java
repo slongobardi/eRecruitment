@@ -34,7 +34,7 @@ public class ColloquioService {
 		Response<Colloquio, Status> response = new Response<>();
 
 		try {
-
+			
 			cRepository.save(colloquio);
 			response.setData(colloquio);
 			response.setStatus(Status.OK);
@@ -260,12 +260,42 @@ public class ColloquioService {
 
 		return response;
 	}
-	
+
+	public Response<Object[], Status> totalFeedbackEvento(int id, Date startDate, Date endDate) {
+		Response<Object[], Status> response = new Response<>();
+
+		try {
+			response.setData(cRepository.totalFeedbackEvento(id, startDate, endDate));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDescrizione("errore query custom feedback " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+
+		return response;
+	}
 	public Response<Set<Object>, Status> report(long id, Date startDate, Date endDate) {
 		Response<Set<Object>, Status> response = new Response<>();
 
 		try {
 			response.setData(cRepository.reportCandidati(id, startDate, endDate));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		} catch (Exception e) {
+			response.setDescrizione("errore query custom feedback " + e.getMessage());
+			response.setStatus(Status.KO);
+			logger.warn(e.getMessage());
+		}
+
+		return response;
+	}
+	
+	public Response<Set<Object>, Status> reportEvento(long id, Date startDate, Date endDate) {
+		Response<Set<Object>, Status> response = new Response<>();
+
+		try {
+			response.setData(cRepository.reportEvento(id, startDate, endDate));
 			response.setDescrizione("query custom feedback ok");
 			response.setStatus(Status.OK);
 		} catch (Exception e) {
@@ -286,6 +316,21 @@ public class ColloquioService {
 			response.setStatus(Status.OK);
 		}catch(Exception e){
 			response.setDescrizione("errore query custom findAllColloquiUtenteByCandidatura " + e.getMessage());
+			response.setStatus(Status.KO);
+		}
+		
+		return response;
+	}
+
+	public Response<List<ColloquioDto>, Status> findAllColloquiByCandidatura(long idC) {
+Response<List<ColloquioDto>,Status> response  = new Response<>();
+		
+		try {
+			response.setData(cRepository.findAllByCandidaturaId(idC).stream().map(ColloquioMapper::toDto).collect(Collectors.toList()));
+			response.setDescrizione("query custom feedback ok");
+			response.setStatus(Status.OK);
+		}catch(Exception e){
+			response.setDescrizione("errore query custom findAllColloquiByCandidatura " + e.getMessage());
 			response.setStatus(Status.KO);
 		}
 		

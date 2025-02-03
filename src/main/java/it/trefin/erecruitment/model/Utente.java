@@ -75,6 +75,8 @@ public class Utente {
     @JoinColumn(name = "azienda_id")
     private Azienda azienda;
     
+
+    
     @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
     private List<Preferenza> preferenza;
 
@@ -361,4 +363,6 @@ public class Utente {
 	public void setSchedaCandidato(List<SchedaCandidato> schedaCandidato) {
 		this.schedaCandidato = schedaCandidato;
 	}
+
+
 }

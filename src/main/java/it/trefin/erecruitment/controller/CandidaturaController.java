@@ -56,6 +56,11 @@ import it.trefin.erecruitment.service.CandidaturaService;
 			return cService.visualizzaTutteCandidature();
 		}
 		
+		@GetMapping("/allEventi/{id}")
+		public Response<List<CandidaturaDto>, Status> visualizzaEventi(@PathVariable long id) {
+			return cService.getEventi(id);
+		}
+		
 		@GetMapping("/visualizzaCandidatureAziendali/{id_azienda}")
 		public Response<List<CandidaturaDto>,Status> visualizzaCandidatureAziendali(@PathVariable long id_azienda){
 			return cService.visualizzaCandidatureAziendali(id_azienda);

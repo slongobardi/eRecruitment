@@ -112,4 +112,21 @@ return response;
 				
 			}
 
+	public Response<String, Status> ingaggiaUtenteEvento(long id, long idAzienda, String nota) {
+		Response<String, Status> response = new Response<>();
+		try {
+			SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
+			candidatoIng.setIngaggiato(true);
+			candidatoIng.setPerso(false);
+			candidatoIng.setNota(nota);
+			response.setStatus(Status.OK);
+		    response.setDescrizione("Candidato ingaggiato");
+		     scCandidatoRepository.save(candidatoIng);
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+		    response.setDescrizione("Errore nell' ingaggio dei candidati " + e.getMessage());
+		}
+		return response;
+	}
+
 }

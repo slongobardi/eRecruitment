@@ -38,6 +38,10 @@ public class SchedaCandidatoController {
 	public Response<String, Status> ingaggiaUtente(@RequestParam long id, @RequestParam long idAzienda){
 		return schedaCandidatoService.ingaggiaUtente(id, idAzienda);
 	}
+	@PatchMapping("/ingaggiaEvento")
+	public Response<String, Status> ingaggiaUtenteEvento(@RequestParam long id, @RequestParam long idAzienda,@RequestParam String nota){
+		return schedaCandidatoService.ingaggiaUtenteEvento(id, idAzienda,nota);
+	}
 	
 	@PatchMapping("/perso")
 	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota, @RequestParam long idAzienda){

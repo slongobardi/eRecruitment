@@ -18,12 +18,13 @@ public interface UtenteRepository extends JpaRepository<Utente, Long> {
 	List<Utente> findAllNotUser();
 
 	
-	@Query(value = "SELECT DISTINCT u.*\r\n"
-			+ "FROM utente u\r\n"
-			+ "LEFT JOIN utente_candidatura uc ON uc.id_utente = u.id\r\n"
-			+ "LEFT JOIN candidatura c ON uc.id_candidatura = c.id\r\n"
-			+ "WHERE u.ruolo = 3\r\n"
-			+ "AND (c.id_azienda = :idAzienda OR u.azienda_id = :idAzienda);",nativeQuery = true)
+	@Query(value = "SELECT DISTINCT u.* " +
+	        "FROM utente u " +
+	        "LEFT JOIN utente_candidatura uc ON uc.id_utente = u.id " +
+	        "LEFT JOIN candidatura c ON uc.id_candidatura = c.id " +
+	        "WHERE u.ruolo = 3 " +
+	        "AND (c.id_azienda = :idAzienda OR u.azienda_id = :idAzienda) " +
+	        "AND (c.is_evento != TRUE OR c.is_evento IS NULL);", nativeQuery = true)
 	List<Utente> findAllNormalUser(@Param("idAzienda") long idAzienda);
 	
 	@Query(value = "SELECT DISTINCT * FROM utente,candidatura,utente_colloquio,colloquio WHERE candidatura.id_azienda = :idAzienda AND colloquio.id_candidatura = candidatura.id AND utente_colloquio.id_colloquio = colloquio.id AND utente.id = utente_colloquio.id_utente;\r\n"

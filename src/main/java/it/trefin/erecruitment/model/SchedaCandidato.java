@@ -17,6 +17,7 @@ public class SchedaCandidato {
 	private String nota;
 	private Boolean perso = false;
 	private Boolean ingaggiato = false;
+	private Boolean pickingList = false;
 
 	@ManyToOne()
 	private Utente utente;
@@ -28,6 +29,7 @@ public class SchedaCandidato {
 		SchedaCandidato sc = new SchedaCandidato();
 		sc.setIngaggiato(false);
 		sc.setPerso(false);
+		sc.setPickingList(false);
 		sc.setNota("");
 		sc.setAzienda(a);
 		sc.setUtente(u);
@@ -81,4 +83,13 @@ public class SchedaCandidato {
 	public void setAzienda(Azienda azienda) {
 		this.azienda = azienda;
 	}
+
+	public Boolean getPickingList() {
+		return pickingList;
+	}
+
+	public void setPickingList(Boolean pickingList) {
+		this.pickingList = pickingList;
+	}
+	
 }

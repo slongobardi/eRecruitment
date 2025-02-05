@@ -88,6 +88,28 @@ public class AuthController {
 	    return user.getId();
 	}
 	
+	@PostMapping("/registerEvent")
+	public long register(@RequestBody Utente user, @RequestParam int sendEmail, @RequestParam long idAzienda,@RequestParam long idEvento) {
+	    if (sendEmail == 0) {
+	        Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
+	        user.setAzienda(azienda);
+	        user.setPassword(passwordEncoder.encode("Erecruitment2024!"));
+	        user.setVerified(true);
+	    } else {
+	        if (idAzienda != 0) {
+	            Azienda azienda = aziendaRepository.getReferenceById(idAzienda);
+	            user.setAzienda(azienda);
+	        }
+	       
+	    }
+	    utenteRepository.save(user);
+	    if (sendEmail == 1) {
+	    	
+	        sendRegistrationConfirmationEmailEvent(user, idEvento);
+	    }
+	    return user.getId();
+	}
+	
 	/*@PostMapping("/registerOriginale")
 	public long registerbyAdmin(@RequestBody Utente user) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -165,6 +187,18 @@ public class AuthController {
 		tokenRepository.save(emailConfirmationToken);
 		// Send email
 		emailService.confirmEmail(emailConfirmationToken, user.getEmail());
+	}
+	
+	public void sendRegistrationConfirmationEmailEvent(Utente user,Long idEvento) {
+		// Generate the token
+		String tokenValue = getAlphaNumericString(15);
+		ConfirmToken emailConfirmationToken = new ConfirmToken();
+		emailConfirmationToken.setToken(tokenValue);
+		emailConfirmationToken.setTimeStamp(LocalDateTime.now());
+		emailConfirmationToken.setUser(user);
+		tokenRepository.save(emailConfirmationToken);
+		// Send email
+		emailService.confirmEmailEvent(emailConfirmationToken, user.getEmail(),idEvento);
 	}
 
 	private String getAlphaNumericString(int n) {

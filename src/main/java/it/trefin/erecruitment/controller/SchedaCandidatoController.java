@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.trefin.erecruitment.dto.SchedaCandidatoDto;
+import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.service.SchedaCandidatoService;
@@ -48,8 +49,17 @@ public class SchedaCandidatoController {
 		return schedaCandidatoService.persoUtente(id, nota,idAzienda);
 	}
 	
+	@PatchMapping("/pickingList")
+	public Response<String, Status> pickingListUtente(@RequestParam long id, @RequestParam long idAzienda){
+		return schedaCandidatoService.pickingList(id,idAzienda);
+	}
+	
 	@GetMapping("/byUtenteAndAzienda/{idU}/{idA}")
 	public Response<SchedaCandidatoDto, Status> getSchedeByUtenteAndAzienda(@PathVariable("idU") long idU,@PathVariable("idA") long idA) {
 		return schedaCandidatoService.getSchedaCandidatiByAziendaAndUtente(idU,idA);
+	}
+	@GetMapping("/getPickingList/{idA}")
+	public Response<List<UtenteCandidaturaDto>, Status> getPickingList(@PathVariable("idA") long idA) {
+		return schedaCandidatoService.getPickingList(idA);
 	}
 }

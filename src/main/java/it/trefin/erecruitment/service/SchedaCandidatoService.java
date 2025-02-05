@@ -9,19 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.dto.SchedaCandidatoDto;
+import it.trefin.erecruitment.dto.UtenteCandidaturaDto;
 import it.trefin.erecruitment.mapper.CandidaturaMapper;
 import it.trefin.erecruitment.mapper.SchedaCandidatoMapper;
+import it.trefin.erecruitment.mapper.UtenteCandidaturaMapper;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.SchedaCandidato;
+import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.repository.SchedaCandidatoRepository;
+import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 
 @Service
 public class SchedaCandidatoService {
 	private Logger logger = LoggerFactory.getLogger(SchedaCandidatoService.class);
     @Autowired
     private SchedaCandidatoRepository scCandidatoRepository;
-
+    @Autowired
+	private UtenteCandidaturaRepository utenteCandidaturaRepository;
     public Response<List<SchedaCandidatoDto>, Status> getSchedaCandidatiByPerso() {
         Response<List<SchedaCandidatoDto>, Status> response = new Response<>();
         try {
@@ -125,6 +130,47 @@ return response;
 		} catch (Exception e) {
 			response.setStatus(Status.SYSTEM_ERROR);
 		    response.setDescrizione("Errore nell' ingaggio dei candidati " + e.getMessage());
+		}
+		return response;
+	}
+
+	public Response<List<UtenteCandidaturaDto>, Status> getPickingList(long idA) {
+		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
+		try {
+			List<UtenteCandidatura> utenteCanddatura =  utenteCandidaturaRepository.findPickingList(idA);
+			response.setData(utenteCanddatura.stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
+			response.setStatus(Status.OK);
+		    response.setDescrizione("Lista candidati nella picking list");
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+		    response.setDescrizione("Errore nella select della picking list" + e.getMessage());
+		}
+		return response;
+	}
+
+	public Response<String, Status> pickingList(long id, long idAzienda) {
+		Response<String, Status> response = new Response<>();
+		try {
+			SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
+			if(candidatoIng.getPickingList()==null) {
+				candidatoIng.setPickingList(true);
+			}else {
+			candidatoIng.setPickingList(!candidatoIng.getPickingList());
+			}
+				
+			candidatoIng.setIngaggiato(false);
+			candidatoIng.setPerso(false);
+			response.setStatus(Status.OK);
+			if(candidatoIng.getPickingList()) {
+		    response.setDescrizione("Candidato aggiunto alla pickingList");
+			}else {
+			    response.setDescrizione("Candidato rimosso dalla pickingList");
+
+			}
+		     scCandidatoRepository.save(candidatoIng);
+		} catch (Exception e) {
+			response.setStatus(Status.SYSTEM_ERROR);
+		    response.setDescrizione("Errore nella modifica della pickingList" + e.getMessage());
 		}
 		return response;
 	}

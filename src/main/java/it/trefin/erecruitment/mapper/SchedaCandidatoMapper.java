@@ -12,6 +12,8 @@ public class SchedaCandidatoMapper {
 		scDto.setIngaggiato(sc.getIngaggiato());
 		scDto.setPerso(sc.getPerso());
 		scDto.setAzienda(sc.getAzienda().getId());
+		scDto.setPickingList(sc.getPickingList());
+		scDto.setRifiutato(sc.getRifiutato());
 		return scDto;
 	}
 	
@@ -24,7 +26,8 @@ public class SchedaCandidatoMapper {
 		sc.setNota(scDto.getNota());
 		sc.setIngaggiato(scDto.getIngaggiato());
 		sc.setPerso(scDto.getPerso());
-		
+		sc.setPickingList(scDto.getPickingList());
+		sc.setRifiutato(scDto.getRifiutato());
 		return sc;
 	}
 

@@ -24,12 +24,12 @@ import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
 import it.trefin.erecruitment.dto.UtenteTitoliStudioDto;
 import it.trefin.erecruitment.model.Colloquio;
+import it.trefin.erecruitment.model.Questionario;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Utente;
-import it.trefin.erecruitment.model.UtenteCandidatura;
-import it.trefin.erecruitment.model.UtenteTitoliStudio;
+
 import it.trefin.erecruitment.service.UtenteService;
 
 @RestController
@@ -145,5 +145,10 @@ public class UtenteController {
     @PutMapping("/complete/{id}")
     public Response<UtenteDto, Status> complete(@PathVariable Long id) {
         return uService.complete(id);
+    }
+    
+    @PutMapping("/questionario/{idU}/{idC}")
+   public Response<Questionario, Status> addQuestionario(@PathVariable Long idU,@PathVariable Long idC,@RequestBody Questionario Questionario) {
+        return uService.addQuestionario(idU,idC,Questionario);
     }
 }

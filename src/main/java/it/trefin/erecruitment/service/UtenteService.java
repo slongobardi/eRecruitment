@@ -1,6 +1,7 @@
 package it.trefin.erecruitment.service;
 
 import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,23 +24,51 @@ import it.trefin.erecruitment.mapper.ColloquioMapper;
 import it.trefin.erecruitment.mapper.SkillMapper;
 import it.trefin.erecruitment.mapper.UtenteMapper;
 import it.trefin.erecruitment.mapper.UtenteTitoliStudioMapper;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Colloquio;
+import it.trefin.erecruitment.model.Esito;
+import it.trefin.erecruitment.model.Questionario;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
+import it.trefin.erecruitment.model.Stato;
+import it.trefin.erecruitment.model.Studi;
+import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
+import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.ColloquioRepository;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
+import it.trefin.erecruitment.repository.QuestionarioRepository;
 import it.trefin.erecruitment.repository.SkillRepository;
+import it.trefin.erecruitment.repository.TitoliStudioRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
+import it.trefin.erecruitment.repository.UtenteTitoliStudioRepository;
 
 @Service
 public class UtenteService {
 	private Logger logger = LoggerFactory.getLogger(UtenteService.class);
 	@Autowired
 	private UtenteRepository uRepository;
-
+	@Autowired
+	private CandidaturaRepository candidaturaRepository;
+	
+	@Autowired
+	private UtenteCandidaturaService utenteCandidaturaService;
+	
+	@Autowired
+	private UtenteTitoliStudioRepository utenteTitoliStudioRepository;
+	
+	@Autowired
+	private TitoliStudioRepository titoliStudioRepository;
+	
+	@Autowired
+	private ColloquioRepository colloquioRepository;
+	
+	@Autowired
+	private QuestionarioRepository questionarioRepository;
+	
 	@Autowired
 	private ColloquioRepository cRepository;
 	@Autowired
@@ -458,6 +487,143 @@ public class UtenteService {
 		
 		return response;
 	}
+
+	public Response<Questionario, Status> addQuestionario(Long idU, Long idC,Questionario questionario) {
+		Response<Questionario, Status> response = new Response<>();
+		
+		try {
+			Colloquio colloquio=new Colloquio();
+			
+			Utente u = uRepository.findById(idU).get();
+			Candidatura candidatura= candidaturaRepository.findById(idC).get();
+			//Aggiornamento Utente
+			u.setTrasferimento(questionario.getTrasferimento());
+			uRepository.save(u);
+			
+			//creazione colloquio 		
+			colloquio.setCandidatura(candidatura);
+			colloquio.setDataColloquio(candidatura.getPubblicazione());
+			colloquio.setEsito(Esito.InValutazione);
+			colloquio.setTipo("conoscitivo-tecnico");
+			colloquio.setUtente(u);
+			colloquioRepository.save(colloquio);
+			
+			//creazione titolo di studio 
+			
+			UtenteTitoliStudio utenteTitoliStudio=new UtenteTitoliStudio();
+			utenteTitoliStudio.setDescrizione(questionario.getIndirizzoStudio());
+			utenteTitoliStudio.setUtente(u);		
+			utenteTitoliStudio.setTitoliStudio(titoliStudioRepository.findByStudi(Studi.DIPLOMA));
+			utenteTitoliStudio.setCompleted(false);
+			utenteTitoliStudioRepository.save(utenteTitoliStudio);
+			//creazione questionario
+			questionario.setUtente(u);
+			questionario.setCandidatura(candidatura);
+			Questionario quest =questionarioRepository.save(questionario);
+			
+			//Collegamento all'evento
+			UtenteCandidatura utenteCandidatura=new UtenteCandidatura();
+	        Date data = new Date(System.currentTimeMillis());
+			utenteCandidatura.setDataIscrizione(data);
+			utenteCandidatura.setCandidatura(candidatura);
+			utenteCandidatura.setStato(Stato.ATTESA);
+			utenteCandidatura.setDisabilitato(false);
+			utenteCandidatura.setUtente(u);
+			utenteCandidaturaService.inserisciUtenteCandidatura(utenteCandidatura, candidatura.getAzienda().getId(), u.getId());
+			
+			//Salvo le skill che non esistono nel db e le collego all'utente
+			List<Skill> skills= skillRepository.findAll();
+			if(questionario.getAltroSkill()!=null || !questionario.getAltroSkill().equals("")) {
+			boolean trovato=false;
+			for (Skill skill : skills) {
+				if(skill.getNome().toLowerCase().replace(" ", "").contains(questionario.getAltroSkill().toLowerCase().replace(" ", ""))) {
+					aggiungiSkill(skill.getId(), idU);
+					trovato=true;
+				}else {
+					trovato=false;
+				}
+			}
+			if(trovato==false) {
+				Skill nuovaSkill=new Skill();
+				nuovaSkill.setNome(questionario.getAltroSkill());
+				Skill nuovaSkill2= skillRepository.save(nuovaSkill);
+				aggiungiSkill(nuovaSkill2.getId(), idU);
+			}
+			}
+			if(questionario.getAltroSoftware()!=null || !questionario.getAltroSoftware().equals("")) {
+				boolean trovato=false;
+				for (Skill skill : skills) {
+					if(skill.getNome().toLowerCase().replace(" ", "").contains(questionario.getAltroSoftware().toLowerCase().replace(" ", ""))) {
+						aggiungiSkill(skill.getId(), idU);
+						trovato=true;
+					}else {
+						trovato=false;
+
+					}}
+				if(trovato==false) {
+					Skill nuovaSkill=new Skill();
+					nuovaSkill.setNome(questionario.getAltroSoftware());
+					Skill nuovaSkill2= skillRepository.save(nuovaSkill);
+					aggiungiSkill(nuovaSkill2.getId(), idU);
+				}
+				
+				}
+				ArrayList<Skill> listaSkill=new ArrayList<>();
+				listaSkill.add(skillRepository.findByNome("C"));				
+				listaSkill.add(skillRepository.findByNome("C++"));
+				listaSkill.add(skillRepository.findByNome("Autocad"));
+				
+				if(skillRepository.findByNome("Catia")==null) {
+					Skill catia=new Skill();
+					catia.setNome("Catia");
+					Skill catiaDb=skillRepository.save(catia);
+					listaSkill.add(catiaDb);
+				}else{
+				listaSkill.add(skillRepository.findByNome("Catia"));		
+				}
+				
+				if(skillRepository.findByNome("Rhinoceros")==null) {
+					Skill catia=new Skill();
+					catia.setNome("Rhinoceros");
+					Skill catiaDb=skillRepository.save(catia);
+					listaSkill.add(catiaDb);
+				}else {
+				listaSkill.add(skillRepository.findByNome("Rhinoceros"));		
+				}
+				
+				if(skillRepository.findByNome("SolidWorks")==null) {
+					Skill catia=new Skill();
+					catia.setNome("SolidWorks");
+					Skill catiaDb=skillRepository.save(catia);
+					listaSkill.add(catiaDb);
+				}else {
+				listaSkill.add(skillRepository.findByNome("SolidWorks"));		
+				}
+				
+				listaSkill.add(skillRepository.findByNome("HTML"));
+				listaSkill.add(skillRepository.findByNome("CSS3"));
+				listaSkill.add(skillRepository.findByNome("OpenOffice"));
+				listaSkill.add(skillRepository.findByNome("Python"));
+				listaSkill.add(skillRepository.findByNome("SQL"));
+				
+
+				for (Skill skill : listaSkill) {
+					aggiungiSkill( idU,skill.getId());
+				}
+				
+			
+			response.setData(quest);
+			response.setStatus(Status.OK);
+			response.setDescrizione("fatto");
+			
+		}catch(Exception e) {
+			response.setStatus(Status.KO);
+			response.setDescrizione(e.getMessage());
+			logger.warn(e.getMessage());
+		}
+		
+		return response;	
+		}
 	
 	
 	

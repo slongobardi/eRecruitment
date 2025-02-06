@@ -7,6 +7,8 @@ public class SchedaCandidatoDto {
 	private String nota;
 	private Boolean perso;
 	private Boolean ingaggiato;
+	private Boolean pickingList;
+	private Boolean rifiutato;
 	
 	public long getId() {
 		return id;
@@ -55,5 +57,24 @@ public class SchedaCandidatoDto {
 	public void setUtente(long utente) {
 		this.utente = utente;
 	}
+
+	public Boolean getPickingList() {
+		return pickingList;
+	}
+
+	public void setPickingList(Boolean pickingList) {
+		this.pickingList = pickingList;
+	}
+
+	public Boolean getRifiutato() {
+		return rifiutato;
+	}
+
+	public void setRifiutato(Boolean rifiutato) {
+		this.rifiutato = rifiutato;
+	}
+	
+	
+	
 
 }

@@ -40,6 +40,9 @@ public class UtenteDto {
 	private List<Long> preferenze;
 	private List<SchedaCandidatoDto> schedaCandidato;
 	private Date dataModificaCv;
+	private Boolean trasferimento;
+	private String situazione;
+	
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -290,6 +293,23 @@ public class UtenteDto {
 
 	public void setSchedaCandidato(List<SchedaCandidatoDto> schedaCandidato) {
 		this.schedaCandidato = schedaCandidato;
+	}
+
+	
+	public Boolean getTrasferimento() {
+		return trasferimento;
+	}
+
+	public void setTrasferimento(Boolean trasferimento) {
+		this.trasferimento = trasferimento;
+	}
+
+	public String getSituazione() {
+		return situazione;
+	}
+
+	public void setSituazione(String situazione) {
+		this.situazione = situazione;
 	}
 
 

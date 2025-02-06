@@ -85,6 +85,8 @@ try {
 	SchedaCandidato candidatoIng = scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
 	candidatoIng.setIngaggiato(true);
 	candidatoIng.setPerso(false);
+	candidatoIng.setRifiutato(false);
+	candidatoIng.setPickingList(false);
 	candidatoIng.setNota("");
 	response.setStatus(Status.OK);
     response.setDescrizione("Candidato ingaggiato");
@@ -98,11 +100,17 @@ return response;
 		
 	}
 
-	public Response<String, Status> persoUtente(long id, String nota,long idAzienda) {
+	public Response<String, Status> persoUtente(long id, String nota,long idAzienda,int codice) {
 		Response<String, Status> response = new Response<>();
 		try {
 			SchedaCandidato candidatoPerso =scCandidatoRepository.findByUtenteIdAndAziendaId(id, idAzienda);
 			candidatoPerso.setPerso(true);
+			if(codice==1) {
+				candidatoPerso.setRifiutato(true);
+			}else {
+				candidatoPerso.setRifiutato(false);
+			}
+			candidatoPerso.setPickingList(false);
 			candidatoPerso.setIngaggiato(false);
 			candidatoPerso.setNota(nota);
 			response.setStatus(Status.OK);
@@ -124,6 +132,9 @@ return response;
 			candidatoIng.setIngaggiato(true);
 			candidatoIng.setPerso(false);
 			candidatoIng.setNota(nota);
+			candidatoIng.setRifiutato(false);
+			candidatoIng.setPickingList(false);
+
 			response.setStatus(Status.OK);
 		    response.setDescrizione("Candidato ingaggiato");
 		     scCandidatoRepository.save(candidatoIng);
@@ -159,6 +170,7 @@ return response;
 			}
 				
 			candidatoIng.setIngaggiato(false);
+			candidatoIng.setRifiutato(false);
 			candidatoIng.setPerso(false);
 			response.setStatus(Status.OK);
 			if(candidatoIng.getPickingList()) {

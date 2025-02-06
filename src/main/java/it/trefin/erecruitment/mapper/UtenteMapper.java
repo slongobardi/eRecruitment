@@ -72,7 +72,13 @@ public class UtenteMapper {
 				: new ArrayList<Long>());
 
 		uDto.setRuolo(u.getRuolo());
-
+		if(u.getTrasferimento()!=null) {
+		uDto.setTrasferimento(u.getTrasferimento());
+		}else {
+			uDto.setTrasferimento(null);;
+		}
+		
+		
 		return uDto;
 	}
 
@@ -97,7 +103,7 @@ public class UtenteMapper {
 		u.setEsperienze(listaEsperienze);
 		u.setAzienda(a);
 		u.setPercentualeInvalidita(uDto.getPercentualeInvalidita());
-
+		u.setTrasferimento(uDto.getTrasferimento());
 		return u;
 	}
 }

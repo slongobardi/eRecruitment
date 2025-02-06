@@ -45,8 +45,8 @@ public class SchedaCandidatoController {
 	}
 	
 	@PatchMapping("/perso")
-	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota, @RequestParam long idAzienda){
-		return schedaCandidatoService.persoUtente(id, nota,idAzienda);
+	public Response<String, Status> persoUtente(@RequestParam long id, @RequestParam String nota, @RequestParam long idAzienda,@RequestParam int codice){
+		return schedaCandidatoService.persoUtente(id, nota,idAzienda,codice);
 	}
 	
 	@PatchMapping("/pickingList")

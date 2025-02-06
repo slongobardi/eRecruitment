@@ -91,7 +91,7 @@ public class EmailService {
                     + "Per favore, fai click sul link qua sotto per attivare l'account e ricordati di cambiare la password al primo accesso " + "<br/> "
                     + generateConfirmationLink(token.getToken()) + "<br/>"
                     + "La tua prima password per accedere è la seguente: " + randomPassword + "<br/>"
-                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "Gruppo Trefin S.P.A."
+                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "Trefin Group Company"
                     + "</body>" + "</html>", true);
 
             javaMailSender.send(message);
@@ -134,7 +134,7 @@ public class EmailService {
                     + "Per favore, fai click sul link qua sotto per attivare l'account e ricordati di cambiare la password al primo accesso " + "<br/> "
                     + generateConfirmationLinkEvent(token.getToken(),idEvento) + "<br/>"
                     + "La tua prima password per accedere è la seguente: " + randomPassword + "<br/>"
-                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "Gruppo Trefin S.P.A."
+                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "Trefin Group Company "
                     + "</body>" + "</html>", true);
 
             javaMailSender.send(message);

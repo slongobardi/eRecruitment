@@ -46,6 +46,7 @@ public class Utente {
     private boolean verified;
     private boolean completed;
     private Date dataModificaCv;
+    private Boolean trasferimento=false;
     
     
     @Enumerated(EnumType.ORDINAL)
@@ -75,6 +76,8 @@ public class Utente {
     @JoinColumn(name = "azienda_id")
     private Azienda azienda;
     
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
+    private List<Questionario> questionari;
 
     
     @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
@@ -364,5 +367,23 @@ public class Utente {
 		this.schedaCandidato = schedaCandidato;
 	}
 
+	public Boolean getTrasferimento() {
+		return trasferimento;
+	}
 
+	public void setTrasferimento(Boolean trasferimento) {
+		this.trasferimento = trasferimento;
+	}
+
+	
+
+	public List<Questionario> getQuestionari() {
+		return questionari;
+	}
+
+	public void setQuestionari(List<Questionario> questionari) {
+		this.questionari = questionari;
+	}
+
+	
 }

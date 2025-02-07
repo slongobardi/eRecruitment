@@ -8,4 +8,6 @@ import it.trefin.erecruitment.model.Questionario;
 @Repository
 public interface QuestionarioRepository extends JpaRepository<Questionario, Long>{
 
+	Questionario findByUtenteIdAndCandidaturaId(Long idU, Long idE);
+
 }

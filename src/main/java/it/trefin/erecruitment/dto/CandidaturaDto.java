@@ -28,7 +28,6 @@ public class CandidaturaDto {
     private byte[] logoEvento;
     
     
-    
 
     
 	public Boolean getDisabilitato() {
@@ -167,6 +166,9 @@ public class CandidaturaDto {
 		this.logoEvento = logoEvento;
 	}
 
+
+
+		
 	
     
 }

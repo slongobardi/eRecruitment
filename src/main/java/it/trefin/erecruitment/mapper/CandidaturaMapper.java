@@ -65,7 +65,6 @@ public class CandidaturaMapper {
             c.getListaTitoliStudio().stream().map(TitoliStudio::getId).collect(Collectors.toSet()) : 
             new HashSet<>()
         );
-
         return cDto;
     }
 

@@ -28,7 +28,7 @@ public class Candidatura {
 	private String nome;
 	private Date pubblicazione;
 	private int numeroCandidati;
-
+	
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
 
@@ -64,7 +64,7 @@ public class Candidatura {
 
 	@OneToMany(mappedBy = "candidatura", cascade = CascadeType.ALL)
 	private List<Questionario> questionari;
-
+	
 	@Lob
 	private byte[] logoEvento;
 

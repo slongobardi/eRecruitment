@@ -624,6 +624,24 @@ public class UtenteService {
 		
 		return response;	
 		}
+
+	public Response<Questionario, Status> getQuestionario(Long idU,Long idE) {
+		Response<Questionario, Status> response = new Response<>();
+		
+		try {
+			Questionario questionario=questionarioRepository.findByUtenteIdAndCandidaturaId(idU,idE);
+			response.setData(questionario);
+			response.setStatus(Status.OK);
+			response.setDescrizione("fatto");
+			
+		}catch(Exception e) {
+			response.setStatus(Status.KO);
+			response.setDescrizione(e.getMessage());
+			logger.warn(e.getMessage());
+		}
+		
+		return response;
+	}
 	
 	
 	

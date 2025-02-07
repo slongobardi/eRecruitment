@@ -151,4 +151,10 @@ public class UtenteController {
    public Response<Questionario, Status> addQuestionario(@PathVariable Long idU,@PathVariable Long idC,@RequestBody Questionario Questionario) {
         return uService.addQuestionario(idU,idC,Questionario);
     }
+    
+
+    @GetMapping("/getQuestionario/{idU}/{idE}")
+   public Response<Questionario, Status> addQuestionario(@PathVariable Long idU,@PathVariable Long idE) {
+        return uService.getQuestionario(idU,idE);
+    }
 }

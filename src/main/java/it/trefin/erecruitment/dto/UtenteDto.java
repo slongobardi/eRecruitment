@@ -42,7 +42,8 @@ public class UtenteDto {
 	private Date dataModificaCv;
 	private Boolean trasferimento;
 	private String situazione;
-	
+    private long idQuestionario;
+
 	public String getCodiceFiscale() {
 		return codiceFiscale;
 	}
@@ -312,7 +313,15 @@ public class UtenteDto {
 		this.situazione = situazione;
 	}
 
+	public long getIdQuestionario() {
+		return idQuestionario;
+	}
 
+	public void setIdQuestionario(long idQuestionario) {
+		this.idQuestionario = idQuestionario;
+	}
+
+	
 
 	
 

@@ -78,7 +78,6 @@ public class UtenteMapper {
 			uDto.setTrasferimento(null);;
 		}
 		
-		
 		return uDto;
 	}
 
@@ -104,6 +103,7 @@ public class UtenteMapper {
 		u.setAzienda(a);
 		u.setPercentualeInvalidita(uDto.getPercentualeInvalidita());
 		u.setTrasferimento(uDto.getTrasferimento());
+		
 		return u;
 	}
 }

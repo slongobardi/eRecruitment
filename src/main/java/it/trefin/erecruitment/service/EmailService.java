@@ -162,10 +162,10 @@ public class EmailService {
     }
 
     private String generateConfirmationLink(String token) {
-        return "<a href=http://192.168.200.248:8080/e-recruitment/#/login?token=" + token + " >Conferma account</a>";
+        return "<a href=http://erecruitment.trefin.it/#/login?token=" + token + " >Conferma account</a>";
     }
     private String generateConfirmationLinkEvent(String token,Long idEvento) {
-        return "<a href=http://192.168.200.248:8080/e-recruitment/#/loginEvento/"+idEvento+"?token=" + token + " >Conferma account</a>";
+        return "<a href=http://erecruitment.trefin.it/#/loginEvento/"+idEvento+"?token=" + token + " >Conferma account</a>";
     }
 
     public boolean verifyUser(String token) {

@@ -151,6 +151,47 @@ public class EmailService {
             return response;
         }
     }
+    
+    public Response<MimeMessageHelper, Status> confirmEmailEventUniversita(ConfirmToken token, String destinatario,Long idEvento) {
+        Response<MimeMessageHelper, Status> response = new Response<>();
+
+        try {
+            // Generare una password casuale
+            String randomPassword = generateRandomPassword()+"E-re24";
+            Utente user = token.getUser();
+            String encryptedPassword = passwordEncoder.encode(randomPassword); // Cifrare la password
+            user.setPassword(encryptedPassword);
+            utenteRepo.save(user);
+
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(destinatario);
+            helper.setFrom(from);
+            helper.setSubject("Conferma account");
+            helper.setText("<html>" 
+                    + "<body>" 
+                    + "<h2>Gentile " + token.getUser().getNome() + ",</h2>"
+                    + "con questo messaggio, ti confermiamo la creazione del tuo account sul nostro portale." + "<br/> "
+                    + "Per favore, fai click sul link qua sotto per attivare l'account e ricordati di cambiare la password al primo accesso " + "<br/> "
+                    + generateConfirmationLinkEventUniversita(token.getToken(), idEvento) + "<br/>"
+                    + "La tua prima password per accedere è la seguente: " + randomPassword + "<br/>"
+                    + "Cordiali saluti,<br/>" + "Talent Acquisition, <br/>" + "Trefin Group Company "
+                    + "</body>" + "</html>", true);
+
+            javaMailSender.send(message);
+
+            response.setData(helper);
+            response.setStatus(Status.OK);
+            response.setDescrizione("Email di conferma inviata con successo ");
+
+            return response;
+        } catch (Exception e) {
+            logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());
+            return response;
+        }
+    }
 
     private String generateRandomPassword() {
         StringBuilder password = new StringBuilder(PASSWORD_LENGTH);
@@ -167,6 +208,10 @@ public class EmailService {
     private String generateConfirmationLinkEvent(String token,Long idEvento) {
         return "<a href=http://erecruitment.trefin.it/#/loginEvento/"+idEvento+"?token=" + token + " >Conferma account</a>";
     }
+    private String generateConfirmationLinkEventUniversita(String token,Long idEvento) {
+        return "<a href=http://erecruitment.trefin.it/#/loginUniversita/universita/"+idEvento+"?token=" + token + " >Conferma account</a>";
+    }
+    
 
     public boolean verifyUser(String token) {
         ConfirmToken emailConfirmationToken = tokenRepo.findByToken(token);

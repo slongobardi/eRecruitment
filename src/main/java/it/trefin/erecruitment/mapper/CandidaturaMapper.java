@@ -31,6 +31,7 @@ public class CandidaturaMapper {
         cDto.setSede(c.getSede());
         cDto.setDisabilitato(c.getDisabilitato());
         cDto.setIsEvento(c.getIsEvento());
+        cDto.setTipoIstruzione(c.getTipoIstruzione());
         if(c.getLogoEvento()!=null) {
         if(c.getIsEvento() && c.getLogoEvento()!=null) {
         cDto.setLogoEvento(c.getLogoEvento());}
@@ -85,6 +86,7 @@ public class CandidaturaMapper {
         c.setDisabilitato(cDto.getDisabilitato());
         c.setIsEvento(cDto.getIsEvento());
         c.setLogoEvento(cDto.getLogoEvento());
+        c.setTipoIstruzione(cDto.getTipoIstruzione());
         return c;
     }
 }

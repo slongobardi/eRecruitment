@@ -26,6 +26,7 @@ public class CandidaturaDto {
     private Boolean disabilitato;
     private Boolean isEvento;
     private byte[] logoEvento;
+    private String tipoIstruzione; 
     
     
 
@@ -164,6 +165,14 @@ public class CandidaturaDto {
 
 	public void setLogoEvento(byte[] logoEvento) {
 		this.logoEvento = logoEvento;
+	}
+
+	public String getTipoIstruzione() {
+		return tipoIstruzione;
+	}
+
+	public void setTipoIstruzione(String tipoIstruzione) {
+		this.tipoIstruzione = tipoIstruzione;
 	}
 
 

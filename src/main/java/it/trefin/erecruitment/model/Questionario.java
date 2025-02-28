@@ -32,6 +32,8 @@ public class Questionario {
 	private int solidworks;
 	private int sqll;
 	private Boolean trasferimento;
+	private String corsoLaurea;
+	private int annoLaurea;
 
 	@JsonIgnore
 	@ManyToOne
@@ -200,6 +202,22 @@ public class Questionario {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getCorsoLaurea() {
+		return corsoLaurea;
+	}
+
+	public void setCorsoLaurea(String corsoLaurea) {
+		this.corsoLaurea = corsoLaurea;
+	}
+
+	public int getAnnoLaurea() {
+		return annoLaurea;
+	}
+
+	public void setAnnoLaurea(int annoLaurea) {
+		this.annoLaurea = annoLaurea;
 	}
 
 }

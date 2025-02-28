@@ -67,6 +67,9 @@ public class Candidatura {
 	
 	@Lob
 	private byte[] logoEvento;
+	
+	@Column(name = "tipo_istruzione")
+	private String tipoIstruzione;
 
 	// Getters and setters
 
@@ -208,5 +211,13 @@ public class Candidatura {
 	public void setQuestionari(List<Questionario> questionari) {
 		this.questionari = questionari;
 	}
+	
+	public String getTipoIstruzione() {
+        return tipoIstruzione;
+    }
+
+    public void setTipoIstruzione(String tipoIstruzione) {
+        this.tipoIstruzione = tipoIstruzione;
+    }
 
 }

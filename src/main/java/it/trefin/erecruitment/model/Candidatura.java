@@ -28,6 +28,10 @@ public class Candidatura {
 	private String nome;
 	private Date pubblicazione;
 	private int numeroCandidati;
+	private Date dataInizio;
+	private Date dataFine;
+	private Boolean isAcademy;
+	
 	
 	@Column(columnDefinition = "TEXT")
 	private String descrizione;
@@ -219,5 +223,30 @@ public class Candidatura {
     public void setTipoIstruzione(String tipoIstruzione) {
         this.tipoIstruzione = tipoIstruzione;
     }
+
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public Date getDataFine() {
+		return dataFine;
+	}
+
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
+
+	public Boolean getIsAcademy() {
+		return isAcademy;
+	}
+
+	public void setIsAcademy(Boolean isAcademy) {
+		this.isAcademy = isAcademy;
+	}
+
 
 }

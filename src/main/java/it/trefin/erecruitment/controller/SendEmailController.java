@@ -31,6 +31,17 @@ public class SendEmailController {
 
 	}
 	
+	@PostMapping("/inviaEmailAdmin")
+	public Response<String, Status> inviaEmailAdmin(
+	        @RequestParam String[] destinatario,
+	        @RequestParam String oggetto,
+	        @RequestBody String testo,
+	        @RequestParam(required = false) String[] bcc) {
+
+	    return emailService.inviaEmailAdmin(destinatario, oggetto, testo, bcc);
+	}
+
+	
 	@GetMapping("/confirmEmail")
 	public boolean confirmEmail(@RequestParam("token") String token) {
 		return emailService.verifyUser(token);

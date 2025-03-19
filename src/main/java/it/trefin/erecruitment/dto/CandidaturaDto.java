@@ -25,8 +25,11 @@ public class CandidaturaDto {
     private String sede;
     private Boolean disabilitato;
     private Boolean isEvento;
+    private Boolean isAcademy;
     private byte[] logoEvento;
     private String tipoIstruzione; 
+    private Date dataInizio;
+    private Date dataFine;
     
     
 
@@ -173,6 +176,30 @@ public class CandidaturaDto {
 
 	public void setTipoIstruzione(String tipoIstruzione) {
 		this.tipoIstruzione = tipoIstruzione;
+	}
+
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public Date getDataFine() {
+		return dataFine;
+	}
+
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
+
+	public Boolean getIsAcademy() {
+		return isAcademy;
+	}
+
+	public void setIsAcademy(Boolean isAcademy) {
+		this.isAcademy = isAcademy;
 	}
 
 

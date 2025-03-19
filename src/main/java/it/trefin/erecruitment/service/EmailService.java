@@ -68,6 +68,37 @@ public class EmailService {
         }
     }
     
+    public Response<String, Status> inviaEmailAdmin(String[] destinatario, String oggetto, String testo, String[] bcc) {
+        Response<String, Status> response = new Response<>();
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            
+            helper.setTo(destinatario);
+            helper.setFrom(from);
+            helper.setSubject(oggetto);
+            helper.setText(testo, true);
+            
+            if (bcc != null && bcc.length > 0) {
+                helper.setBcc(bcc);
+            }
+
+
+            javaMailSender.send(message);
+            response.setData("Email inviata con successo");
+            response.setStatus(Status.OK);
+            response.setDescrizione("Email inviata con successo");
+            return response;
+        } catch (Exception e) {
+            logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());
+            return response;
+        }
+    }
+
+
+
 
     public Response<MimeMessageHelper, Status> confirmEmail(ConfirmToken token, String destinatario) {
         Response<MimeMessageHelper, Status> response = new Response<>();

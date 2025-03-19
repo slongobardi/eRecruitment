@@ -44,6 +44,10 @@ public class UtenteMapper {
 		uDto.setCv(u.getCv());
 		uDto.setDataModificaCv(u.getDataModificaCv());
 		uDto.setDataNascita(u.getDataNascita());
+		uDto.setNota(u.getNota());
+		uDto.setDataInizio(u.getDataInizio());
+		uDto.setDataFine(u.getDataFine());
+		uDto.setStato(u.getStato());
 		uDto.setSchedaCandidato(u.getSchedaCandidato() != null
 				? u.getSchedaCandidato().stream().map(SchedaCandidatoMapper::toDto).collect(Collectors.toList())
 				: new ArrayList<>());
@@ -103,6 +107,7 @@ public class UtenteMapper {
 		u.setAzienda(a);
 		u.setPercentualeInvalidita(uDto.getPercentualeInvalidita());
 		u.setTrasferimento(uDto.getTrasferimento());
+		
 		
 		return u;
 	}

@@ -23,6 +23,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 
+import it.trefin.erecruitment.dto.CorsoDto;
+
 @Entity
 public class Utente {
 
@@ -45,18 +47,59 @@ public class Utente {
     private String comuneNascita;
     private boolean verified;
     private boolean completed;
-    private Date dataModificaCv;
+    private Date dataInizio;
+    private Date dataFine;
+	private Date dataModificaCv;
     private Boolean trasferimento=false;
     
+    @Column(name = "stato")
+    private String stato;
+
     
-    @Enumerated(EnumType.ORDINAL)
+    public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	@Column(columnDefinition = "TEXT")
+    private String nota;
+    
+    
+    public Date getDataInizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public Date getDataFine() {
+		return dataFine;
+	}
+
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
+
+	@Enumerated(EnumType.ORDINAL)
     private Ruolo ruolo;
     
     @Column(unique = true)
     @Email(message = "Inserisci una email valida.")
     private String email;
     
-    @Column(columnDefinition = "TEXT")
+    public String getNota() {
+		return nota;
+	}
+
+	public void setNota(String nota) {
+		this.nota = nota;
+	}
+
+	@Column(columnDefinition = "TEXT")
     private String descrizione;
     
     @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
@@ -88,6 +131,7 @@ public class Utente {
     
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<SchedaCandidato> schedaCandidato;
+	
     
     @Lob
     private byte[] foto;
@@ -384,6 +428,7 @@ public class Utente {
 	public void setQuestionari(List<Questionario> questionari) {
 		this.questionari = questionari;
 	}
+
 
 	
 }

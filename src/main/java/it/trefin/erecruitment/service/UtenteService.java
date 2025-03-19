@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,7 @@ import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.QuestionarioRepository;
 import it.trefin.erecruitment.repository.SkillRepository;
 import it.trefin.erecruitment.repository.TitoliStudioRepository;
+import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 import it.trefin.erecruitment.repository.UtenteTitoliStudioRepository;
 
@@ -77,6 +79,9 @@ public class UtenteService {
 	private EmailService eService;
 	@Autowired
 	private ConfirmTokenRepository confirmTokenRepository;
+	
+	@Autowired
+	private UtenteCandidaturaRepository utenteCandidaturaRepository;
 
 	public Response<UtenteDto, Status> visualizzaUtente(long id) {
 		Response<UtenteDto, Status> response = new Response<>();
@@ -104,6 +109,8 @@ public class UtenteService {
 	    try {
 	        Utente u = uRepository.findById(id).orElse(null);
 	        if (u != null) {
+	        	u.setNome(utente.getNome());
+	        	u.setCognome(utente.getCognome());
 	        	u.setCellulare(utente.getCellulare());
 	        	u.setCitta(utente.getCitta());
 	        	u.setEmail(utente.getEmail());
@@ -643,7 +650,103 @@ public class UtenteService {
 		return response;
 	}
 	
+	public Response<String, Status> aggiungiNota(Long id, String nota) {
+	    Response<String, Status> response = new Response<>();
+	    
+	    try {
+	        Utente u = uRepository.findById(id).orElse(null);
+
+	        if (u != null) {
+	            u.setNota(nota);
+
+	            uRepository.save(u);
+	            
+	            response.setData("Nota aggiornata con successo.");
+	            response.setStatus(Status.OK);
+	        } else {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            response.setDescrizione("Utente non trovato.");
+	        }
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("Errore nell'aggiunta della nota: " + e.getMessage());
+	        logger.warn(e.getMessage()); 
+	    }
+
+	    return response;
+	}
 	
+	public Response<String, Status> aggiungiData(Long id, Date dataInizio, Date dataFine) {
+	    Response<String, Status> response = new Response<>();
+
+	    try {
+	        Utente u = uRepository.findById(id).orElse(null);
+
+	        if (u != null) {
+	            u.setDataInizio(dataInizio);
+	            u.setDataFine(dataFine);
+
+	            uRepository.save(u);
+	            
+	            response.setData("Date aggiornate con successo.");
+	            response.setStatus(Status.OK);
+	        } else {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            response.setDescrizione("Utente non trovato.");
+	        }
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("Errore nell'aggiornamento delle date: " + e.getMessage());
+	        logger.warn(e.getMessage()); 
+	    }
+
+	    return response;
+	}
 	
+	public Response<String, Status> getNota(Long id) {
+	    Response<String, Status> response = new Response<>();
+
+	    try {
+	        Utente u = uRepository.findById(id).orElse(null);
+
+	        if (u != null) {
+	            response.setData(u.getNota());
+	            response.setStatus(Status.OK);
+	        } else {
+	            response.setStatus(Status.SYSTEM_ERROR);
+	            response.setDescrizione("Utente non trovato.");
+	        }
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("Errore nel recupero della nota: " + e.getMessage());
+	        logger.warn(e.getMessage());
+	    }
+
+	    return response;
+	}
+ 
+	
+	public Response<Map<String, Date>, Status> getData(Long id) {
+	    Response<Map<String, Date>, Status> response = new Response<>();
+
+	    Utente u = uRepository.findById(id).orElse(null);
+	    if (u == null) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("Utente non trovato.");
+	        return response;
+	    }
+
+	    Map<String, Date> dateMap = Map.of(
+	        "dataInizio", u.getDataInizio(),
+	        "dataFine", u.getDataFine()
+	    );
+
+	    response.setData(dateMap);
+	    response.setStatus(Status.OK);
+	    return response;
+	}
+
+
+
 
 }

@@ -199,6 +199,28 @@ public class AuthController {
 	    return response;
 	}
 	
+	@PostMapping("/resetPasswordAdmin/{email}")
+	public Response<String, Status> resetPasswordAdmin(@PathVariable("email") String email) {
+	    Utente u = utenteRepository.findByEmail(email);
+	    Response<String, Status> response = new Response<>();
+
+	    if (u == null) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setData("Utente non trovato");
+	    } else {
+	        String randomPwd = generateSecurePassword();
+	        u.setPassword(passwordEncoder.encode(randomPwd));
+	        utenteRepository.save(u);
+
+	        response.setStatus(Status.OK);
+	        response.setData("Password resettata con successo");
+
+	        sendPasswordResetEmailAdmin(u, randomPwd);
+	    }
+	    return response;
+	}
+
+	
 	
 	public void sendRegistrationConfirmationEmail(Utente user) {
 		// Generate the token
@@ -263,6 +285,23 @@ public class AuthController {
 				+ "Cordiali saluti,<br/>" + "Talent Acquisition <br/>" + "Gruppo Trefin S.P.A." + "</body>" + "</html>";
 		emailService.inviaEmail(new String[] { user.getEmail() }, "Reset della password", emailContent);
 	}
+	
+	public void sendPasswordResetEmailAdmin(Utente user, String newPassword) {
+	    String emailContent = "<html><body>" +
+	            "<h2>Gentile " + user.getNome() + ",</h2>" +
+	            "La tua password è stata resettata. La nuova password è: <strong>" + newPassword + "</strong><br/>" +
+	            "Per favore, accedi al tuo account e cambia la password appena possibile.<br/>" +
+	            "Cordiali saluti,<br/>" +
+	            "Talent Acquisition <br/>" +
+	            "Gruppo Trefin S.P.A." +
+	            "</body></html>";
+
+	    String[] bcc = new String[]{"Simona.Longobardi@3fedin.it"};
+
+	    emailService.inviaEmailAdmin(new String[]{user.getEmail()}, "Reset della password", emailContent, bcc);
+	}
+
+
 	
 	private String generateSecurePassword() {
 		

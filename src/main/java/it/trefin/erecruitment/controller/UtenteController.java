@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -157,4 +158,25 @@ public class UtenteController {
    public Response<Questionario, Status> addQuestionario(@PathVariable Long idU,@PathVariable Long idE) {
         return uService.getQuestionario(idU,idE);
     }
+    
+    @PutMapping("/aggiungiNota/{id}")
+    public Response<String, Status> aggiungiNota(@PathVariable Long id, @RequestBody String nota) {
+        return uService.aggiungiNota(id, nota);
+    }
+
+    @PutMapping("/aggiungiData/{id}")
+    public Response<String, Status> aggiungiData(@PathVariable Long id, @RequestParam Date dataInizio, @RequestParam Date dataFine) {
+        return uService.aggiungiData(id, dataInizio, dataFine);
+    }
+    
+    @GetMapping("/getNota/{id}")
+    public Response<String, Status> getNota(@PathVariable Long id) {
+        return uService.getNota(id);
+    }
+
+    @GetMapping("/getData/{id}")
+    public Response<Map<String, Date>, Status> getData(@PathVariable Long id) {
+        return uService.getData(id);
+    }
+
 }

@@ -43,6 +43,32 @@ public class UtenteDto {
 	private Boolean trasferimento;
 	private String situazione;
     private long idQuestionario;
+    private String nota;
+    private Date dataInizio; 
+    private Date dataFine;
+    private String stato;
+
+
+
+
+	public UtenteDto() {
+	}
+
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public Date getDataFine() {
+		return dataFine;
+	}
+
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
 
 	public String getCodiceFiscale() {
 		return codiceFiscale;
@@ -319,6 +345,70 @@ public class UtenteDto {
 
 	public void setIdQuestionario(long idQuestionario) {
 		this.idQuestionario = idQuestionario;
+	}
+
+	public String getNota() {
+		return nota;
+	}
+
+	public void setNota(String nota) {
+		this.nota = nota;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public UtenteDto(long id, long idAzienda, String nome, String cognome, String email, String password,
+			String cellulare, String descrizione, String indirizzo, String citta, String codiceFiscale, String telefono,
+			String genere, String origine, String comuneNascita, boolean verified, boolean completed,
+			boolean categoriaProtetta, Integer percentualeInvalidita, List<Long> utenteTitoliStudio,
+			List<Long> utentiCandidati, List<Long> listaEsperienze, Set<Long> listaSkill,
+			List<ColloquioDto> listaColloquii, Ruolo ruolo, byte[] foto, byte[] cv, Date dataNascita,
+			List<Long> preferenze, List<SchedaCandidatoDto> schedaCandidato, Date dataModificaCv, Boolean trasferimento,
+			String situazione, long idQuestionario, String nota, Date dataInizio, Date dataFine) {
+		super();
+		this.id = id;
+		this.idAzienda = idAzienda;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.email = email;
+		this.password = password;
+		this.cellulare = cellulare;
+		this.descrizione = descrizione;
+		this.indirizzo = indirizzo;
+		this.citta = citta;
+		this.codiceFiscale = codiceFiscale;
+		this.telefono = telefono;
+		this.genere = genere;
+		this.origine = origine;
+		this.comuneNascita = comuneNascita;
+		this.verified = verified;
+		this.completed = completed;
+		this.categoriaProtetta = categoriaProtetta;
+		this.percentualeInvalidita = percentualeInvalidita;
+		this.utenteTitoliStudio = utenteTitoliStudio;
+		this.utentiCandidati = utentiCandidati;
+		this.listaEsperienze = listaEsperienze;
+		this.listaSkill = listaSkill;
+		this.listaColloquii = listaColloquii;
+		this.ruolo = ruolo;
+		this.foto = foto;
+		this.cv = cv;
+		this.dataNascita = dataNascita;
+		this.preferenze = preferenze;
+		this.schedaCandidato = schedaCandidato;
+		this.dataModificaCv = dataModificaCv;
+		this.trasferimento = trasferimento;
+		this.situazione = situazione;
+		this.idQuestionario = idQuestionario;
+		this.nota = nota;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
 	}
 
 	

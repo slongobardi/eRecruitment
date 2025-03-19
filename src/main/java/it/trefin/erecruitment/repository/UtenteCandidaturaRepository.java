@@ -38,4 +38,6 @@ public interface UtenteCandidaturaRepository extends JpaRepository<UtenteCandida
 			+" 	schedacandidato.azienda_id=:idAzienda "
 			+ "GROUP BY utente_candidatura.id_utente;",nativeQuery=true)
 	List<UtenteCandidatura> findPickingList(@Param("idAzienda") long idA);
+	@Query("DELETE FROM UtenteCandidatura uc WHERE uc.utente.id = :idUtente AND uc.candidatura.id = :idCandidatura")
+	void deleteByUtenteIdAndCandidaturaId(@Param("idUtente") long idUtente, @Param("idCandidatura") long idCandidatura);
 }

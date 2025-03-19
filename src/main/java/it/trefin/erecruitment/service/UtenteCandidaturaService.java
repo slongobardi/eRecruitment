@@ -139,13 +139,13 @@ public class UtenteCandidaturaService {
 
 	}
 
-	public Response<List<UtenteCandidaturaDto>, Status> eliminaUtenteCandidatura(long id, long idCandidatura) {
+	public Response<List<UtenteCandidaturaDto>, Status> eliminaUtenteCandidatura(long idUtente, long idCandidatura) {
 
 		Response<List<UtenteCandidaturaDto>, Status> response = new Response<>();
 		try {
 			Candidatura c = cRepository.findById(idCandidatura).get();
 			c.setNumeroCandidati(c.getNumeroCandidati() - 1);
-			ucRepository.deleteById(id);
+			ucRepository.deleteById(idUtente);
 			response.setData(
 					ucRepository.findAll().stream().map(UtenteCandidaturaMapper::toDto).collect(Collectors.toList()));
 			response.setStatus(Status.OK);

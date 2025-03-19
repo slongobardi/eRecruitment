@@ -31,7 +31,10 @@ public class CandidaturaMapper {
         cDto.setSede(c.getSede());
         cDto.setDisabilitato(c.getDisabilitato());
         cDto.setIsEvento(c.getIsEvento());
+        cDto.setIsAcademy(c.getIsAcademy());
         cDto.setTipoIstruzione(c.getTipoIstruzione());
+        cDto.setDataInizio(c.getDataInizio());
+        cDto.setDataFine(c.getDataFine());
         if(c.getLogoEvento()!=null) {
         if(c.getIsEvento() && c.getLogoEvento()!=null) {
         cDto.setLogoEvento(c.getLogoEvento());}
@@ -87,6 +90,9 @@ public class CandidaturaMapper {
         c.setIsEvento(cDto.getIsEvento());
         c.setLogoEvento(cDto.getLogoEvento());
         c.setTipoIstruzione(cDto.getTipoIstruzione());
+        c.setDataInizio(cDto.getDataInizio());
+        c.setDataFine(cDto.getDataFine());
+        c.setIsAcademy(cDto.getIsAcademy());
         return c;
     }
 }

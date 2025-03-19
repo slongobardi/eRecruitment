@@ -12,7 +12,7 @@ public class Response<D,S> {
 		SYSTEM_ERROR,
 		MISSED_REQUIRED_PARAM,
 		AUTH_REQUIRED,
-		EXPIRED
+		EXPIRED, FAIL
 	}
 	
 	public Response() {

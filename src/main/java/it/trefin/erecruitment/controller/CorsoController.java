@@ -33,6 +33,13 @@ public class CorsoController {
     public Response<List<CorsoDto>, Status> visualizzaTuttiCorsi() {
         return corsoService.visualizzaTuttiCorsi();
     }
+    
+    @GetMapping("/corsiAzienda/{aziendaId}")
+    public ResponseEntity<Response<List<CorsoDto>, Status>> getCorsiByAzienda(@PathVariable long aziendaId) {
+        Response<List<CorsoDto>, Status> response = corsoService.visualizzaCorsiByAziendaId(aziendaId);
+        return ResponseEntity.ok(response);
+    }
+
 
     @PutMapping("/aggiorna/{id}")
     public Response<CorsoDto, Status> aggiornaCorso(@PathVariable Long id, @RequestBody CorsoDto corsoDto) {

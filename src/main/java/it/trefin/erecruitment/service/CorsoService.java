@@ -92,6 +92,30 @@ public class CorsoService {
         
         return response;
     }
+    
+    public Response<List<CorsoDto>, Status> visualizzaCorsiByAziendaId(long aziendaId) {
+        Response<List<CorsoDto>, Status> response = new Response<>();
+
+        try {
+            List<Corso> corsi = corsoRepository.findByCandidatura_AziendaId(aziendaId);
+            
+            if (corsi.isEmpty()) {
+                response.setStatus(Status.FAIL);
+                response.setDescrizione("Nessun corso trovato per l'azienda specificata.");
+            } else {
+                response.setData(corsi.stream().map(corso -> CorsoMapper.toDTO(corso, true)).collect(Collectors.toList()));
+                response.setStatus(Status.OK);
+                response.setDescrizione("Corsi trovati con successo per l'azienda.");
+            }
+        } catch (Exception e) {
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("Errore durante il recupero dei corsi: " + e.getMessage());
+            logger.warn(e.getMessage());
+        }
+
+        return response;
+    }
+
 
     public Response<CorsoDto, Status> aggiornaCorso(CorsoDto corsoDto) {
         Response<CorsoDto, Status> response = new Response<>();

@@ -63,10 +63,11 @@ public interface ColloquioRepository extends JpaRepository<Colloquio, Long> {
             "JOIN candidatura ON colloquio.id_candidatura = candidatura.id " +
             "JOIN schedacandidato ON schedacandidato.utente_id = utente.id " +
             "WHERE candidatura.id_azienda = :id " +
-            "AND candidatura.is_evento != TRUE OR candidatura.is_evento is NULL"+
+            "AND (candidatura.is_evento != TRUE OR candidatura.is_evento IS NULL) " +
             "AND colloquio.data_colloquio BETWEEN :start AND :end", 
-    nativeQuery = true)
-Set<Object> reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
+            nativeQuery = true)
+    Set<Object> reportCandidati(@Param("id") long id, @Param("start") Date startDate, @Param("end") Date endDate);
+
 	
     @Query(value = "SELECT DISTINCT " +
             "    utente.id, " +

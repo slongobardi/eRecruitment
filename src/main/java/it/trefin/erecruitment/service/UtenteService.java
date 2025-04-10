@@ -109,8 +109,6 @@ public class UtenteService {
 	    try {
 	        Utente u = uRepository.findById(id).orElse(null);
 	        if (u != null) {
-	        	u.setNome(utente.getNome());
-	        	u.setCognome(utente.getCognome());
 	        	u.setCellulare(utente.getCellulare());
 	        	u.setCitta(utente.getCitta());
 	        	u.setEmail(utente.getEmail());

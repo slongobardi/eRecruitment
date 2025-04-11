@@ -165,7 +165,10 @@ public class UtenteController {
     }
 
     @PutMapping("/aggiungiData/{id}")
-    public Response<String, Status> aggiungiData(@PathVariable Long id, @RequestParam Date dataInizio, @RequestParam Date dataFine) {
+    public Response<String, Status> aggiungiData(
+            @PathVariable Long id,
+            @RequestParam Date dataInizio,
+            @RequestParam(required = false) Date dataFine) { 
         return uService.aggiungiData(id, dataInizio, dataFine);
     }
     

@@ -682,10 +682,13 @@ public class UtenteService {
 
 	        if (u != null) {
 	            u.setDataInizio(dataInizio);
-	            u.setDataFine(dataFine);
+
+	            if (dataFine != null) {
+	                u.setDataFine(dataFine);
+	            }
 
 	            uRepository.save(u);
-	            
+
 	            response.setData("Date aggiornate con successo.");
 	            response.setStatus(Status.OK);
 	        } else {
@@ -695,7 +698,7 @@ public class UtenteService {
 	    } catch (Exception e) {
 	        response.setStatus(Status.SYSTEM_ERROR);
 	        response.setDescrizione("Errore nell'aggiornamento delle date: " + e.getMessage());
-	        logger.warn(e.getMessage()); 
+	        logger.warn(e.getMessage());
 	    }
 
 	    return response;

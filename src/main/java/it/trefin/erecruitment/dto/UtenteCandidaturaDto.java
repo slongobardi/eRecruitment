@@ -23,6 +23,8 @@ private long id;
 	private Boolean disabilitato;
 	
 	
+	private String iscritto;
+	
 
 	
 
@@ -80,6 +82,14 @@ private long id;
 
 	public void setCandidatura(CandidaturaDto candidatura) {
 		this.candidatura = candidatura;
+	}
+
+	public String getIscritto() {
+		return iscritto;
+	}
+
+	public void setIscritto(String iscritto) {
+		this.iscritto = iscritto;
 	}
 	
 	

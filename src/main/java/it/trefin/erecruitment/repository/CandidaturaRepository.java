@@ -1,5 +1,6 @@
 package it.trefin.erecruitment.repository;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import it.trefin.erecruitment.model.Candidatura;
+import it.trefin.erecruitment.model.CandidaturaCountResult;
 import it.trefin.erecruitment.model.Skill;
 
 @Repository
@@ -36,4 +38,18 @@ public interface CandidaturaRepository extends JpaRepository<Candidatura, Long>{
 
 
 	 List<Candidatura> findByIsEventoTrueAndAziendaId(long id_azienda);
+	 
+	 
+	 @Query(value = "SELECT COUNT(*) as count, c.nome, uc.data_iscrizione, c.id_azienda \r\n"
+			 + "FROM candidatura c \r\n"
+			 + "   JOIN utente_candidatura uc ON uc.id_candidatura = c.id \r\n"
+		     + "   WHERE uc.data_iscrizione = :dataIscrizione \r\n"
+		     + "   GROUP BY c.nome, c.id_azienda, uc.data_iscrizione", nativeQuery = true)
+		    List<CandidaturaCountResult> countCandidatureByDate(
+		        @Param("dataIscrizione") LocalDate dataIscrizione
+		    );
+
+		   
 }
+
+

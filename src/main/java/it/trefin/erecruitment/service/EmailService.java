@@ -1,6 +1,10 @@
 package it.trefin.erecruitment.service;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.mail.internet.MimeMessage;
@@ -14,10 +18,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import it.trefin.erecruitment.model.CandidaturaCountResult;
 import it.trefin.erecruitment.model.ConfirmToken;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Utente;
+import it.trefin.erecruitment.repository.AziendaRepository;
+import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,6 +43,12 @@ public class EmailService {
 
     @Autowired
     private UtenteRepository utenteRepo;
+    
+    @Autowired
+    private CandidaturaRepository candidaturaRepo;
+    
+    @Autowired
+    private AziendaRepository aziendaRepo;
 
     @Value("${spring.mail.from}")
     private String from;
@@ -70,7 +83,7 @@ public class EmailService {
     
     public Response<String, Status> inviaEmailAdmin(String[] destinatario, String oggetto, String testo, String[] bcc) {
         Response<String, Status> response = new Response<>();
-        try {
+     /*   try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             
@@ -94,7 +107,68 @@ public class EmailService {
             response.setStatus(Status.SYSTEM_ERROR);
             response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());
             return response;
+        }*/
+        try {
+            // --- CONTROLLO CANDIDATURE PER DATA ---
+            LocalDate dataIscrizione = LocalDate.now(); 
+            List<CandidaturaCountResult> risultati =
+            		candidaturaRepo.countCandidatureByDate(dataIscrizione);
+
+            Map<Long, Integer> countPerAzienda = new HashMap<>();
+
+            for (CandidaturaCountResult r : risultati) {
+                countPerAzienda.merge(r.getIdAzienda(), r.getCount(), Integer::sum);
+            }
+
+            for (Map.Entry<Long, Integer> entry : countPerAzienda.entrySet()) {
+                Long idAzienda = entry.getKey();
+                
+                String azienda = aziendaRepo.findById(idAzienda).get().getNome();
+                
+                int count = entry.getValue();
+
+                if (count > 5) {
+                    MimeMessage salesMessage = javaMailSender.createMimeMessage();
+                    MimeMessageHelper salesHelper = new MimeMessageHelper(salesMessage, true);
+
+                    salesHelper.setTo("salesdepartment@3fedin.it");
+                    salesHelper.setFrom("no-reply@3fedin.it");
+                    salesHelper.setSubject("Segnalazione candidature");
+                    salesHelper.setText(
+                        String.format("Sono state ricevute %d candidature per l'azienda %s nella data %s.",
+                                count, azienda, dataIscrizione), false
+                    );
+
+                    javaMailSender.send(salesMessage);
+                }
+            }
+
+            // --- INVIO EMAIL PRINCIPALE ---
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setTo(destinatario);
+            helper.setFrom(from);
+            helper.setSubject(oggetto);
+            helper.setText(testo, true);
+
+            if (bcc != null && bcc.length > 0) {
+                helper.setBcc(bcc);
+            }
+
+            javaMailSender.send(message);
+            response.setData("Email inviata con successo");
+            response.setStatus(Status.OK);
+            response.setDescrizione("Email inviata con successo");
+            return response;
+
+        } catch (Exception e) {
+            logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
+            response.setStatus(Status.SYSTEM_ERROR);
+            response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());
+            return response;
         }
+
     }
 
 

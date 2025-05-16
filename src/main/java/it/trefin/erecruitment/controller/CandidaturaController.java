@@ -2,6 +2,7 @@
 	
 	import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,7 @@ import it.trefin.erecruitment.dto.CandidaturaDto;
 import it.trefin.erecruitment.dto.ColloquioDto;
 import it.trefin.erecruitment.dto.SkillDto;
 import it.trefin.erecruitment.dto.UtenteDto;
+import it.trefin.erecruitment.model.Candidatura;
 import it.trefin.erecruitment.model.Response;
 import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.service.CandidaturaService;
@@ -88,5 +90,20 @@ import it.trefin.erecruitment.service.CandidaturaService;
 		public Response<CandidaturaDto, Status> updateDisable(@PathVariable long id_candidatura){
 			return cService.updateDescrizione(id_candidatura);
 		}
+		
+		@PostMapping("/candidatura")
+		public Map<String, Long> creaCandidatura(@RequestBody CandidaturaDto candidaturaDto) {
+		    Response<CandidaturaDto, Response.Status> response = cService.inserisciCandidatura(candidaturaDto);
+		    CandidaturaDto saved = response.getData();
+
+		    return Map.of(
+		        "candidaturaId", saved.getId(),
+		        "aziendaId", saved.getAzienda()
+		    );
+		}
+
+
+
+		
 		
 	}

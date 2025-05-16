@@ -58,6 +58,10 @@ public class EmailService {
     private SecureRandom random = new SecureRandom();
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // Aggiunto il password encoder
 
+    private String aziendaName;
+	private String destinatarioEmail;
+
+    
     public Response<String, Status> inviaEmail(String[] destinatario, String oggetto, String testo) {
         Response<String, Status> response = new Response<>();
         try {
@@ -72,7 +76,7 @@ public class EmailService {
             response.setData("Email inviata con successo");
             response.setStatus(Status.OK);
             response.setDescrizione("Email inviata con successo ");
-            return null;
+            return response;
         } catch (Exception e) {
             logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
             response.setStatus(Status.SYSTEM_ERROR);
@@ -124,7 +128,7 @@ public class EmailService {
                 Long idAzienda = entry.getKey();
                 
                 String azienda = aziendaRepo.findById(idAzienda).get().getNome();
-                
+                aziendaName = azienda;
                 int count = entry.getValue();
 
                 if (count > 5) {
@@ -132,7 +136,7 @@ public class EmailService {
                     MimeMessageHelper salesHelper = new MimeMessageHelper(salesMessage, true);
 
                     salesHelper.setTo("salesdepartment@3fedin.it");
-                    salesHelper.setFrom("no-reply@3fedin.it");
+                    salesHelper.setFrom("info-erecruitment@trefin.it");
                     salesHelper.setSubject("Segnalazione candidature");
                     salesHelper.setText(
                         String.format("Sono state ricevute %d candidature per l'azienda %s nella data %s.",
@@ -141,13 +145,28 @@ public class EmailService {
 
                     javaMailSender.send(salesMessage);
                 }
-            }
+            
 
             // --- INVIO EMAIL PRINCIPALE ---
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-            helper.setTo(destinatario);
+			switch (aziendaName) {
+            case "Aerosoft":
+              destinatarioEmail = "simone.esposito.ext@3fedin.it";
+              break;
+            case "Nauticad":
+                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+              break;
+            case "Aerosoft FRANCE":
+                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+              break;
+            case "3F & EDIN":
+                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+              break;
+          }
+            
+            helper.setTo(destinatarioEmail);
             helper.setFrom(from);
             helper.setSubject(oggetto);
             helper.setText(testo, true);
@@ -160,18 +179,20 @@ public class EmailService {
             response.setData("Email inviata con successo");
             response.setStatus(Status.OK);
             response.setDescrizione("Email inviata con successo");
+            }
             return response;
-
         } catch (Exception e) {
             logger.error("Errore durante l'invio dell'email: {}", e.getMessage());
             response.setStatus(Status.SYSTEM_ERROR);
-            response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());
+            response.setDescrizione("Errore durante l'invio dell'email: " + e.getMessage());		
             return response;
+
         }
+            }
 
-    }
+    
 
-
+   
 
 
     public Response<MimeMessageHelper, Status> confirmEmail(ConfirmToken token, String destinatario) {

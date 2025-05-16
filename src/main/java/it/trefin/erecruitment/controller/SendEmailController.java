@@ -25,8 +25,7 @@ public class SendEmailController {
 
 	@PostMapping("/inviaEmail")
 	public Response<String, Status> inviaEmail(@RequestParam String [] destinatario,
-			@RequestParam String oggetto, @RequestBody String testo) {
-
+		@RequestParam String oggetto, @RequestBody String testo, @RequestParam(required = false) String[] bcc) { 
 		return emailService.inviaEmail(destinatario, oggetto, testo);
 
 	}

@@ -493,142 +493,123 @@ public class UtenteService {
 		return response;
 	}
 
-	public Response<Questionario, Status> addQuestionario(Long idU, Long idC,Questionario questionario) {
-		Response<Questionario, Status> response = new Response<>();
-		
-		try {
-			Colloquio colloquio=new Colloquio();
-			
-			Utente u = uRepository.findById(idU).get();
-			Candidatura candidatura= candidaturaRepository.findById(idC).get();
-			//Aggiornamento Utente
-			u.setTrasferimento(questionario.getTrasferimento());
-			uRepository.save(u);
-			
-			//creazione colloquio 		
-			colloquio.setCandidatura(candidatura);
-			colloquio.setDataColloquio(candidatura.getPubblicazione());
-			colloquio.setEsito(Esito.InValutazione);
-			colloquio.setTipo("conoscitivo-tecnico");
-			colloquio.setUtente(u);
-			colloquioRepository.save(colloquio);
-			
-			//creazione titolo di studio 
-			
-			UtenteTitoliStudio utenteTitoliStudio=new UtenteTitoliStudio();
-			utenteTitoliStudio.setDescrizione(questionario.getIndirizzoStudio());
-			utenteTitoliStudio.setUtente(u);		
-			utenteTitoliStudio.setTitoliStudio(titoliStudioRepository.findByStudi(Studi.DIPLOMA));
-			utenteTitoliStudio.setCompleted(false);
-			utenteTitoliStudioRepository.save(utenteTitoliStudio);
-			//creazione questionario
-			questionario.setUtente(u);
-			questionario.setCandidatura(candidatura);
-			Questionario quest =questionarioRepository.save(questionario);
-			
-			//Collegamento all'evento
-			UtenteCandidatura utenteCandidatura=new UtenteCandidatura();
-	        Date data = new Date(System.currentTimeMillis());
-			utenteCandidatura.setDataIscrizione(data);
-			utenteCandidatura.setCandidatura(candidatura);
-			utenteCandidatura.setStato(Stato.ATTESA);
-			utenteCandidatura.setDisabilitato(false);
-			utenteCandidatura.setUtente(u);
-			utenteCandidaturaService.inserisciUtenteCandidatura(utenteCandidatura, candidatura.getAzienda().getId(), u.getId());
-			
-			//Salvo le skill che non esistono nel db e le collego all'utente
-			List<Skill> skills= skillRepository.findAll();
-			if(questionario.getAltroSkill()!=null || !questionario.getAltroSkill().equals("")) {
-			boolean trovato=false;
-			for (Skill skill : skills) {
-				if(skill.getNome().toLowerCase().replace(" ", "").contains(questionario.getAltroSkill().toLowerCase().replace(" ", ""))) {
-					aggiungiSkill(skill.getId(), idU);
-					trovato=true;
-				}else {
-					trovato=false;
-				}
-			}
-			if(trovato==false) {
-				Skill nuovaSkill=new Skill();
-				nuovaSkill.setNome(questionario.getAltroSkill());
-				Skill nuovaSkill2= skillRepository.save(nuovaSkill);
-				aggiungiSkill(nuovaSkill2.getId(), idU);
-			}
-			}
-			if(questionario.getAltroSoftware()!=null || !questionario.getAltroSoftware().equals("")) {
-				boolean trovato=false;
-				for (Skill skill : skills) {
-					if(skill.getNome().toLowerCase().replace(" ", "").contains(questionario.getAltroSoftware().toLowerCase().replace(" ", ""))) {
-						aggiungiSkill(skill.getId(), idU);
-						trovato=true;
-					}else {
-						trovato=false;
+	public Response<Questionario, Status> addQuestionario(Long idU, Long idC, Questionario questionario) {
+	    Response<Questionario, Status> response = new Response<>();
 
-					}}
-				if(trovato==false) {
-					Skill nuovaSkill=new Skill();
-					nuovaSkill.setNome(questionario.getAltroSoftware());
-					Skill nuovaSkill2= skillRepository.save(nuovaSkill);
-					aggiungiSkill(nuovaSkill2.getId(), idU);
-				}
-				
-				}
-				ArrayList<Skill> listaSkill=new ArrayList<>();
-				listaSkill.add(skillRepository.findByNome("C"));				
-				listaSkill.add(skillRepository.findByNome("C++"));
-				listaSkill.add(skillRepository.findByNome("Autocad"));
-				
-				if(skillRepository.findByNome("Catia")==null) {
-					Skill catia=new Skill();
-					catia.setNome("Catia");
-					Skill catiaDb=skillRepository.save(catia);
-					listaSkill.add(catiaDb);
-				}else{
-				listaSkill.add(skillRepository.findByNome("Catia"));		
-				}
-				
-				if(skillRepository.findByNome("Rhinoceros")==null) {
-					Skill catia=new Skill();
-					catia.setNome("Rhinoceros");
-					Skill catiaDb=skillRepository.save(catia);
-					listaSkill.add(catiaDb);
-				}else {
-				listaSkill.add(skillRepository.findByNome("Rhinoceros"));		
-				}
-				
-				if(skillRepository.findByNome("SolidWorks")==null) {
-					Skill catia=new Skill();
-					catia.setNome("SolidWorks");
-					Skill catiaDb=skillRepository.save(catia);
-					listaSkill.add(catiaDb);
-				}else {
-				listaSkill.add(skillRepository.findByNome("SolidWorks"));		
-				}
-				
-				listaSkill.add(skillRepository.findByNome("HTML"));
-				listaSkill.add(skillRepository.findByNome("CSS3"));
-				listaSkill.add(skillRepository.findByNome("OpenOffice"));
-				listaSkill.add(skillRepository.findByNome("Python"));
-				listaSkill.add(skillRepository.findByNome("SQL"));
-				
+	    try {
+	        Questionario existing = questionarioRepository.findByUtenteIdAndCandidaturaId(idU, idC);
+	        if (existing != null) {
+	            response.setStatus(Status.ALREADY_EXISTS);
+	            response.setDescrizione("Hai già compilato il questionario per questa candidatura.");
+	            return response;
+	        }
 
-				for (Skill skill : listaSkill) {
-					aggiungiSkill( idU,skill.getId());
-				}
-				
-			
-			response.setData(quest);
-			response.setStatus(Status.OK);
-			response.setDescrizione("fatto");
-			
-		}catch(Exception e) {
-			response.setStatus(Status.KO);
-			response.setDescrizione(e.getMessage());
-			logger.warn(e.getMessage());
-		}
-		
-		return response;	
-		}
+	        Utente u = uRepository.findById(idU).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+	        Candidatura candidatura = candidaturaRepository.findById(idC).orElseThrow(() -> new RuntimeException("Candidatura non trovata"));
+
+	        u.setTrasferimento(questionario.getTrasferimento());
+	        uRepository.save(u);
+
+	        Colloquio colloquio = new Colloquio();
+	        colloquio.setUtente(u);
+	        colloquio.setCandidatura(candidatura);
+	        colloquio.setDataColloquio(candidatura.getPubblicazione());
+	        colloquio.setEsito(Esito.InValutazione);
+	        colloquio.setTipo("conoscitivo-tecnico");
+	        colloquioRepository.save(colloquio);
+
+	        UtenteTitoliStudio utenteTitoliStudio = new UtenteTitoliStudio();
+	        utenteTitoliStudio.setUtente(u);
+	        utenteTitoliStudio.setDescrizione(questionario.getIndirizzoStudio());
+	        utenteTitoliStudio.setTitoliStudio(titoliStudioRepository.findByStudi(Studi.DIPLOMA));
+	        utenteTitoliStudio.setCompleted(false);
+	        utenteTitoliStudioRepository.save(utenteTitoliStudio);
+
+	        UtenteCandidatura utenteCandidatura = new UtenteCandidatura();
+	        utenteCandidatura.setUtente(u);
+	        utenteCandidatura.setCandidatura(candidatura);
+	        utenteCandidatura.setDataIscrizione(new Date(System.currentTimeMillis()));
+	        utenteCandidatura.setStato(Stato.ATTESA);
+	        utenteCandidatura.setDisabilitato(false);
+	        utenteCandidaturaService.inserisciUtenteCandidatura(utenteCandidatura, candidatura.getAzienda().getId(), u.getId());
+
+	        questionario.setUtente(u);
+	        questionario.setCandidatura(candidatura);
+	        Questionario quest = questionarioRepository.save(questionario);
+
+	        List<Skill> skills = skillRepository.findAll();
+
+	        String altroSkill = questionario.getAltroSkill();
+	        if (altroSkill != null && !altroSkill.trim().isEmpty()) {
+	            boolean trovato = skills.stream().anyMatch(skill ->
+	                skill.getNome().replace(" ", "").equalsIgnoreCase(altroSkill.replace(" ", ""))
+	            );
+
+	            if (!trovato) {
+	                Skill nuovaSkill = new Skill();
+	                nuovaSkill.setNome(altroSkill);
+	                Skill salvata = skillRepository.save(nuovaSkill);
+	                aggiungiSkill(salvata.getId(), idU);
+	            } else {
+	                Skill skillEsistente = skills.stream()
+	                    .filter(skill -> skill.getNome().replace(" ", "").equalsIgnoreCase(altroSkill.replace(" ", "")))
+	                    .findFirst().orElse(null);
+	                if (skillEsistente != null) {
+	                    aggiungiSkill(skillEsistente.getId(), idU);
+	                }
+	            }
+	        }
+
+	        String altroSoftware = questionario.getAltroSoftware();
+	        if (altroSoftware != null && !altroSoftware.trim().isEmpty()) {
+	            boolean trovato = skills.stream().anyMatch(skill ->
+	                skill.getNome().replace(" ", "").equalsIgnoreCase(altroSoftware.replace(" ", ""))
+	            );
+
+	            if (!trovato) {
+	                Skill nuovaSkill = new Skill();
+	                nuovaSkill.setNome(altroSoftware);
+	                Skill salvata = skillRepository.save(nuovaSkill);
+	                aggiungiSkill(salvata.getId(), idU);
+	            } else {
+	                Skill skillEsistente = skills.stream()
+	                    .filter(skill -> skill.getNome().replace(" ", "").equalsIgnoreCase(altroSoftware.replace(" ", "")))
+	                    .findFirst().orElse(null);
+	                if (skillEsistente != null) {
+	                    aggiungiSkill(skillEsistente.getId(), idU);
+	                }
+	            }
+	        }
+
+	        String[] skillFisse = {
+	            "C", "C++", "Autocad", "Catia", "Rhinoceros",
+	            "SolidWorks", "HTML", "CSS3", "OpenOffice", "Python", "SQL"
+	        };
+
+	        for (String skillName : skillFisse) {
+	            Skill skill = skillRepository.findByNome(skillName);
+	            if (skill == null) {
+	                skill = new Skill();
+	                skill.setNome(skillName);
+	                skill = skillRepository.save(skill);
+	            }
+	            aggiungiSkill(idU, skill.getId());
+	        }
+
+	        response.setData(quest);
+	        response.setStatus(Status.OK);
+	        response.setDescrizione("fatto");
+
+	    } catch (Exception e) {
+	        response.setStatus(Status.KO);
+	        response.setDescrizione(e.getMessage());
+	        logger.warn("Errore durante salvataggio questionario: " + e.getMessage(), e);
+	    }
+
+	    return response;
+	}
+
+		  
 
 	public Response<Questionario, Status> getQuestionario(Long idU,Long idE) {
 		Response<Questionario, Status> response = new Response<>();

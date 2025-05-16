@@ -16,6 +16,9 @@ public class Questionario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	private int java;
+	private int javascript;
+	private int dotnet;
 	private String altro;
 	private String altroSkill;
 	private String altroSoftware;
@@ -23,6 +26,13 @@ public class Questionario {
 	private int autocad;
 	private int c;
 	private int catia;
+	private int gira;
+	private int cpp;
+	private int pass;
+	private int playwright;
+	private int selenium;
+	private int angular;
+	private String altroAmbito;
 	private int html;
 	private String indirizzoStudio;
 	private int office;
@@ -60,11 +70,11 @@ public class Questionario {
 	private int matlab;
 	private int simulink;
 	private int hypermesh;
-	private int ABAQUS;
-	private int CREO;
+	private int abaqus;
+	private int creo;
 	private int design;
 	private int stress;
-	private int CFD;
+	private int cfd;
 	private int manufacturingSupport;
 	private int ingegneriaIndustriale;
 	private int disegno2D;
@@ -87,17 +97,40 @@ public class Questionario {
 	private int impiantiIdraulici;
 	private int impiantiVentilazioneCond;
 	private int struttureNavali;
+	private String esamiMancanti;
+	private int ansys;
+	private String altroAmbitoMerceologico;
+	private String altroSettoreTecnologico;
+	private String altroSettoreMerceologico;
+	private String ambitoEccellenza;
+	private boolean jobRotation;
+	private boolean mobilitaItalia;
+	private boolean mobilitaEstero;
+	private boolean mobilitaRegioni;
+	private boolean mobilitaNo;
+	private String regioniPreferite;
+	private String paesiPreferiti;
+
 
 	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "utente_id")
 	private Utente utente;
-
+	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "candidatura_id")
 	private Candidatura candidatura;
+
+	public boolean isJobRotation() {
+		return jobRotation;
+	}
+
+	public void setJobRotation(boolean jobRotation) {
+		this.jobRotation = jobRotation;
+	}
+
 
 	public String getAltro() {
 		return altro;
@@ -147,14 +180,6 @@ public class Questionario {
 		this.c = c;
 	}
 
-	public int getCatia() {
-		return catia;
-	}
-
-	public void setCatia(int catia) {
-		this.catia = catia;
-	}
-
 	public int getHtml() {
 		return html;
 	}
@@ -185,14 +210,6 @@ public class Questionario {
 
 	public void setPython(int python) {
 		this.python = python;
-	}
-
-	public int getRhinoceros() {
-		return rhinoceros;
-	}
-
-	public void setRhinoceros(int rhinoceros) {
-		this.rhinoceros = rhinoceros;
 	}
 
 	public String getSituazione() {
@@ -304,14 +321,6 @@ public class Questionario {
 
 	public void setStress(int stress) {
 		this.stress = stress;
-	}
-
-	public int getCFD() {
-		return CFD;
-	}
-
-	public void setCFD(int cFD) {
-		CFD = cFD;
 	}
 
 	public int getManufacturingSupport() {
@@ -529,22 +538,6 @@ public class Questionario {
 		this.hypermesh = hypermesh;
 	}
 
-	public int getABAQUS() {
-		return ABAQUS;
-	}
-
-	public void setABAQUS(int aBAQUS) {
-		ABAQUS = aBAQUS;
-	}
-
-	public int getCREO() {
-		return CREO;
-	}
-
-	public void setCREO(int cREO) {
-		CREO = cREO;
-	}
-
 	public int getDisegno2D() {
 		return disegno2D;
 	}
@@ -624,15 +617,7 @@ public class Questionario {
 	public void setAutocad2D(int autocad2d) {
 		autocad2D = autocad2d;
 	}
-
-	public int getAutocad3D() {
-		return autocad3D;
-	}
-
-	public void setAutocad3D(int autocad3d) {
-		autocad3D = autocad3d;
-	}
-
+	
 	public int getCrocieristico() {
 		return crocieristico;
 	}
@@ -704,5 +689,230 @@ public class Questionario {
 	public void setStruttureNavali(int struttureNavali) {
 		this.struttureNavali = struttureNavali;
 	}
+
+	public int getGira() {
+		return gira;
+	}
+
+	public void setGira(int gira) {
+		this.gira = gira;
+	}
+
+	public int getCpp() {
+		return cpp;
+	}
+
+	public void setCpp(int cpp) {
+		this.cpp = cpp;
+	}
+
+	public int getPass() {
+		return pass;
+	}
+
+	public void setPass(int pass) {
+		this.pass = pass;
+	}
+
+	public int getPlaywright() {
+		return playwright;
+	}
+
+	public void setPlaywright(int playwright) {
+		this.playwright = playwright;
+	}
+
+	public int getSelenium() {
+		return selenium;
+	}
+
+	public void setSelenium(int selenium) {
+		this.selenium = selenium;
+	}
+
+	public int getAngular() {
+		return angular;
+	}
+
+	public void setAngular(int angular) {
+		this.angular = angular;
+	}
+
+	public String getAltroAmbito() {
+		return altroAmbito;
+	}
+
+	public void setAltroAmbito(String altroAmbito) {
+		this.altroAmbito = altroAmbito;
+	}
+
+	public int getJava() {
+		return java;
+	}
+
+	public void setJava(int java) {
+		this.java = java;
+	}
+
+	public int getJavascript() {
+		return javascript;
+	}
+
+	public void setJavascript(int javascript) {
+		this.javascript = javascript;
+	}
+
+	public int getDotnet() {
+		return dotnet;
+	}
+
+	public void setDotnet(int dotnet) {
+		this.dotnet = dotnet;
+	}
+
+	public String getEsamiMancanti() {
+		return esamiMancanti;
+	}
+
+	public void setEsamiMancanti(String esamiMancanti) {
+		this.esamiMancanti = esamiMancanti;
+	}
+
+	public int getAnsys() {
+		return ansys;
+	}
+
+	public void setAnsys(int ansys) {
+		this.ansys = ansys;
+	}
+
+	public String getAltroAmbitoMerceologico() {
+		return altroAmbitoMerceologico;
+	}
+
+	public void setAltroAmbitoMerceologico(String altroAmbitoMerceologico) {
+		this.altroAmbitoMerceologico = altroAmbitoMerceologico;
+	}
+
+	public String getAltroSettoreTecnologico() {
+		return altroSettoreTecnologico;
+	}
+
+	public void setAltroSettoreTecnologico(String altroSettoreTecnologico) {
+		this.altroSettoreTecnologico = altroSettoreTecnologico;
+	}
+
+	public String getAltroSettoreMerceologico() {
+		return altroSettoreMerceologico;
+	}
+
+	public void setAltroSettoreMerceologico(String altroSettoreMerceologico) {
+		this.altroSettoreMerceologico = altroSettoreMerceologico;
+	}
+
+	public int getCatia() {
+		return catia;
+	}
+
+	public int getRhinoceros() {
+		return rhinoceros;
+	}
+
+	public void setRhinoceros(int rhinoceros) {
+		this.rhinoceros = rhinoceros;
+	}
+
+	public int getAutocad3D() {
+		return autocad3D;
+	}
+
+	public void setAutocad3D(int autocad3d) {
+		autocad3D = autocad3d;
+	}
+
+	public void setCatia(int catia) {
+		this.catia = catia;
+	}
+
+	public String getRegioniPreferite() {
+		return regioniPreferite;
+	}
+
+	public void setRegioniPreferite(String regioniPreferite) {
+		this.regioniPreferite = regioniPreferite;
+	}
+
+	public String getPaesiPreferiti() {
+		return paesiPreferiti;
+	}
+
+	public void setPaesiPreferiti(String paesiPreferiti) {
+		this.paesiPreferiti = paesiPreferiti;
+	}
+
+	public String getAmbitoEccellenza() {
+		return ambitoEccellenza;
+	}
+
+	public void setAmbitoEccellenza(String ambitoEccellenza) {
+		this.ambitoEccellenza = ambitoEccellenza;
+	}
+
+	public int getAbaqus() {
+		return abaqus;
+	}
+
+	public void setAbaqus(int abaqus) {
+		this.abaqus = abaqus;
+	}
+
+	public int getCreo() {
+		return creo;
+	}
+
+	public void setCreo(int creo) {
+		this.creo = creo;
+	}
+
+	public int getCfd() {
+		return cfd;
+	}
+
+	public void setCfd(int cfd) {
+		this.cfd = cfd;
+	}
+
+	public boolean isMobilitaItalia() {
+		return mobilitaItalia;
+	}
+
+	public void setMobilitaItalia(boolean mobilitaItalia) {
+		this.mobilitaItalia = mobilitaItalia;
+	}
+
+	public boolean isMobilitaNo() {
+		return mobilitaNo;
+	}
+
+	public void setMobilitaNo(boolean mobilitaNo) {
+		this.mobilitaNo = mobilitaNo;
+	}
+
+	public boolean isMobilitaEstero() {
+		return mobilitaEstero;
+	}
+
+	public void setMobilitaEstero(boolean mobilitaEstero) {
+		this.mobilitaEstero = mobilitaEstero;
+	}
+
+	public boolean isMobilitaRegioni() {
+		return mobilitaRegioni;
+	}
+
+	public void setMobilitaRegioni(boolean mobilitaRegioni) {
+		this.mobilitaRegioni = mobilitaRegioni;
+	}
+
 
 }

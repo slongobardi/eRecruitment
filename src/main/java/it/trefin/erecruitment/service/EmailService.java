@@ -153,16 +153,16 @@ public class EmailService {
 
 			switch (aziendaName) {
             case "Aerosoft":
-              destinatarioEmail = "simone.esposito.ext@3fedin.it";
+              destinatarioEmail = "job@aerosoft.it";
               break;
             case "Nauticad":
-                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+                destinatarioEmail = "job@nauticad.com";
               break;
             case "Aerosoft FRANCE":
-                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+                destinatarioEmail = "job@aerosoft.it";
               break;
             case "3F & EDIN":
-                destinatarioEmail = "simone.esposito.ext@3fedin.it";
+                destinatarioEmail = "job@3fedin.it";
               break;
           }
             

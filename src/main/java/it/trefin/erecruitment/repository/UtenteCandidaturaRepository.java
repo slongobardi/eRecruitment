@@ -40,4 +40,8 @@ public interface UtenteCandidaturaRepository extends JpaRepository<UtenteCandida
 	List<UtenteCandidatura> findPickingList(@Param("idAzienda") long idA);
 	@Query("DELETE FROM UtenteCandidatura uc WHERE uc.utente.id = :idUtente AND uc.candidatura.id = :idCandidatura")
 	void deleteByUtenteIdAndCandidaturaId(@Param("idUtente") long idUtente, @Param("idCandidatura") long idCandidatura);
+	
+	@Query("SELECT COUNT(uc) FROM UtenteCandidatura uc WHERE uc.candidatura.id = :idCandidatura")
+	int countByCandidaturaId(@Param("idCandidatura") Long idCandidatura);
+
 }

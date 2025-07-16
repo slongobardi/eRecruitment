@@ -261,19 +261,27 @@ public class CandidaturaService {
 		Response<List<CandidaturaDto>, Status> response = new Response<>();
 
 		try {
-					
-			response.setData(cRepository.findByIsEventoTrueAndAziendaId(id_azienda).stream().map(CandidaturaMapper::toDto).collect(Collectors.toList()));
+			List<Candidatura> candidature = cRepository.findByIsEventoTrueAndAziendaId(id_azienda);
+
+			List<CandidaturaDto> dtoList = candidature.stream().map(c -> {
+				CandidaturaDto dto = CandidaturaMapper.toDto(c);
+
+				int numeroCandidati = uRepository.countByCandidaturaId(c.getId());
+				dto.setNumeroCandidati(numeroCandidati);
+
+				return dto;
+			}).collect(Collectors.toList());
+
+			response.setData(dtoList);
 			response.setStatus(Status.OK);
 			response.setDescrizione("Candidature ritornate con successo.");
 			return response;
 
 		} catch (Exception e) {
-
 			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
+			response.setDescrizione("Errore durante il recupero delle candidature evento: " + e.getMessage());
 			logger.warn(e.getMessage());
 			return response;
-
 		}
 	}
 

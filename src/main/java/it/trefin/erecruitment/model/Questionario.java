@@ -1,6 +1,5 @@
 package it.trefin.erecruitment.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -108,6 +107,8 @@ public class Questionario {
 	private boolean mobilitaEstero;
 	private boolean mobilitaRegioni;
 	private boolean mobilitaNo;
+	private boolean mobilita;
+
 	private String regioniPreferite;
 	private String paesiPreferiti;
 
@@ -122,6 +123,15 @@ public class Questionario {
 	@ManyToOne
 	@JoinColumn(name = "candidatura_id")
 	private Candidatura candidatura;
+	
+	public boolean isMobilita() {
+		return mobilita;
+	}
+
+	public void setMobilita(boolean mobilita) {
+		this.mobilita = mobilita;
+	}
+
 
 	public boolean isJobRotation() {
 		return jobRotation;
@@ -882,6 +892,7 @@ public class Questionario {
 		this.cfd = cfd;
 	}
 
+
 	public boolean isMobilitaItalia() {
 		return mobilitaItalia;
 	}
@@ -913,6 +924,7 @@ public class Questionario {
 	public void setMobilitaRegioni(boolean mobilitaRegioni) {
 		this.mobilitaRegioni = mobilitaRegioni;
 	}
+
 
 
 }

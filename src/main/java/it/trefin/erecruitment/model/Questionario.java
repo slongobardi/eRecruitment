@@ -96,6 +96,7 @@ public class Questionario {
 	private int impiantiIdraulici;
 	private int impiantiVentilazioneCond;
 	private int struttureNavali;
+	private int ptc_Creo;
 	private String esamiMancanti;
 	private int ansys;
 	private String altroAmbitoMerceologico;
@@ -923,6 +924,14 @@ public class Questionario {
 
 	public void setMobilitaRegioni(boolean mobilitaRegioni) {
 		this.mobilitaRegioni = mobilitaRegioni;
+	}
+
+	public int getPtc_Creo() {
+		return ptc_Creo;
+	}
+
+	public void setPtc_Creo(int ptc_Creo) {
+		this.ptc_Creo = ptc_Creo;
 	}
 
 

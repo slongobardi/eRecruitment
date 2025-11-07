@@ -146,18 +146,23 @@ public class AziendaService {
 
 	}
 
-	public void aggiornaAzienda(AziendaDto azienda) {
-		List<Utente> listaUtenti = new ArrayList<>();
-		List<Candidatura> listaCandidature = new ArrayList<>();
-		for (long idUtente : azienda.getUtenti()) {
-			listaUtenti.add(this.uRepository.getReferenceById(idUtente));
-		}
-		for (long idCandidatura : azienda.getListaCandidature()) {
-			listaCandidature.add(this.cRepository.getReferenceById(idCandidatura));
-		}
-		Azienda aziendaAggiornata = AziendaMapper.toEntity(azienda, listaUtenti, listaCandidature);
-		this.aRepository.save(aziendaAggiornata);
+	public void aggiornaAzienda(long id, AziendaDto aziendaDto) {
+	    // Trova l'azienda esistente
+	    Azienda aziendaEsistente = aRepository.findById(id)
+	        .orElseThrow(() -> new RuntimeException("Azienda non trovata"));
 
+	    // Aggiorna solo i campi necessari
+	    aziendaEsistente.setIndirizzo(aziendaDto.getIndirizzo());
+	    aziendaEsistente.setDescrizione(aziendaDto.getDescrizione());
+	    aziendaEsistente.setLuogo(aziendaDto.getLuogo());
+	    aziendaEsistente.setLinkAzienda(aziendaDto.getLinkAzienda());
+
+	    // Salva l'azienda aggiornata nel database
+	    aRepository.save(aziendaEsistente);
 	}
 
+	
+
+
+	
 }

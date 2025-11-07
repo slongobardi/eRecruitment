@@ -2,6 +2,8 @@ package it.trefin.erecruitment.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AziendaDto {
 
 	private long id;
@@ -14,6 +16,8 @@ public class AziendaDto {
 	private List<Long> listaCandidature;
 	private List<Long> utenti;
 	private List<Long> preferenze;
+	
+
 	private List<Long> schedaCandidato;
 
 	public long getId() {
@@ -87,7 +91,7 @@ public class AziendaDto {
 	public void setPreferenze(List<Long> preferenze) {
 		this.preferenze = preferenze;
 	}
-	public List<Long> getSchedaCandiato() {
+	public List<Long> getSchedaCandidato() {
 		return schedaCandidato;
 	}
 

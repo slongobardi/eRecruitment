@@ -275,22 +275,44 @@ public class UtenteService {
 		return response;
 	}
 	
-	public Response<List<UtenteDto>, Status> getAllNormalUser(long idAzienda ) {
-		Response<List<UtenteDto>, Status> response = new Response<>();
-		try {
-			List<Utente> responseQuery = uRepository.findAllNormalUser(idAzienda);
-	
+	public Response<List<UtenteDto>, Status> getAllNormalUser(long idAzienda) {
+	    Response<List<UtenteDto>, Status> response = new Response<>();
 
-			response.setData(responseQuery.stream().map(UtenteMapper::toDto).collect(Collectors.toList()));
-			response.setStatus(Status.OK);
-			response.setDescrizione("ok");
-		} catch (Exception e) {
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("getAllNotUser in errore " + e.getMessage());
-			logger.warn(e.getMessage());
-		}
-		return response;
+	    try {
+	        List<Utente> utenti = uRepository.findAllNormalUser(idAzienda);
+
+	        List<UtenteDto> data = utenti.stream().map(u -> {
+	            UtenteDto dto = new UtenteDto();
+
+	            dto.setId(u.getId());
+	            dto.setNome(u.getNome());
+	            dto.setCognome(u.getCognome());
+	            dto.setEmail(u.getEmail());
+	            dto.setCellulare(u.getCellulare());
+	            dto.setDataNascita(u.getDataNascita());
+	            dto.setStato(u.getStato());
+
+	            // id azienda: meglio prenderlo dalla relation
+	            dto.setIdAzienda(
+	                u.getAzienda() != null ? u.getAzienda().getId() : idAzienda
+	            );
+
+	            return dto;
+	        }).collect(Collectors.toList());
+
+	        response.setData(data);
+	        response.setStatus(Status.OK);
+	        response.setDescrizione("ok");
+
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("getAllNormalUser in errore " + e.getMessage());
+	        logger.warn(e.getMessage());
+	    }
+
+	    return response;
 	}
+
 	
 	public Response<List<UtenteDto>, Status> findUtentePerColloquioAzienda(long idAzienda) {
 		Response<List<UtenteDto>, Status> response = new Response<>();
@@ -459,6 +481,7 @@ public class UtenteService {
 			Utente u = uRepository.findById(id).orElse(null);
 			if (u != null) {
 				u.setCompleted(true);
+				u.setDataIscrizione(new Date(System.currentTimeMillis()));
 				uRepository.save(u);
 				response.setData(UtenteMapper.toDto(u));
 				response.setStatus(Status.OK);

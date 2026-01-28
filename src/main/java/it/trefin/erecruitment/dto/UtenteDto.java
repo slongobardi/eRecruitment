@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-import it.trefin.erecruitment.model.Ruolo;
-import it.trefin.erecruitment.model.SchedaCandidato;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import it.trefin.erecruitment.model.Ruolo;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UtenteDto {
 
 	private long id;
@@ -47,9 +49,17 @@ public class UtenteDto {
     private Date dataInizio; 
     private Date dataFine;
     private String stato;
+    private Date dataIscrizione;
 
 
 
+	public Date getDataIscrizione() {
+		return dataIscrizione;
+	}
+
+	public void setDataIscrizione(Date dataIscrizione) {
+		this.dataIscrizione = dataIscrizione;
+	}
 
 	public UtenteDto() {
 	}

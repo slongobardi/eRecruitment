@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Lob;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 
 public class CandidaturaDto {
 

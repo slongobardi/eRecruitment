@@ -161,24 +161,40 @@ public class CandidaturaService {
 
 	public Response<List<CandidaturaDto>, Status> visualizzaTutteCandidature() {
 
-		Response<List<CandidaturaDto>, Status> response = new Response<>();
+	    Response<List<CandidaturaDto>, Status> response = new Response<>();
 
-		try {
+	    try {
+	        List<CandidaturaDto> lista = cRepository.findAll().stream().map(c -> {
+	            CandidaturaDto dto = new CandidaturaDto();
+	            dto.setId(c.getId());
+	            dto.setNome(c.getNome());
+	            dto.setPubblicazione(c.getPubblicazione());
 
-			response.setData(cRepository.findAll().stream().map(CandidaturaMapper::toDto).collect(Collectors.toList()));
-			response.setStatus(Status.OK);
-			response.setDescrizione("Candidature ritornate con successo.");
-			return response;
+	            if (c.getAzienda() != null) {
+	                dto.setAzienda(c.getAzienda().getId());
+	                dto.setNomeAzienda(c.getAzienda().getNome());
+	            }
 
-		} catch (Exception e) {
+	            dto.setListaSkill(
+	                c.getListaSkill() != null
+	                    ? c.getListaSkill().stream().map(Skill::getId).collect(Collectors.toSet())
+	                    : new java.util.HashSet<>()
+	            );
 
-			response.setStatus(Status.SYSTEM_ERROR);
-			response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
-			logger.warn(e.getMessage());
-			return response;
+	            return dto;
+	        }).collect(Collectors.toList());
 
-		}
+	        response.setData(lista);
+	        response.setStatus(Status.OK);
+	        response.setDescrizione("Candidature ritornate con successo.");
+	        return response;
 
+	    } catch (Exception e) {
+	        response.setStatus(Status.SYSTEM_ERROR);
+	        response.setDescrizione("visualizzaTutteCandidature in errore " + e.getMessage());
+	        logger.warn(e.getMessage());
+	        return response;
+	    }
 	}
 
 	public Response<List<CandidaturaDto>, Status> visualizzaCandidatureAziendali(long id_azienda) {

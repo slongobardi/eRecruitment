@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.trefin.erecruitment.model.CandidaturaCountResult;
@@ -27,8 +26,8 @@ import it.trefin.erecruitment.repository.AziendaRepository;
 import it.trefin.erecruitment.repository.CandidaturaRepository;
 import it.trefin.erecruitment.repository.ConfirmTokenRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

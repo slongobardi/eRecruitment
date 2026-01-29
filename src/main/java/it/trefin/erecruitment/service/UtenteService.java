@@ -1,15 +1,12 @@
 package it.trefin.erecruitment.service;
 
 import java.sql.Date;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +32,6 @@ import it.trefin.erecruitment.model.Response.Status;
 import it.trefin.erecruitment.model.Skill;
 import it.trefin.erecruitment.model.Stato;
 import it.trefin.erecruitment.model.Studi;
-import it.trefin.erecruitment.model.TitoliStudio;
 import it.trefin.erecruitment.model.Utente;
 import it.trefin.erecruitment.model.UtenteCandidatura;
 import it.trefin.erecruitment.model.UtenteTitoliStudio;
@@ -48,6 +44,7 @@ import it.trefin.erecruitment.repository.TitoliStudioRepository;
 import it.trefin.erecruitment.repository.UtenteCandidaturaRepository;
 import it.trefin.erecruitment.repository.UtenteRepository;
 import it.trefin.erecruitment.repository.UtenteTitoliStudioRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UtenteService {
@@ -481,7 +478,7 @@ public class UtenteService {
 			Utente u = uRepository.findById(id).orElse(null);
 			if (u != null) {
 				u.setCompleted(true);
-				u.setDataIscrizione(new Date(System.currentTimeMillis()));
+				//u.setDataIscrizione(new Date(System.currentTimeMillis()));
 				uRepository.save(u);
 				response.setData(UtenteMapper.toDto(u));
 				response.setStatus(Status.OK);

@@ -1,58 +1,104 @@
 package it.trefin.erecruitment.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.security.config.Customizer.withDefaults;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
-@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-	@Autowired
-	private JwtRequestFilter jwtRequestFilter;
+  private final JwtRequestFilter jwtRequestFilter;
+  private final CustomUserDetailsService customUserDetailsService;
 
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
+  public SecurityConfig(JwtRequestFilter jwtRequestFilter,
+                        CustomUserDetailsService customUserDetailsService) {
+    this.jwtRequestFilter = jwtRequestFilter;
+    this.customUserDetailsService = customUserDetailsService;
+  }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors(withDefaults()).csrf(csrf -> csrf.disable())
-				.authorizeRequests(requests -> requests
-						.antMatchers("/auth/login","/auth/register","/auth/registerEvent","/auth/registerEventUniversita","/auth/cambiaPassword","/auth/resetPassword/**",
-								"/auth/resetPasswordAdmin/**","/api/sendEmail/inviaEmail", "/api/sendEmail/inviaEmailAdmin", "/api/candidatura/all", "/api/candidatura/visualizza/**","/api/azienda/visualizza/**","/api/skill/visualizza/**",
-								"/api/sendEmail/inviaEmail/**", "/api/sendEmail/confirmEmail/**","/api/candidatura/skillDellaCandidatura/**","/api/skill/all")
-						.permitAll().antMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated())
-				.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    http
+      .cors(withDefaults())
+      .csrf(csrf -> csrf.disable())
 
-	}
+      // ✅ evita popup browser/basic e form login
+      .httpBasic(b -> b.disable())
+      .formLogin(f -> f.disable())
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
-	}
+      .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+      .authorizeHttpRequests(auth -> auth
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+        // (consigliato per Angular) preflight
+        // .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+
+        .requestMatchers(
+          "/auth/login",
+          "/auth/register",
+          "/auth/registerEvent",
+          "/auth/registerEventUniversita",
+          "/auth/cambiaPassword",
+          "/auth/resetPassword/**",
+          "/auth/resetPasswordAdmin/**",
+
+          "/api/sendEmail/inviaEmail",
+          "/api/sendEmail/inviaEmailAdmin",
+          "/api/sendEmail/inviaEmail/**",
+          "/api/sendEmail/confirmEmail/**",
+
+          "/api/candidatura/all",
+          "/api/candidatura/visualizza/**",
+          "/api/candidatura/skillDellaCandidatura/**",
+
+          "/api/azienda/visualizza/**",
+
+          "/api/skill/visualizza/**",
+          "/api/skill/all"
+        ).permitAll()
+
+        .requestMatchers("/admin/**").hasRole("ADMIN")
+        .anyRequest().authenticated()
+      );
+
+    // ✅ collega il tuo userDetailsService + encoder (equivalente del configure(AuthenticationManagerBuilder...))
+    http.authenticationProvider(authenticationProvider());
+
+    // ✅ filtro JWT
+    http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+    return http.build();
+  }
+
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    provider.setUserDetailsService(customUserDetailsService);
+    provider.setPasswordEncoder(passwordEncoder());
+    return provider;
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  // ✅ equivalente del tuo authenticationManagerBean()
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+  }
 }
